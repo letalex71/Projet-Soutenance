@@ -1,0 +1,62 @@
+@media (min-width:768px){
+    .portfolio-navbar.fixed-top+.page>img{
+        width:100%
+    }
+    .poster{
+        max-width:20%;
+        margin-top: -125px;
+    }
+    .portfolio-block{
+        padding-bottom:100px;
+        padding-top:100px
+    }
+    #add-to-list{
+        margin-top: 1px;
+        border-radius: .5em 0em 0em .5em!important;
+        -webkit-border-radius: .5em 0em 0em .5em!important;
+        -moz-border-radius: .5em 0em 0em .5em!important;
+        -ms-border-radius: .5em 0em 0em .5em!important;
+        -o-border-radius: .5em 0em 0em .5em!important;
+    }
+    #add-to-list-dd{
+        margin-top: 1px;
+        border-radius: 0em .5em .5em 0em!important;
+        -webkit-border-radius: 0em .5em .5em 0em!important;
+        -moz-border-radius: 0em .5em .5em 0em!important;
+        -ms-border-radius: 0em .5em .5em 0em!important;
+        -o-border-radius: 0em .5em .5em 0em!important;
+    }
+    #like{
+        margin-top: 1px;
+        border-radius: .5em!important;
+        -webkit-border-radius: .5em!important;
+        -moz-border-radius: .5em!important;
+        -ms-border-radius: .5em!important;
+        -o-border-radius: .5em!important;
+}
+    .discover-poster{
+        width:50%;
+        margin-left: 30%;
+    }
+}
+
+@media (min-width:576px){
+    .portfolio-navbar.fixed-top+.page{
+        padding-top:5.5rem
+    }
+}
+
+@media (min-width:375px) and (max-width:768px){
+    .poster img{
+        width:80%;
+        margin-top: -125px;
+    }
+    .banner, img{
+        width:100%;
+        height:150px;
+    }
+    .offset-1, .col-lg-7, .border-bottom > p{
+        text-align: center;
+        margin: 0;
+    }
+}
