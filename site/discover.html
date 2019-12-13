@@ -42,7 +42,7 @@
                         <a class="nav-link" href="login.html">Se connecter</a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link" href="regsiter.html">S'enregister</a>
+                        <a class="nav-link" href="register.html">S'enregister</a>
                     </li>
                 </ul>
             </div>
@@ -105,9 +105,9 @@
         }
 
         $.ajax(settings).done(function (response) {
-            for (movie of response.results){
-            console.log(movie)
-            $('#popular').before(`
+            for (movie of response.results) {
+                console.log(movie)
+                $('#popular').before(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top"><span id="js-glamour-likes-28145"
                             class="grid-item-icons-counter c-label">0</span>
@@ -132,8 +132,7 @@
                             src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}"
                             loading="lazy" class="grid-item-image u-inset">
                     </a>
-            </article>`
-            );
+            </article>`);
             }
         });
     </script>
