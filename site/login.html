@@ -55,8 +55,8 @@
                                 <form class="form-signin">
                                     <div class="form-label-group">
                                         <label for="inputUserame">Pseudonyme</label>
-                                        <input type="text" id="inputUserame" class="form-control" placeholder="Pseudonyme"
-                                            required autofocus>
+                                        <input type="text" id="inputUserame" class="form-control"
+                                            placeholder="Pseudonyme" required autofocus>
                                     </div>
                                     <div class="form-label-group">
                                         <label for="inputPassword">Mot de passe</label>
@@ -65,17 +65,51 @@
                                     </div>
                                     <button class="btn btn-lg btn-primary btn-block text-uppercase mt-3"
                                         type="submit">Se connecter</button>
-                                    <a class="d-block text-center mt-2 small" href="forgot-password.html">Mot de passe oublié?</a>
-                                    <a class="d-block text-center mt-2 small" href="register.html">Pas encore de comtpe? Enregistrez-vous</a>
+                                    <a class="d-block text-center mt-2 small" href="#" data-target="#pwdModal"
+                                        data-toggle="modal">Mot de passe oublié?</a>
+                                    <a class="d-block text-center mt-2 small" href="register.html">Pas encore de comtpe?
+                                        Enregistrez-vous</a>
                                     <hr class="my-4">
-                                    <button class="btn btn-lg btn-danger btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Se connecter avec Google</button>
-                                    <button class="btn btn-lg btn-info btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Se connecter avec Facebook</button>
+                                    <button class="btn btn-lg btn-danger btn-google btn-block text-uppercase"
+                                        type="submit"><i class="fab fa-google mr-2"></i> Se connecter avec
+                                        Google</button>
+                                    <button class="btn btn-lg btn-info btn-facebook btn-block text-uppercase"
+                                        type="submit"><i class="fab fa-facebook-f mr-2"></i> Se connecter avec
+                                        Facebook</button>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div id="pwdModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h1 class="text-center">Mot de passe oublié?</h1>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <div class="text-center">
+                                            <p>Entrez votre adresse email</p>
+                                            <div class="panel-body">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <input class="form-control input-lg"
+                                                            placeholder="Adresse email" name="email" type="email">
+                                                    </div>
+                                                    <input class="btn btn-lg btn-primary btn-block"
+                                                        value="Envoyer un nouveau mot de passe" type="submit">
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
         </section>
     </main>
     <footer class="page-footer sticky-bottom">
