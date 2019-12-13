@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="assets/css/glam.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
 </head>
 
@@ -54,69 +55,9 @@
             </div>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card border-0 discover"><a href="item-view.html"><img
-                                    class="card-img-top scale-on-hover discover-poster"
-                                    src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8ConJ03HoRTwHpdvtwqnMd2uffC.jpg"
-                                    alt="Card Image"></a>
-                            <div class="card-body">
-                                <p class="text-center"><a href="item-view.html">Alita : Battle Angel</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card border-0 discover"><a href="item-view.html"><img
-                                    class="card-img-top scale-on-hover discover-poster"
-                                    src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8ConJ03HoRTwHpdvtwqnMd2uffC.jpg"
-                                    alt="Card Image"></a>
-                            <div class="card-body">
-                                <p class="text-center"><a href="item-view.html">Alita : Battle Angel</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card border-0 discover"><a href="item-view.html"><img
-                                    class="card-img-top scale-on-hover discover-poster"
-                                    src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8ConJ03HoRTwHpdvtwqnMd2uffC.jpg"
-                                    alt="Card Image"></a>
-                            <div class="card-body">
-                                <p class="text-center"><a href="item-view.html">Alita : Battle Angel</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card border-0 discover"><a href="item-view.html"><img
-                                    class="card-img-top scale-on-hover discover-poster"
-                                    src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8ConJ03HoRTwHpdvtwqnMd2uffC.jpg"
-                                    alt="Card Image"></a>
-                            <div class="card-body">
-                                <p class="text-center"><a href="item-view.html">Alita : Battle Angel</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card border-0 discover"><a href="item-view.html"><img
-                                    class="card-img-top scale-on-hover discover-poster"
-                                    src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8ConJ03HoRTwHpdvtwqnMd2uffC.jpg"
-                                    alt="Card Image"></a>
-                            <div class="card-body">
-                                <p class="text-center"><a href="item-view.html">Alita : Battle Angel</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card border-0 discover"><a href="item-view.html"><img
-                                    class="card-img-top scale-on-hover discover-poster"
-                                    src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8ConJ03HoRTwHpdvtwqnMd2uffC.jpg"
-                                    alt="Card Image"></a>
-                            <div class="card-body">
-                                <p class="text-center"><a href="item-view.html">Alita : Battle Angel</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="container">
+                    <div class="container" id="popular">
                         <nav aria-label="Discover-pagination">
-                            <ul class="pagination justify-content-center">
+                            <ul class="pagination justify-content-center mt-2">
                                 <li class="page-item disabled">
                                     <a class="page-link" href="#" tabindex="-1">Précédent </a>
                                 </li>
@@ -130,6 +71,8 @@
                             </ul>
                         </nav>
                     </div>
+                    <!-- Div qui affichera les messages d'erreurs et les résultats de la rechercher par ville -->
+                    <div id="view"></div>
                 </div>
             </div>
         </section>
@@ -151,6 +94,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
     <script src="assets/js/script.min.js"></script>
+    <script>
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": "https://api.themoviedb.org/3/discover/movie?page=1&include_video=false&include_adult=false&sort_by=popularity.desc&language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc",
+            "method": "GET",
+            "headers": {},
+            "data": "{}"
+        }
+
+        $.ajax(settings).done(function (response) {
+            for (movie of response.results){
+            console.log(movie)
+            $('#popular').before(`
+                <article class="grid-item">
+                    <div class="grid-item-icons u-top"><span id="js-glamour-likes-28145"
+                            class="grid-item-icons-counter c-label">0</span>
+                        <div class="c-tooltip"><a href="/login">
+                                <div class="c-reaction"><img src="/resources/icons/icon-love.svg"
+                                        class="c-reaction-icon c-reaction-icon-disabled"></div>
+                            </a>
+                            <div class="c-tooltip-text">you need to be logged in to love</div>
+                        </div>
+                        <div class="c-tooltip"><a href="/login">
+                                <div class="c-reaction"><img src="/resources/icons/icon-star.svg"
+                                        class="c-reaction-icon c-reaction-icon-disabled"></div>
+                            </a>
+                            <div class="c-tooltip-text">you need to be logged in to save as favorite</div>
+                        </div>
+                    </div> <a href="item-view.html?id=${movie.id}" class="grid-item-link">
+                        <div class="grid-item-content">
+                            <div class="grid-item-content-divider"></div>
+                            <h3 class="grid-item-content-title">${movie.original_title}</h3>
+                            </h4>
+                        </div> <img
+                            src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}"
+                            loading="lazy" class="grid-item-image u-inset">
+                    </a>
+            </article>`
+            );
+            }
+        });
+    </script>
 </body>
 
 </html>

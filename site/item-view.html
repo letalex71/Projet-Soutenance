@@ -47,24 +47,17 @@
             </div>
         </div>
     </nav>
-    <main class="page lanidng-page"><img
-            src="https://image.tmdb.org/t/p/w1400_and_h450_face/8yjqnpOfuFQg3qLRl9Ca1NgIBB5.jpg">
+    <main class="page lanidng-page ">
+        <img class="backdrop" src="">
         <section class="portfolio-block photography ">
             <div class="container ">
                 <div class="row no-gutters">
                     <img class="offset-1 col-md-3 img-fluid image poster"
-                        src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/8ConJ03HoRTwHpdvtwqnMd2uffC.jpg">
+                        src="">
                     <div class="offset-1 col-md-7 border-bottom">
                         <!-- Synopsis -->
                         <h4 class="text-center"><ins>Synopsis</ins></h4>
-                        <p class="text-right">Lorsqu’Alita se réveille sans aucun souvenir de qui elle est, dans un
-                            futur qu’elle ne reconnaît pas, elle est accueillie par Ido, un médecin qui comprend que
-                            derrière ce corps de cyborg abandonné, se cache une jeune femme au passé extraordinaire.
-                            Ce n’est que lorsque les forces dangereuses et corrompues qui gèrent la ville d’Iron
-                            City se lancent à sa poursuite qu’Alita découvre la clé de son passé - elle a des
-                            capacités de combat uniques, que ceux qui détiennent le pouvoir veulent absolument
-                            maîtriser. Si elle réussit à leur échapper, elle pourrait sauver ses amis, sa famille,
-                            et le monde qu’elle a appris à aimer.</p>
+                        <p class="text-center overview"></p>
                         <div class="container">
                             <div class="d-flex justify-content-center align-items-center content">
                                 <h3>Ratings</h3>
@@ -104,14 +97,17 @@
         <section class="portfolio-block photography gradient">
             <div class="container ">
                 <div class="row no-gutters">
-                    <div class="offset-1 col-md-2 container-fluid border-bottom">
+                    <div class="offset-1 col-md-3 container-fluid border-bottom text-wrap">
                         <h4 class="text-center"><ins>Détails</ins></h4>
-                        <h5>Pays</h5>
-                        <h5>Studio</h5>
-                        <h5>Année</h5>
-                        <h5>Casting</h5>
-                        <h5>Revenus</h5>
-                        <h5>Budget</h5>
+                        <ul>
+                            <li class="country"></li>
+                            <ul class="studio">Studios :
+                            </ul>
+                            <li class="year"></li>
+                            <!-- <ul class="casting"></ul> -->
+                            <li class="revenues"></li>
+                            <li class="budget"></li>
+                        </ul>
                     </div>
                     <div class="col-md-7 container-fluid border-bottom">
                         <!-- Synopsis -->
@@ -140,6 +136,36 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js"></script>
     <script src="assets/js/script.min.js"></script>
+    <script>
+        id = window.location.href.substr(84);
+
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": `https://api.themoviedb.org/3/movie/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc`,
+            "method": "GET",
+            "headers": {},
+            "data": "{}"
+        }
+
+        $.ajax(settings).done(function (response) {
+            console.log(response);
+            $('.overview').text(response.overview);
+            $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
+            $('.backdrop').attr('src', `https://image.tmdb.org/t/p/w1440_and_h320_bestv2/${response.backdrop_path}`);
+
+
+            /* TO DO
+            response.production_companies.forEach( studio => {
+                $('.studio').append(studio.name);
+            });
+            $('.country').text(`Country : ${response.production_countries[0].iso_3166_1}`
+            $('.year').text(`Année : ${response.release_date.substr(0, 4)}`)
+            $('.casting').text(`Casting : ${response.production_countries[0].iso_3166_1}`)
+            $('.revenues').text(`Revenus : ${response.revenue} $`)
+            $('.budget').text(`Budget : ${response.production_countries[0].iso_3166_1}`) */
+        });
+    </script>
 
 
 </body>
