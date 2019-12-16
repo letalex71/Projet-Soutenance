@@ -125,8 +125,7 @@ function discoverShows() {
 // 2.1 - Display Movie
 // Get last characters of URL to have only the ID
 function displayMovie(){
-    // id = window.location.href.substr(84); // WF3
-    id = window.location.href.substr(78); // Home tests only
+    id = window.location.search.substr(4);
 
     var settings = {
         "async": true,
@@ -160,8 +159,7 @@ function displayMovie(){
 // 2.2 - Display TV Show
 /* Get last characters of URL to have only the ID */
 function displayShow(){
-    // id = window.location.href.substr(84); // WF3
-    id = window.location.href.substr(74); // Laptop - Home tests only
+    id = window.location.search.substr(4);
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -179,14 +177,13 @@ function displayShow(){
             `https://image.tmdb.org/t/p/w1440_and_h320_bestv2/${response.backdrop_path}`);
     
     
-        /* TO DO
         response.production_companies.forEach( studio => {
             $('.studio').append(studio.name);
         });
-        $('.country').text(`Country : ${response.production_countries[0].iso_3166_1}`
-        $('.year').text(`Année : ${response.release_date.substr(0, 4)}`)
-        $('.casting').text(`Casting : ${response.production_countries[0].iso_3166_1}`)
-        $('.revenues').text(`Revenus : ${response.revenue} $`)
-        $('.budget').text(`Budget : ${response.production_countries[0].iso_3166_1}`) */
+        $('.country').text(`Country : ${response.production_countries[0].iso_3166_1}`);
+        $('.year').text(`Année : ${response.release_date.substr(0, 4)}`);
+        $('.casting').text(`Casting : ${response.production_countries[0].iso_3166_1}`);
+        $('.revenues').text(`Revenus : ${response.revenue} $`);
+        $('.budget').text(`Budget : ${response.production_countries[0].iso_3166_1}`);
     });
 }
