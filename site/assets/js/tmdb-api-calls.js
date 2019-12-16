@@ -124,7 +124,7 @@ function discoverShows() {
 
 // 2.1 - Display Movie
 // Get last characters of URL to have only the ID
-function displayMovie(){
+function displayMovie() {
     id = window.location.search.substr(4);
 
     var settings = {
@@ -135,30 +135,32 @@ function displayMovie(){
         "headers": {},
         "data": "{}"
     }
-    
+
     $.ajax(settings).done(function (response) {
         console.log(response);
         $('.overview').text(response.overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
         $('.backdrop').attr('src',
             `https://image.tmdb.org/t/p/w1440_and_h320_bestv2/${response.backdrop_path}`);
-    
-    
-        /* TO DO
-        response.production_companies.forEach( studio => {
-            $('.studio').append(studio.name);
+
+
+        response.production_countries.forEach(country => {
+            $('.country').append(`<li><small>${country.name}</small></li> `);
         });
-        $('.country').text(`Country : ${response.production_countries[0].iso_3166_1}`
-        $('.year').text(`Année : ${response.release_date.substr(0, 4)}`)
-        $('.casting').text(`Casting : ${response.production_countries[0].iso_3166_1}`)
-        $('.revenues').text(`Revenus : ${response.revenue} $`)
-        $('.budget').text(`Budget : ${response.production_countries[0].iso_3166_1}`) */
+        response.production_companies.forEach(studio => {
+            $('.studio').append(`<li><small>${studio.name}</small></li> `);
+        });
+
+        $('.year').append(`<li><small>${response.release_date.substr(0, 4)}</small></li>`);
+        $('.casting').append(`<li><small>${response.production_countries[0].iso_3166_1}</small></li>`);
+        $('.budget').append(`<li><small>${response.budget} $</small></li>`);
+        $('.revenues').append(`<li><small>${response.revenue} $</small></li>`)
     });
 }
 
 // 2.2 - Display TV Show
 /* Get last characters of URL to have only the ID */
-function displayShow(){
+function displayShow() {
     id = window.location.search.substr(4);
     var settings = {
         "async": true,
@@ -168,22 +170,31 @@ function displayShow(){
         "headers": {},
         "data": "{}"
     }
-    
+
     $.ajax(settings).done(function (response) {
         console.log(response);
+
+        // Used to convert US dates to French dates
+        const firstAired = new Date(response.first_air_date);
+        const lastAired = new Date(response.last_air_date);
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        let productionState = response.in_production;
+        let search = new RegExp("^true$");
         $('.overview').text(response.overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
         $('.backdrop').attr('src',
             `https://image.tmdb.org/t/p/w1440_and_h320_bestv2/${response.backdrop_path}`);
-    
-    
-        response.production_companies.forEach( studio => {
-            $('.studio').append(studio.name);
+        $('.first-episode').append(`<li><small>${firstAired.toLocaleDateString('fr-FR', options)}</small></li>`);
+        $('.last-episode').append(`<li><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
+        $('.number-seasons').append(`<li><small>${response.number_of_seasons}</small></li>`);
+        $('.number-episodes').append(`<li><small>${response.number_of_episodes}</small></li>`);
+        if (search.test(productionState)) {
+            $('.in-production').append(`<li><small>En production</small></li>`);
+        } else {
+            $('.in-production').append(`<li><small>Terminée</small></li>`);
+        }
+        response.genres.forEach(genre => {
+            $('.genres').append(`<li><small>${genre.name}</small></li> `);
         });
-        $('.country').text(`Country : ${response.production_countries[0].iso_3166_1}`);
-        $('.year').text(`Année : ${response.release_date.substr(0, 4)}`);
-        $('.casting').text(`Casting : ${response.production_countries[0].iso_3166_1}`);
-        $('.revenues').text(`Revenus : ${response.revenue} $`);
-        $('.budget').text(`Budget : ${response.production_countries[0].iso_3166_1}`);
     });
 }
