@@ -49,13 +49,13 @@ function discoverMovies() {
                 <div class="grid-item-icons u-top"><span id="js-glamour-likes-28145"
                         class="grid-item-icons-counter c-label">0</span>
                     <div class="c-tooltip"><a href="/login">
-                            <div class="c-reaction"><img src="/resources/icons/icon-love.svg"
+                            <div class="c-reaction"><img src="assets/img/icons/ionicons_svg_ios-heart.svg"
                                     class="c-reaction-icon c-reaction-icon-disabled"></div>
                         </a>
                         <div class="c-tooltip-text">you need to be logged in to love</div>
                     </div>
                     <div class="c-tooltip"><a href="/login">
-                            <div class="c-reaction"><img src="/resources/icons/icon-star.svg"
+                            <div class="c-reaction"><img src="assets/img/icons/ionicons_svg_ios-star.svg"
                                     class="c-reaction-icon c-reaction-icon-disabled"></div>
                         </a>
                         <div class="c-tooltip-text">you need to be logged in to save as favorite</div>
@@ -93,13 +93,13 @@ function discoverShows() {
                 <div class="grid-item-icons u-top"><span id="js-glamour-likes-28145"
                         class="grid-item-icons-counter c-label">0</span>
                     <div class="c-tooltip"><a href="/login">
-                            <div class="c-reaction"><img src="/resources/icons/icon-love.svg"
+                            <div class="c-reaction"><img src="assets/img/icons/ionicons_svg_ios-heart.svg"
                                     class="c-reaction-icon c-reaction-icon-disabled"></div>
                         </a>
                         <div class="c-tooltip-text">you need to be logged in to love</div>
                     </div>
                     <div class="c-tooltip"><a href="/login">
-                            <div class="c-reaction"><img src="/resources/icons/icon-star.svg"
+                            <div class="c-reaction"><img src="assets/img/icons/ionicons_svg_ios-star.svg"
                                     class="c-reaction-icon c-reaction-icon-disabled"></div>
                         </a>
                         <div class="c-tooltip-text">you need to be logged in to save as favorite</div>
@@ -107,7 +107,7 @@ function discoverShows() {
                 </div> <a href="tv.html?id=${show.id}" class="grid-item-link">
                     <div class="grid-item-content">
                         <div class="grid-item-content-divider"></div>
-                        <h3 class="grid-item-content-title">${show.original_title}</h3>
+                        <h3 class="grid-item-content-title">${show.name}</h3>
                         </h4>
                     </div> <img
                         src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
@@ -130,7 +130,7 @@ function displayMovie() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": `https://api.themoviedb.org/3/movie/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc`,
+        "url": `https://api.themoviedb.org/3/movie/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc&append_to_response=credits`,
         "method": "GET",
         "headers": {},
         "data": "{}"
@@ -165,7 +165,7 @@ function displayShow() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": `https://api.themoviedb.org/3/tv/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc`,
+        "url": `https://api.themoviedb.org/3/tv/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc&append_to_response=credits`,
         "method": "GET",
         "headers": {},
         "data": "{}"
@@ -178,8 +178,16 @@ function displayShow() {
         const firstAired = new Date(response.first_air_date);
         const lastAired = new Date(response.last_air_date);
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+        // Convert boolean value to sentance for better displaying
         let productionState = response.in_production;
         let search = new RegExp("^true$");
+        if (search.test(productionState)) {
+            $('.in-production').append(`<li><small>En production</small></li>`);
+        } else {
+            $('.in-production').append(`<li><small>Terminée</small></li>`);
+        }
+        // Display other elements
         $('.overview').text(response.overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
         $('.backdrop').attr('src',
@@ -188,11 +196,6 @@ function displayShow() {
         $('.last-episode').append(`<li><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.number-seasons').append(`<li><small>${response.number_of_seasons}</small></li>`);
         $('.number-episodes').append(`<li><small>${response.number_of_episodes}</small></li>`);
-        if (search.test(productionState)) {
-            $('.in-production').append(`<li><small>En production</small></li>`);
-        } else {
-            $('.in-production').append(`<li><small>Terminée</small></li>`);
-        }
         response.genres.forEach(genre => {
             $('.genres').append(`<li><small>${genre.name}</small></li> `);
         });

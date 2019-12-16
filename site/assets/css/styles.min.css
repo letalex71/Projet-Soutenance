@@ -3,6 +3,9 @@
         width: 100%
     }
 
+    .image-fluid, .poster{
+        height:60%;
+    }
     .poster {
         max-width: 20%;
         margin-top: -125px;
@@ -38,6 +41,9 @@
         -moz-border-radius: .5em !important;
         -ms-border-radius: .5em !important;
         -o-border-radius: .5em !important;
+    }
+    .container-fluid, .span, li {
+        list-style: none;
     }
 }
 
