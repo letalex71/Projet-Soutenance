@@ -39,12 +39,39 @@ setTimeout(function(){
         console.log('impossible de charger correctement la page, Veuillez réessayer');
 }, 500);*/
 
-discoverMovies().then(function (content) {
-    console.info('Films chargés !');
-    console.log(content);
-}).catch(function (err) {
-    console.error('Erreur !');
-    console.dir(err);
-});
+
+function loadScript(src) {
+    return new Promise(function(resolve, reject) {
+        let script = document.createElement('script');
+        script.src = src;
+
+        script.onload = () => resolve(script);
+        script.onerror = () => reject(new Error(`Script load error for ${src}`));
+
+        document.head.append(script);
+        }
+    );
+}
+
+let promise = loadScript(` {{ asset('js/tmdb-api-calls.js') }}` );
+
+promise.then(
+    script => {
+        discoverShows(),
+        discoverMovies()
+    },
+    error => alert(`Error: ${error.message}`)
+);
+
+
+function sleeper(ms) {
+    return function(x) {
+        return new Promise(resolve => setTimeout(() => resolve(x), ms));
+    };
+}
+promise.then(sleeper(1000)).then(
+    script => checkSession(),
+    error => alert(`Error: ${error.message}`)
+);
 </script>
 {% endblock %}
