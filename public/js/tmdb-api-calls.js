@@ -31,8 +31,9 @@
  */
 
 function checkSession() {
+    var itemsToChange =  $("[id*='itemMovies-'], [id*='itemShows-']")
     if (isLogged === true) {
-        $("[id*='itemMovies-']").each(function (){
+        itemsToChange.each(function (){
             $(this).html(`
             <span id="js-glamour-likes-28145" class="grid-item-icons-counter c-label">0</span>
                 <div class="c-tooltip">
@@ -53,7 +54,7 @@ function checkSession() {
                 </div>`);
         });
     } else {
-        $("[id*='itemMovies-']").each(function (){
+        itemsToChange.each(function (){
             $(this).html(`
             <span id="js-glamour-likes-28145" class="grid-item-icons-counter c-label">0</span>
                     <div class="c-tooltip">
@@ -99,18 +100,15 @@ function discoverMovies() {
                             <div class="grid-item-content-divider"></div>
                             <h3 class="grid-item-content-title">${movie.original_title}</h3>
                             </h4>
-                        </div> <img
+                        </div> 
+                        <img
                             src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}"
                             loading="lazy" class="grid-item-image u-inset">
                     </a>
-                </article>`
-            );
+                </article>`);
             }
-        
         }
     });
-    checkSession();
-    
 }
 
 // 1.2 - Popular TV Shows
@@ -125,40 +123,28 @@ function discoverShows() {
     }
 
     $.ajax(settings).done(function (response) {
-        for (show of response.results) {
-            $('#popular-shows').before(`
-            <article class="grid-item">
-                <div class="grid-item-icons u-top"><span id="js-glamour-likes-28145"
-                        class="grid-item-icons-counter c-label">0</span>
-                    <div class="c-tooltip"><a href="/login">
-                    <div class="c-reaction">
-                        <i class=" c-reaction-icon c-reaction-icon-disabled fas fa-heart"></i>
+        for (var i = 0; i < 20; i++){
+            for (show of response.results) {
+                $('#popular-shows').before(`
+                <article class="grid-item">
+                    <div class="grid-item-icons u-top" id="itemShows-` + i++ + `">
                     </div>
-                        </a>
-                        <div class="c-tooltip-text">Vous devez être connecté pour aimer ceci</div>
-                    </div>
-                    <div class="c-tooltip"><a href="/login">
-                    <div class="c-reaction">
-                        <i class=" c-reaction-icon c-reaction-icon-disabled fas fa-star"></i>
-                    </div>
-                        </a>
-                        <div class="c-tooltip-text">Vous devez être connecté pour ajouter en favori</div>
-                    </div>
-                </div> <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
-                    <div class="grid-item-content">
-                        <div class="grid-item-content-divider"></div>
-                        <h3 class="grid-item-content-title">${show.name}</h3>
-                        </h4>
-                    </div>
-                    <img
-                        src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
-                        loading="lazy" class="grid-item-image u-inset">
-                </a>
-        </article>`);
+                    </div> 
+                    <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
+                        <div class="grid-item-content">
+                            <div class="grid-item-content-divider"></div>
+                            <h3 class="grid-item-content-title">${show.name}</h3>
+                            </h4>
+                        </div>
+                        <img
+                            src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
+                            loading="lazy" class="grid-item-image u-inset">
+                    </a>
+            </article>`);
+            }         
         }
     });
 }
-
 /**
  * 2 :: ITEM PAGE
  */
