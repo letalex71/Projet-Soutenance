@@ -34,8 +34,7 @@ function checkSession() {
     var itemsToChange =  $("[id*='itemMovies-'], [id*='itemShows-']")
     if (isLogged === true) {
         itemsToChange.each(function (){
-            $(this).html(`
-            <span id="js-glamour-likes-28145" class="grid-item-icons-counter c-label">0</span>
+            $(this).append(`
                 <div class="c-tooltip">
                     <a href="/like">
                         <div class="c-reaction">
@@ -55,8 +54,7 @@ function checkSession() {
         });
     } else {
         itemsToChange.each(function (){
-            $(this).html(`
-            <span id="js-glamour-likes-28145" class="grid-item-icons-counter c-label">0</span>
+            $(this).append(`
                     <div class="c-tooltip">
                         <a href="/login">
                             <div class="c-reaction">
@@ -94,6 +92,9 @@ function discoverMovies() {
             $('#popular-movies').before(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemMovies-` + i++ + `">
+                    <i class="far fa-star">
+                    <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
+                    </i>
                     </div>
                     <a href="films?id=${movie.id}" class="grid-item-link">
                         <div class="grid-item-content">
@@ -128,6 +129,9 @@ function discoverShows() {
                 $('#popular-shows').before(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemShows-` + i++ + `">
+                    <i class="far fa-star">
+                    <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
+                    </i>
                     </div>
                     </div> 
                     <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
