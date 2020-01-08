@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription {% endblock %}
+
+{% block body %}
+<main class="page projects-page">
+    <section class="portfolio-block projects-with-sidebar">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-xl-9 mx-auto">
+                    <div class="card card-signin flex-row my-5">
+                        <div class="card-img-left d-none d-md-flex">
+                            <!-- Background image for card set in CSS! -->
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Inscription</h5>
+                            <form class="form-signin" method="POST">
+                                {{ form_start(registrationForm) }}
+                                <div class="form-label-group">
+                                    {{ form_row(registrationForm.email, {
+                                        'label': 'Adresse Email ',
+                                        'attr': {'placeholder': 'Adresse email'}
+                                        }) 
+                                    }}
+                                </div>
+                                <div class="form-label-group">
+                                    {{ form_row(registrationForm.plainPassword, {
+                                        'label': 'Mot de passe ',
+                                        'attr': {'placeholder': 'Mot de passe'}
+                                        })
+                                    }}
+                                </div>
+                                <button class="btn btn-sm btn-primary btn-block text-uppercase mt-3"
+                                    type="submit">Inscription</button>
+                                <p class="d-block text-center mt-2 small">Déjà un compte ? <a
+                                        href="{{ path('app_login') }}">Cliquez ici pour vous connecter</a></p>
+                                <hr class="my-4">
+                                <button class="btn btn-sm btn-danger btn-google btn-block text-uppercase"
+                                    type="submit"><i class="fab fa-google mr-2"></i>Connexion avec
+                                    Google</button>
+                                <button class="btn btn-sm btn-info btn-facebook btn-block text-uppercase"
+                                    type="submit"><i class="fab fa-facebook-f mr-2"></i>Connexion avec
+                                    Facebook</button>
+                                {{ form_end(registrationForm) }}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

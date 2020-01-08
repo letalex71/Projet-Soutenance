@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %} - Movilist</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('img/favicon/favicon-32x32.png') }}">
+    <link rel="stylesheet" href="{{ asset('css//bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/css/pikaday.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    {% block stylesheets %}{% endblock %}
+
+</head>
+
+<body>
+    <header>
+        {% set route = app.request.attributes.get('_route') %}
+        <nav id="main-navbar" class="navbar navbar-expand-md navbar-dark gradient">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item{% if route == 'home' %} active{% endif %}">
+                        <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item{% if route == 'search' %} active{% endif %}">
+                        <a class="nav-link" href="{{ path('search') }}">Rechercher</a>
+                    </li>
+                    <li class="nav-item{% if route == 'forum' %} active{% endif %}">
+                        <a class="nav-link disabled" href="{{ path('forum') }}">Forum</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mx-auto order-0">
+                <a class="navbar-brand mx-auto" href="{{ path('home') }}"><img src="{{ asset('img/logo.png') }}"
+                        class="d-inline-block align-top mr-2" id="logo" alt=""></a>
+                <button data-toggle="collapse" class="navbar-toggler" data-target="#navbarNav">
+                    <span class="sr-only">Dérouler Menu</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    {% if app.user %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class='menu_text'>Mon compte</span><i class="fas fa-user-circle menu_icon"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item{% if route == 'app_logout' %} active{% endif %}" href="{{ path('profile') }}">Mon Compte</a>
+                        </a>
+                        <a class="dropdown-item{% if route == 'app_logout' %} active{% endif %}" href="{{ path('profile') }}">Mes Watchlists</a>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item text-danger{% if route == 'app_logout' %} active{% endif %}" href="{{ path('app_logout') }}">Deconnexion</a>
+                        </a>
+                        </div>
+                    </li>
+                    {% else %}
+                        <li class="nav-item{% if route == 'app_login' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                        <li class="nav-item{% if route == 'app_register' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        {% block body %}{% endblock %}
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="{{ asset('js/tmdb-api-calls.js') }}"></script>
+    {% block javascripts %}{% endblock %}
+    
+</body>
+
+</html>

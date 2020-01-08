@@ -1,0 +1,102 @@
+{# pages/show-view.html.twig #}
+{% extends "base.html.twig" %}
+{% block title %} {% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block body %}
+<main class="page lanidng-page ">
+    <img class="backdrop" src="">
+    <section class="portfolio-block photography ">
+        <div class="container ">
+            <div class="row no-gutters">
+                <img class="offset-1 col-md-3 img-fluid image poster" src="">
+                <div class="offset-1 col-md-7 border-bottom">
+                    <!-- Synopsis -->
+                    <h4 class="text-center"><ins>Synopsis</ins></h4>
+                    <p class="text-center overview"></p>
+                    <div class="container">
+                        <div class="d-flex justify-content-center align-items-center content">
+                            <h3>Ratings</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="offset-1 col-md-3 mt-2">
+                    <!-- Example split danger button -->
+                    <div class="btn-group dropdown">
+                        <button type="button" id="add-to-list" class="btn btn-sm btn-primary add-to-list">Ajouter à
+                            ma liste</button>
+                        <button type="button" id="add-to-list-dd"
+                            class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </div>
+                    <button class="btn btn-sm btn-danger" id="like"><i class="fas fa-heart"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="portfolio-block call-to-action border-bottom">
+
+    </section>
+    <section class="portfolio-block photography gradient">
+        <div class="container ">
+            <div class="row no-gutters">
+                <div class="offset-1 col-md-3 container-fluid border-bottom text-wrap">
+                    <h4 class="text-center"><ins>Détails</ins></h4>
+                    <span class="first-episode"><ins>Première diffusion : </ins></span>
+                    <span class="last-episode"><ins>Dernière diffusion : </ins></span>
+                    <span class="in-production"><ins>Production : </ins></span>
+                    <span class="number-seasons"><ins>Nombre de saisons : </ins></span>
+                    <span class="number-episodes"><ins>Nombre d'épisodes : </ins></span>
+                    <span class="genres"><ins>Genres : </ins></span>
+                    <!-- <ul class="casting"></ul> -->
+                </div>
+                <div class="col-md-7 container-fluid border-bottom">
+                    <!-- Casting -->
+                    <nav>
+                        <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-cast-tab" data-toggle="tab" href="#nav-cast"
+                                role="tab" aria-controls="nav-cast" aria-selected="true">
+                                <h4>Casting</h4>
+                            </a>
+                            <a class="nav-item nav-link" id="nav-crew-tab" data-toggle="tab" href="#nav-crew" role="tab"
+                                aria-controls="nav-crew" aria-selected="false">
+                                <h4>Equipe</h4>
+                            </a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="nav-cast" role="tabpanel"
+                            aria-labelledby="nav-cast-tab">
+                            <ul class="list-group-cast">
+                            </ul>
+                        </div>
+                        <div class="tab-pane fade show" id="nav-crew" role="tabpanel"
+                            aria-labelledby="nav-crew-tab">
+                            <ul class="list-group-crew">
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Casting -->
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
+{% block javascripts %}
+<script>
+    displayShow();
+</script>
+{% endblock %}

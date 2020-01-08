@@ -1,0 +1,63 @@
+{# pages/search.html.twig #}
+{% extends "base.html.twig" %}
+{% block title %}Rechercher {% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block body %}
+<main class="page projects-page">
+    <div class="row">
+        <div class="col-8 offset-2">
+            <div class="input-group md-form form-sm form-2 pl-0">
+                <input class="form-control my-0 py-1 red-border" type="text" placeholder="Rechercher" aria-label="Search">
+                <div class="input-group-append">
+                    <span class="input-group-text red lighten-3" id="basic-text1"><i class="fas fa-search text-grey"
+                            aria-hidden="true"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="portfolio-block projects-with-sidebar">
+        <!-- Start: portfolio heading -->
+        <!-- End: portfolio heading -->
+        <div class="row">
+            <div class="col-1">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <h5 class="nav-link " id="v-pills-filter-tab" data-toggle="pill" href="#v-pills-filter"
+                        role="tab" aria-controls="v-pills-filter" aria-selected="false">Filtres</h5>
+                    <a class="nav-link active" id="v-pills-none-tab" data-toggle="pill" href="#v-pills-none"
+                        role="tab" aria-controls="v-pills-none" aria-selected="true">Aucun</a>
+                    <a class="nav-link" id="v-pills-movie-tab" data-toggle="pill" href="#v-pills-movie"
+                        role="tab" aria-controls="v-pills-movie" aria-selected="true">Film</a>
+                    <a class="nav-link" id="v-pills-shows-tab" data-toggle="pill" href="#v-pills-shows" role="tab"
+                        aria-controls="v-pills-shows" aria-selected="false">Série</a>
+                    <a class="nav-link" id="v-pills-actors-tab" data-toggle="pill" href="#v-pills-actors" role="tab"
+                        aria-controls="v-pills-actors" aria-selected="false">Acteur</a>
+                </div>
+            </div>
+            <div class="col-11">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-none" role="tabpanel"
+                        aria-labelledby="v-pills-none-tab">
+                        <h6>En utilisant ce filtre par défaut, l'appel API matchera pour films, séries TV et personnalités.</h6>
+                    </div>
+                    <div class="tab-pane fade show" id="v-pills-movie" role="tabpanel"
+                        aria-labelledby="v-pills-movie-tab">
+                        <h6>En utilisant ce filtre, l'appel API se fera à nouveau pour n'afficher que les
+                            résultats correspondant à un film.</h6>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-shows" role="tabpanel"
+                        aria-labelledby="v-pills-shows-tab">
+                        <h6>En utilisant ce filtre, l'appel API se fera à nouveau pour n'afficher que les
+                            résultats correspondant à une série.</h6>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-actors" role="tabpanel"
+                        aria-labelledby="v-pills-actors-tab">
+                        <h6>En utilisant ce filtre, l'appel API se fera à nouveau pour n'afficher que les
+                            résultats correspondant une personnalité.</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>{% endblock %}
+{% block javascripts %}{% endblock %}

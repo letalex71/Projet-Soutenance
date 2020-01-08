@@ -1,0 +1,50 @@
+{# pages/discover.html.twig #}
+{% extends "base.html.twig" %}
+{% block title %}Discover {% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block body %}
+<main class="page projects-page">
+    <section class="portfolio-block projects-cards">
+        <div class="heading">
+            <h2>Découvrir</h2>
+        </div>
+        <div class="container">
+            <h2>Films populaires</h2>
+            <div class="row">
+                <div class="container" id="popular-movies">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <hr>
+            <h2>Séries populaires</h2>
+            <div class="row">
+                <div class="container" id="popular-shows">
+                </div>
+            </div>
+    </section>
+</main>
+
+{% endblock %}
+{% block javascripts %}
+<script>
+    var isLogged = {{ (app.user is not empty) ? 'true' : 'false' }}; 
+    console.log(isLogged);
+/*discoverMovies();
+discoverShows();
+setTimeout(function(){
+    if($("[id*='itemMovies-']").length == 20)
+        checkSession();
+    else
+        console.log('impossible de charger correctement la page, Veuillez réessayer');
+}, 500);*/
+
+discoverMovies().then(function (content) {
+    console.info('Films chargés !');
+    console.log(content);
+}).catch(function (err) {
+    console.error('Erreur !');
+    console.dir(err);
+});
+</script>
+{% endblock %}
