@@ -65,6 +65,7 @@ Voilà !
 * Menu redéfini
 * contenu des pages mieux rendu
 * Boutons "ajouter watchlist/like" cliquables uniquement si utilisateur connecté (redirection vers /connexion sinon)
+* Bundle pour de meilleurs promesses préinstallée. Documentation ici https://github.com/guzzle/promises
 	
 ### A faire : 
 * Fix : banniere lors de l'affichage d'un film/serie
