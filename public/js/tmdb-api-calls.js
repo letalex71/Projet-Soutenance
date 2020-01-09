@@ -74,7 +74,7 @@ function checkSession() {
                 });
     }
 }
-
+    
 // 1.1 - Popular Movies
 function discoverMovies() {
     var settings = {

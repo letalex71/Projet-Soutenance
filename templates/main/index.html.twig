@@ -54,24 +54,22 @@ function loadScript(src) {
 }
 
 let promise = loadScript(` {{ asset('js/tmdb-api-calls.js') }}` );
-
+console.time('promise');
 promise.then(
-    script => {
-        discoverShows(),
-        discoverMovies()
-    },
-    error => alert(`Error: ${error.message}`)
+    script => discoverMovies(),
+    error => alert(`Error: ${error.message}`),
+    ).then(() => new Promise(
+        script => discoverShows(),
+        error => alert(`Error: ${error.message}`),
+        console.timeEnd('promise'),
+    )
 );
 
-
-function sleeper(ms) {
-    return function(x) {
-        return new Promise(resolve => setTimeout(() => resolve(x), ms));
-    };
-}
-promise.then(sleeper(1000)).then(
-    script => checkSession(),
-    error => alert(`Error: ${error.message}`)
-);
+var checkExist = setInterval(function() {
+    if ($("div[id*='itemMovies-'], div[id*='itemShows-']").length) {
+        checkSession();
+        clearInterval(checkExist);
+    }
+}, 5);
 </script>
 {% endblock %}
