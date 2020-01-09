@@ -103,7 +103,7 @@ function discoverMovies() {
                             </h4>
                         </div> 
                         <img
-                            src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}"
+                            src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}"
                             loading="lazy" class="grid-item-image u-inset">
                     </a>
                 </article>`);
@@ -166,11 +166,13 @@ function displayMovie() {
         "data": "{}"
     }
     $.ajax(settings).done(function (response) {
-        console.log(response.credits);
+        console.log(response);
+        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
+        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}` ;
         $('title').prepend(response.title);
-        $('.overview').text(response.overview);
+        $('.overview').text(overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
-        $('.backdrop').attr('src', `https://image.tmdb.org/t/p/w1440_and_h320_bestv2/${response.backdrop_path}`);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         /**
          * Cast / Crew Area
          * Need to truncate results because some movies have very big cast/crew. Display only the first ten
