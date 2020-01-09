@@ -4,25 +4,22 @@
 {% block stylesheets %}{% endblock %}
 {% block body %}
 <main class="page projects-page" id="movie-item">
-    <section class="portfolio-block photography" id="movie-backdrop">
-        <div class="backdrop">
+    <section class="portfolio-block photography primary-block" id="movie-backdrop">
+        <div class="backdrop primary-block">
         </div>
             <div class="row ">
                 <img class="offset-1 col-md-3 img-fluid image poster" src="">
-                <div class="offset-1 col-md-7 border-bottom synopsis">
+                <div class="offset-1 col-md-7 synopsis">
                     <!-- Synopsis -->
-                    <h4 class="text-center"><ins>Synopsis</ins></h4>
-                    <p class="text-center overview"></p>
-                    <div class="container">
-                        <div class="d-flex justify-content-center align-items-center content">
-                            <h3>Ratings</h3>
-                        </div>
+                    <div class="container text-center overview">
+                        <h3>Synopsis</h3>
+                            <p class="overview-content"></p>
+                        <h3>Ratings</h3>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="offset-1 col-md-3 mt-2 buttons">
-                    <!-- Example split danger button -->
                     <div class="btn-group dropdown">
                         <button type="button" id="add-to-list" class="btn btn-sm btn-primary add-to-list">Ajouter à
                             ma liste</button>
@@ -39,23 +36,22 @@
                             <a class="dropdown-item" href="#">Separated link</a>
                         </div>
                     </div>
-                    <button class="btn btn-sm btn-danger" id="like"><i class="fas fa-heart"></i></button>
+                    <button class="btn btn-sm btn-danger" id="like"><i class="far fa-heart">J'ai aimé ce film !</i></button>
                 </div>
             </div>
         </section>
-        <section class="portfolio-block call-to-action border-bottom">
-    
-        </section>
-        <section class="portfolio-block photography gradient">
+        <section class="portfolio-block photography gradient secondary-block">
             <div class="row no-gutters">
-                <div class="offset-1 col-md-2 container-fluid border-bottom text-wrap details">
-                    <h4 class="text-center"><ins>Détails</ins></h4>
-                    <span class="country"><ins>Pays : </ins></span>
-                    <span class="studio"><ins>Studios : </ins></span>
-                    <span class="year"><ins>Année : </ins></span>
-                    <!-- <ul class="casting"></ul> -->
-                    <span class="revenues"><ins>Recettes : </ins></span>
-                    <span class="budget"><ins>Budget : </ins></span>
+                <div class="offset-1 col-md-2 container-fluid border-bottom text-wrap details overview">
+                    <div class="details-content">
+                    <h4 class="text-center details-content">
+                        <ins>Détails</ins></h4>
+                        <span class="country"><ins>Pays : </ins></span>
+                        <span class="studio"><ins>Studios : </ins></span>
+                        <span class="year"><ins>Année : </ins></span>
+                        <span class="revenues"><ins>Recettes : </ins></span>
+                        <span class="budget"><ins>Budget : </ins></span>
+                    </div>
                 </div>
                 <div class="offset-2 col-md-5 container-fluid border-bottom details">
                     <!-- Casting -->
