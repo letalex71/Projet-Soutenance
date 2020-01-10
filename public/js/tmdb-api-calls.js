@@ -74,7 +74,7 @@ function checkSession() {
                 });
     }
 }
-    
+
 // 1.1 - Popular Movies
 function discoverMovies() {
     var settings = {
@@ -133,8 +133,8 @@ function discoverShows() {
                     <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
                     </div>
-                    </div> 
-                    <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
+                    </div>
+                    <a href="/series?id=${show.id}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                             <h3 class="grid-item-content-title">${show.name}</h3>
@@ -145,7 +145,7 @@ function discoverShows() {
                             loading="lazy" class="grid-item-image u-inset">
                     </a>
             </article>`);
-            }         
+            }
         }
     });
 }
@@ -178,14 +178,18 @@ function displayMovie() {
          * Need to truncate results because some movies have very big cast/crew. Display only the first ten
          */
         var truncCast = response.credits.cast.slice(0, 10);
-        truncCast.forEach(cast => {
+        console.log(truncCast)
+        i = 0;
+        truncCast.forEach(casting => {
             $('.list-group-cast').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
-            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cast.profile_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${cast.id}-${cast.name}">${cast.name}</a></span>
-            <span class="badge badge-pill text-dark">${cast.character}</span>
+            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${casting.profile_path}" loading="lazy" class="casting-list-img">
+            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}-${casting.name}">${casting.name}</a></span>
+            <span class="badge badge-pill text-dark">${casting.character}</span>
         </p>`);
+        
         });
+
         var truncCrew = response.credits.crew.slice(0, 10);
         truncCrew.forEach(crew => {
             $('.list-group-crew').append(`
@@ -198,15 +202,21 @@ function displayMovie() {
         /**
          * Details Area
          */
+        let countries = [];
         response.production_countries.forEach(country => {
-            $('.country').append(`<li><small>${country.name}</small></li> `);
+            countries.push(country.name);
         });
+
+        let studios = [];
         response.production_companies.forEach(studio => {
-            $('.studio').append(`<li><small>${studio.name}</small></li> `);
+            studios.push(studio.name);
         });
-        $('.year').append(`<li><small>${response.release_date.substr(0, 4)}</small></li>`);
-        $('.budget').append(`<li><small>${response.budget} $</small></li>`);
-        $('.revenues').append(`<li><small>${response.revenue} $</small></li>`)
+
+        $('.country').append( countries.join(', ') );
+        $('.studio').append( studios.join(', ') );
+        $('.year').append(`${response.release_date.substr(0, 4)}`);
+        $('.budget').append(`${response.budget} $`);
+        $('.revenues').append(`${response.revenue} $`)
     });
 
 }
@@ -238,25 +248,26 @@ function displayShow() {
             day: 'numeric'
         };
         // Convert boolean value to sentance for better displaying
+        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
+        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}` ;
         let productionState = response.in_production;
         let search = new RegExp("^true$");
         if (search.test(productionState)) {
-            $('.in-production').append(`<li><small>En production</small></li>`);
+            $('.in-production').append(`<li class="details-li-content"><small>En production</small></li>`);
         } else {
-            $('.in-production').append(`<li><small>Terminée</small></li>`);
+            $('.in-production').append(`<li class="details-li-content"><small>Terminée</small></li>`);
         }
         // Display other elements
         $('title').prepend(response.name);
-        $('.overview').text(response.overview);
+        $('.overview-content').text(overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
-        $('.backdrop').attr('src',
-            `https://image.tmdb.org/t/p/w1440_and_h320_bestv2/${response.backdrop_path}`);
-        $('.first-episode').append(`<li><small>${firstAired.toLocaleDateString('fr-FR', options)}</small></li>`);
-        $('.last-episode').append(`<li><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
-        $('.number-seasons').append(`<li><small>${response.number_of_seasons}</small></li>`);
-        $('.number-episodes').append(`<li><small>${response.number_of_episodes}</small></li>`);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
+        $('.first-episode').append(`<li class="details-li-content"><small>${firstAired.toLocaleDateString('fr-FR', options)}</small></li>`);
+        $('.last-episode').append(`<li class="details-li-content"><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
+        $('.number-seasons').append(`<li class="details-li-content"><small>${response.number_of_seasons}</small></li>`);
+        $('.number-episodes').append(`<li class="details-li-content"><small>${response.number_of_episodes}</small></li>`);
         response.genres.forEach(genre => {
-            $('.genres').append(`<li><small>${genre.name}</small></li> `);
+            $('.genres').append(`<li class="details-li-content"><small>${genre.name}</small></li> `);
         });
         /**
          * Cast / Crew Area
@@ -285,7 +296,7 @@ function displayShow() {
 
 // 2.2 - Display People
 /* Get last characters of URL to have only the ID */
-function displayShow() {
+function displayPeople() {
     id = window.location.search.substr(4);
     var settings = {
         "async": true,

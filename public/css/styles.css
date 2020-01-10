@@ -20,6 +20,9 @@
     font-family: 'Open Sans', sans-serif;
     font-size: x-large
 }
+.details-li-content{
+    font-size: large;
+}
 .navbar {
     padding-top: 0rem;
     padding-bottom: 0rem;
