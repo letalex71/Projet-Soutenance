@@ -27,6 +27,8 @@
 
 {% endblock %}
 {% block javascripts %}
+<script src="{{ asset('js/tmdb_api.js') }} "></script>
+<script src="{{ asset('js/display.js') }} "></script>
 <script>
 
 let isLogged = {{ (app.user is not empty) ? 'true' : 'false' }}; 
@@ -36,7 +38,7 @@ let movies = tmdbApi.discover('movie', {
         'include_adult' : 'false',
         'sort_by' : 'popularity.desc',
         'total_result' : '5',
-        'language' : 'fr_FR',
+        'language' : 'fr-FR',
         })
 .then( movies => { return displayMovies(movies.results) })
 
@@ -45,7 +47,7 @@ let shows = tmdbApi.discover('tv', {
             'timezone' : 'Europe%2FParis',
             'page' : '1',
             'sort_by' : 'popularity.desc',
-            'language' : 'fr_FR',
+            'language' : 'fr-FR',
         })
 .then( shows => { return displayShows(shows.results) });
 

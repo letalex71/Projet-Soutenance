@@ -1,0 +1,19 @@
+Accueil :
+	
+	- 10 vignettes plutôt que 20
+
+Page présentation :
+	
+	film :
+
+		- medias (screenshots / bandes annonces)
+		- commentaires
+
+	série :
+
+
+
+	people :
+
+
+Page de recherche :

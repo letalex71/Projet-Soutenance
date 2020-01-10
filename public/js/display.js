@@ -81,6 +81,9 @@ function checkSession(isLogged) {
 
 async function displayMovies(movies){
     
+
+    console.log(movies);
+
     return new Promise( resolve => { 
         let movieId = 0;
 
@@ -95,7 +98,7 @@ async function displayMovies(movies){
                         <a href="films?id=${movie.id}" class="grid-item-link">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
-                                <h3 class="grid-item-content-title">${movie.original_title}</h3>
+                                <h3 class="grid-item-content-title">${movie.title}</h3>
                             </div> 
                             <img
                                 src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}"

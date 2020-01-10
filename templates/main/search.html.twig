@@ -1,7 +1,9 @@
 {# pages/search.html.twig #}
 {% extends "base.html.twig" %}
 {% block title %}Rechercher {% endblock %}
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
 {% block body %}
 <main class="page projects-page">
     <div class="row">
@@ -58,6 +60,22 @@
                 </div>
             </div>
         </div>
+    
+
+    <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
+  <option value="AL">Alabama</option>
+    ...
+  <option value="WY">Wyoming</option>
+</select>
+
     </section>
 </main>{% endblock %}
-{% block javascripts %}{% endblock %}
+{% block javascripts %}
+
+<script>
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+{% endblock %}
