@@ -1,6 +1,11 @@
 #main-navbar .nav-item.active>.nav-link {
     color: #42d342;
 }
+
+.primary-details{
+    margin-bottom: 3rem;
+}
+
 .primary-block{
     background-color: #343a40;
     color:  white;
@@ -170,6 +175,10 @@ li.nav-item-right{
     .border-bottom>p {
         text-align: center;
         margin: 0;
+    }
+
+    .synopsis{
+        margin-top:1rem!important;
     }
 }
 

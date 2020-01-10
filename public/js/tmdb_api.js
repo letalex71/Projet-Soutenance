@@ -4,21 +4,20 @@ var tmdbApi = {
 		clé API qui sert à la création de l'URL pour faire la requête.
 		Possibilité d'utiliser setApiKey pour la changer
 	 */
-	apiKey : '6bf0fa1291809ddcb8f6efb13f63ffbc',
+	apiKey: '6bf0fa1291809ddcb8f6efb13f63ffbc',
 
 	/*
 		URL de base qui sert à la création de l'URL pour faire la requête
 	 */
-	baseURL :'https://api.themoviedb.org/3/',
+	baseURL: 'https://api.themoviedb.org/3/',
 
 	/*
 		Cette fonction sert a hydrater la variable apiKey qui sera réutilisée
 		pour toutes les requêtes
 	 */
-	setApiKey : function (apiKey) 
-	{
+	setApiKey: function (apiKey) {
 
-		this.apiKey = apiKey; 
+		this.apiKey = apiKey;
 	},
 
 
@@ -26,16 +25,14 @@ var tmdbApi = {
 		Reçoit l'url à laquelle faire une requête, et renvoit le résultat
 		sous forme de promesse
 	 */
-	apiRequest: async function (url)
-	{
-		const response =  fetch(url);
+	apiRequest: async function (url) {
+		const response = fetch(url);
 
-		const output =  response.then(response => {
+		const output = response.then(response => {
 			return response.json();
-		})	
+		})
 
 		return output;
-		
 	},
 
 	/*
@@ -44,14 +41,13 @@ var tmdbApi = {
 		avoir la liste des films du genre comédie.
 		Liste des filtres possibles : https://developers.themoviedb.org/3/discover/movie-discover
 	 */
-	discover  : function(type, filters) 
-	{
+	discover: function (type, filters) {
 
 		url = `${this.baseURL}discover/${type}?api_key=${this.apiKey}`;
 
 
-		for ( filter in  filters)
-				url += `&${filter}=${filters[filter]}`;
+		for (filter in filters)
+			url += `&${filter}=${filters[filter]}`;
 
 		return this.apiRequest(url);
 	},
@@ -60,10 +56,9 @@ var tmdbApi = {
 		Retournera une requête de tous les genres disponibles pour un type de media
 		('movie' ou 'tv')
 	 */
-	genres : function (type) 
-	{
+	genres: function (type) {
 
-		url =  `${this.baseURL}genre/${type}/list?api_key=${this.apiKey}`;
+		url = `${this.baseURL}genre/${type}/list?api_key=${this.apiKey}`;
 
 		return this.apiRequest(url);
 	},
@@ -71,60 +66,56 @@ var tmdbApi = {
 	/*
 		Retournera les données d'un film par rapport à son id. Le contenu sera en 'en_US' par
 		défaut. 'detail' permet de recevoir qu'un détail spécifique. Pour connaître la liste des
-		détails possibles : https://developers.themoviedb.org/3/movies/get-movie-details 
-		(ex : envoyer 'release_date' pour ne recevoir que la date de sortie) 
+		détails possibles : https://developers.themoviedb.org/3/movies/get-movie-details
+		(ex : envoyer 'release_date' pour ne recevoir que la date de sortie)
 	 */
-	movie : function (id, language = 'fr_FR', detail = false, appendToResponse = false) 
-	{
+	movie: function (id, language = 'fr_FR', detail = false, appendToResponse = false) {
 
-		url =  `${this.baseURL}movie/${id}`; 
+		url = `${this.baseURL}movie/${id}`;
 
-		url += (detail === false ) 
-		? `?api_key=${this.apiKey}&language=${language}` : 
-		`/${detail}?api_key=${this.apiKey}&language=${language}`;
+		url += (detail === false) ?
+			`?api_key=${this.apiKey}&language=${language}` :
+			`/${detail}?api_key=${this.apiKey}&language=${language}`;
 
 		url += (appendToResponse === false) ? '' : `apend_to_response=${appendToResponse}`;
 
 		return this.apiRequest(url);
 	},
 
-	tvShow : function (id, language = 'fr_FR', detail = false, appendToResponse = false) 
-	{
+	tvShow: function (id, language = 'fr_FR', detail = false, appendToResponse = false) {
 
-		url =  `${this.baseURL}tv/${id}`; 
+		url = `${this.baseURL}tv/${id}`;
 
-		url += (detail === false ) 
-		? `?api_key=${this.apiKey}&language=${language}` : 
-		`/${detail}?api_key=${this.apiKey}&language=${language}`;
+		url += (detail === false) ?
+			`?api_key=${this.apiKey}&language=${language}` :
+			`/${detail}?api_key=${this.apiKey}&language=${language}`;
 
 		url += (appendToResponse === false) ? '' : `apend_to_response=${appendToResponse}`;
-		
+
 		return this.apiRequest(url);
 	},
 
-	people : function (id, language = 'fr_FR', detail = false, appendToResponse = false) 
-	{
+	people: function (id, language = 'fr_FR', detail = false, appendToResponse = false) {
 
-		url =  `${this.baseURL}people/${id}`; 
+		url = `${this.baseURL}people/${id}`;
 
-		url += (detail === false ) 
-		? `?api_key=${this.apiKey}&language=${language}` : 
-		`/${detail}?api_key=${this.apiKey}&language=${language}`;
+		url += (detail === false) ?
+			`?api_key=${this.apiKey}&language=${language}` :
+			`/${detail}?api_key=${this.apiKey}&language=${language}`;
 
 		url += (appendToResponse === false) ? '' : `apend_to_response=${appendToResponse}`;
-		
+
 		return this.apiRequest(url);
 	},
 
-	/* 
+	/*
 		'type' accepte : 'all', 'movie', 'tv', 'person'
 		'timeWindow' accepte : 	'day', 'week'
 	 */
-	trendings : function (type, timeWindow) 
-	{
+	trendings: function (type, timeWindow) {
 
 		url = `${this.baseURL}trending/${type}/${timeWindow}?api_key=${this.apiKey}`;
 
 		return this.apiRequest(url);
-	}	
+	}
 }
