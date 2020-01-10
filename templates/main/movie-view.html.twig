@@ -3,25 +3,23 @@
 {% block title %} {% endblock %}
 {% block stylesheets %}{% endblock %}
 {% block body %}
-<main class="page projects-page">
-    <img class="backdrop" src="">
-    <section class="portfolio-block photography ">
+<main class="page projects-page" id="movie-item">
+    <section class="portfolio-block photography primary-block" id="movie-backdrop">
+        <div class="backdrop primary-block">
+        </div>
         <div class="row ">
             <img class="offset-1 col-md-3 img-fluid image poster" src="">
-            <div class="offset-1 col-md-7 border-bottom">
+            <div class="offset-1 col-md-7 synopsis">
                 <!-- Synopsis -->
-                <h4 class="text-center"><ins>Synopsis</ins></h4>
-                <p class="text-center overview"></p>
-                <div class="container">
-                    <div class="d-flex justify-content-center align-items-center content">
-                        <h3>Ratings</h3>
-                    </div>
+                <div class="container text-center overview">
+                    <h3>Synopsis</h3>
+                    <p class="overview-content"></p>
+                    <h3>Ratings</h3>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="offset-1 col-md-3 mt-2">
-                <!-- Example split danger button -->
+            <div class="offset-1 col-md-3 mt-2 buttons">
                 <div class="btn-group dropdown">
                     <button type="button" id="add-to-list" class="btn btn-sm btn-primary add-to-list">Ajouter à
                         ma liste</button>
@@ -38,51 +36,48 @@
                         <a class="dropdown-item" href="#">Separated link</a>
                     </div>
                 </div>
-                <button class="btn btn-sm btn-danger" id="like"><i class="fas fa-heart"></i></button>
+                <button class="btn btn-sm btn-danger" id="like"><i class="far fa-heart">J'ai aimé ce film !</i></button>
             </div>
         </div>
     </section>
-    <section class="portfolio-block call-to-action border-bottom">
-
-    </section>
-    <section class="portfolio-block photography gradient">
+    <section class="portfolio-block photography gradient secondary-block">
         <div class="row no-gutters">
-            <div class="offset-1 col-md-2 container-fluid border-bottom text-wrap">
-                <h4 class="text-center"><ins>Détails</ins></h4>
-                <span class="country"><ins>Pays : </ins></span>
-                <span class="studio"><ins>Studios : </ins></span>
-                <span class="year"><ins>Année : </ins></span>
-                <!-- <ul class="casting"></ul> -->
-                <span class="revenues"><ins>Recettes : </ins></span>
-                <span class="budget"><ins>Budget : </ins></span>
+            <div class="offset-1 col-md-3 container-fluid border-bottom text-wrap details overview">
+                <div class="details-content">
+                    <h4 class="text-center details-content">
+                        <ins>Détails</ins></h4>
+                    <li class="mb-3">Pays : <span class="details-li-content country"></span></li>
+                    <li class="mb-3">Studios : <span class="details-li-content studio"></span></li>
+                    <li class="mb-3">Année : <span class="details-li-content year"></span></li>
+                    <li class="mb-3">Recettes : <span class="details-li-content revenues"></span></li>
+                    <li class="mb-3">Budget : <span class="details-li-content budget"></span></li>
+                </div>
             </div>
-            <div class="offset-2 col-md-5 container-fluid border-bottom">
+            <div class="col-md-5 container-fluid border-bottom details">
                 <!-- Casting -->
-                <nav>
-                    <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-cast-tab" data-toggle="tab" href="#nav-cast"
-                            role="tab" aria-controls="nav-cast" aria-selected="true">
-                            <h4>Casting</h4>
-                        </a>
-                        <a class="nav-item nav-link" id="nav-crew-tab" data-toggle="tab" href="#nav-crew" role="tab"
-                            aria-controls="nav-crew" aria-selected="false">
-                            <h4>Equipe</h4>
-                        </a>
+                <ul class="nav nav-pills offset-md-5 offset-3" id="pills-tab" role="tablist">
+                    <li class="nav-item nav-item-left">
+                        <a class="nav-link active" id="pills-cast-tab" data-toggle="pill" href="#pills-cast" role="tab"
+                            aria-controls="pills-cast" aria-selected="true">Casting</a>
+                    </li>
+                    <li class="nav-item nav-item-right">
+                        <a class="nav-link" id="pills-crew-tab" data-toggle="pill" href="#pills-crew" role="tab"
+                            aria-controls="pills-crew" aria-selected="false">Equipe</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-cast" role="tabpanel"
+                        aria-labelledby="pills-cast-tab">
+                        <p class="list-group-cast"></p>
                     </div>
-                </nav>
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-cast" role="tabpanel" aria-labelledby="nav-cast-tab">
-                        <ul class="list-group-cast">
-                        </ul>
+                    <div class="tab-pane fade" id="pills-crew" role="tabpanel" aria-labelledby="pills-crew-tab">
+                        <p class="list-group-crew"></p>
                     </div>
-                    <div class="tab-pane fade show" id="nav-crew" role="tabpanel" aria-labelledby="nav-crew-tab">
-                        <ul class="list-group-crew">
-                        </ul>
-                    </div>
-                </div>  
+                </div>
                 <!-- Casting -->
             </div>
         </div>
+
     </section>
 </main>
 {% endblock %}
