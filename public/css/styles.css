@@ -32,6 +32,23 @@
     margin-top:60px;
     z-index:2;
 }
+p.list-group-cast{
+    margin-bottom: 0!important ;
+}
+
+p.list-group-crew{
+    margin-bottom: 0!important ;
+}
+
+li.nav-item-left{
+    background-color: #fff;
+    border-top-left-radius: .25rem;
+}
+
+li.nav-item-right{
+    background-color: #fff;
+    border-top-right-radius: .25rem;
+}
 
 .details{
     z-index: 2
@@ -61,7 +78,9 @@
     .portfolio-navbar.fixed-top+.page>img {
         width: 100%
     }
-
+    img.casting-list-img{
+        height:125px;
+    }
     img#logo.d-inline-block.align-top.mr-2 {
         margin-left: 6rem;
         width: 25%;
@@ -131,7 +150,9 @@
         width: 80%;
         margin-top: -125px;
     }
-
+    img.casting-list-img{
+        max-height:60px;
+    }
     img#logo.d-inline-block.align-top.mr-2 {
         display: none !important;
     }

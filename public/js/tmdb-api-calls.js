@@ -180,20 +180,20 @@ function displayMovie() {
         var truncCast = response.credits.cast.slice(0, 10);
         truncCast.forEach(cast => {
             $('.list-group-cast').append(`
-            <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
-            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cast.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
+            <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
+            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cast.profile_path}" loading="lazy" class="casting-list-img">
             <span class="badge badge-pill"><a href="/personnes?id=${cast.id}-${cast.name}">${cast.name}</a></span>
             <span class="badge badge-pill text-dark">${cast.character}</span>
-        </li>`);
+        </p>`);
         });
         var truncCrew = response.credits.crew.slice(0, 10);
         truncCrew.forEach(crew => {
             $('.list-group-crew').append(`
-            <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
+            <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
             <span class="badge badge-pill"><a href="/personnes?id=${crew.id}-${crew.name}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
-        </li>`);
+        </p>`);
         });
         /**
          * Details Area
