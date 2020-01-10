@@ -256,9 +256,9 @@ function displayShow() {
         // Display other elements
         $('title').prepend(response.name);
         $('.overview').text(response.overview);
-        $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
+        $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`);
         $('.backdrop').attr('src',
-            `https://image.tmdb.org/t/p/w1440_and_h320_bestv2/${response.backdrop_path}`);
+            `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`);
         $('.first-episode').append(`<li><small>${firstAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.last-episode').append(`<li><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.number-seasons').append(`<li><small>${response.number_of_seasons}</small></li>`);

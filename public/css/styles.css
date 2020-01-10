@@ -2,6 +2,12 @@
     color: #42d342;
 }
 
+.btn-outline-light:hover {
+    color: #fff;
+    background: #0ea0ff;
+    border-color: #fff;
+}
+
 .primary-details{
     margin-bottom: 3rem;
 }
