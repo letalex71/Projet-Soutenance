@@ -306,6 +306,9 @@ function displayShow() {
     $('.year').append(`${response.release_date.substr(0, 4)}`);
     $('.budget').append(`${response.budget} $`);
     $('.revenues').append(`${response.revenue} $`)
-    $('.votes').append(`${response.vote_average} $`)
+    $('.votes').append(`<span class="fa-layers fa-fw">
+    <i class="fas fa-star"></i>
+        <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
+    </span>`)
     });
 }
