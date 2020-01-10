@@ -28,49 +28,32 @@
 {% endblock %}
 {% block javascripts %}
 <script>
-    var isLogged = {{ (app.user is not empty) ? 'true' : 'false' }}; 
-    console.log(isLogged);
-/*discoverMovies();
-discoverShows();
-setTimeout(function(){
-    if($("[id*='itemMovies-']").length == 20)
-        checkSession();
-    else
-        console.log('impossible de charger correctement la page, Veuillez réessayer');
-}, 500);*/
+
+let isLogged = {{ (app.user is not empty) ? 'true' : 'false' }}; 
+
+let movies = tmdbApi.discover('movie', {
+        'include_video' : 'false',
+        'include_adult' : 'false',
+        'sort_by' : 'popularity.desc',
+        'total_result' : '5',
+        'language' : 'fr_FR',
+        })
+.then( movies => { return displayMovies(movies.results) })
+
+let shows = tmdbApi.discover('tv', {
+            'include_null_first_air_dates' : 'false',
+            'timezone' : 'Europe%2FParis',
+            'page' : '1',
+            'sort_by' : 'popularity.desc',
+            'language' : 'fr_FR',
+        })
+.then( shows => { return displayShows(shows.results) });
+
+Promise.all([movies, shows]).then( () => checkSession(isLogged));
 
 
-function loadScript(src) {
-    return new Promise(function(resolve, reject) {
-        let script = document.createElement('script');
-        script.src = src;
 
-        script.onload = () => resolve(script);
-        script.onerror = () => reject(new Error(`Script load error for ${src}`));
 
-        document.head.append(script);
-        }
-    );
-}
-
-let promise = loadScript(` {{ asset('js/tmdb-api-calls.js') }}` );
-console.time('promise');
-promise.then(
-    script => discoverMovies(),
-    error => alert(`Error: ${error.message}`),
-    ).then(() => new Promise(
-        script => discoverShows(),
-        error => alert(`Error: ${error.message}`),
-        console.timeEnd('promise'),
-    )
-);
-
-var checkExist = setInterval(function() {
-    if ($("div[id*='itemMovies-'], div[id*='itemShows-']").length) {
-        checkSession();
-        clearInterval(checkExist);
-    }
-}, 150);
 
 </script>
 {% endblock %}
