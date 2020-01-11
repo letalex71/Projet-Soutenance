@@ -80,4 +80,11 @@ class MainController extends AbstractController
     {
         return $this->render('main/people-view.html.twig');
     }
+    /**
+     * @Route("/profil/watchlists", name="watchlists")
+     */
+    public function watchilists()
+    {
+        return $this->render('main/watchlist.html.twig');
+    }
 }
