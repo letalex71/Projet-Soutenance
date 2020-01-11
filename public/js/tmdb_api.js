@@ -95,16 +95,20 @@ var tmdbApi = {
 		return this.apiRequest(url);
 	},
 
-	people: function (id, language = 'fr_FR', detail = false, appendToResponse = false) {
+	people: function (id, language = 'fr-FR', detail = false, appendToResponse = false) {
 
-		url = `${this.baseURL}people/${id}`;
+		url = `${this.baseURL}person/${id}`;
 
 		url += (detail === false) ?
 			`?api_key=${this.apiKey}&language=${language}` :
 			`/${detail}?api_key=${this.apiKey}&language=${language}`;
 
 		url += (appendToResponse === false) ? '' : `apend_to_response=${appendToResponse}`;
+		return this.apiRequest(url);
+	},
+	peopleCredits: function (id, language = 'fr-FR') {
 
+		url = `${this.baseURL}person/${id}/combined_credits`;
 		return this.apiRequest(url);
 	},
 
@@ -117,5 +121,6 @@ var tmdbApi = {
 		url = `${this.baseURL}trending/${type}/${timeWindow}?api_key=${this.apiKey}`;
 
 		return this.apiRequest(url);
-	}
+	}, 
+	
 }

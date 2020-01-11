@@ -182,7 +182,7 @@ function displayMovie() {
             $('.list-group-cast').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${casting.profile_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}-${casting.name}">${casting.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}">${casting.name}</a></span>
             <span class="badge badge-pill text-dark">${casting.character}</span>
         </p>`);
         });
@@ -192,7 +192,7 @@ function displayMovie() {
             $('.list-group-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}-${crew.name}">${crew.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </p>`);
         });
@@ -279,7 +279,7 @@ function displayShow() {
             $('.list-group-cast').append(`
             <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cast.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${cast.id}-${cast.name}">${cast.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes?id=${cast.id}">${cast.name}</a></span>
             <span class="badge badge-pill text-dark">${cast.character}</span>
         </li>`);
         });
@@ -288,7 +288,7 @@ function displayShow() {
             $('.list-group-crew').append(`
             <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}-${crew.name}">${crew.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </li>`);
         });
@@ -302,65 +302,28 @@ function displayPeople() {
     var settings = {
         "async": true,
         "crossDomain": true,
-        "url": `https://api.themoviedb.org/3/person/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc&append_to_response=credits`,
+        "url": `https://api.themoviedb.org/3/person/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc`,
         "method": "GET",
         "headers": {},
         "data": "{}"
     }
 
-    $.ajax(settings).done(function (response) {
-        console.log(response);
-        // Used to convert US dates to French dates
-        const firstAired = new Date(response.first_air_date);
-        const lastAired = new Date(response.last_air_date);
-        const options = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
-        // Convert boolean value to sentance for better displaying
-        let productionState = response.in_production;
-        let search = new RegExp("^true$");
-        if (search.test(productionState)) {
-            $('.in-production').append(`<li><small>En production</small></li>`);
-        } else {
-            $('.in-production').append(`<li><small>Terminée</small></li>`);
-        }
-        // Display other elements
-        $('title').prepend(response.name);
-        $('.overview').text(response.overview);
-        $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
-        $('.backdrop').attr('src',
-            `https://image.tmdb.org/t/p/w1440_and_h320_bestv2/${response.backdrop_path}`);
-        $('.first-episode').append(`<li><small>${firstAired.toLocaleDateString('fr-FR', options)}</small></li>`);
-        $('.last-episode').append(`<li><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
-        $('.number-seasons').append(`<li><small>${response.number_of_seasons}</small></li>`);
-        $('.number-episodes').append(`<li><small>${response.number_of_episodes}</small></li>`);
-        response.genres.forEach(genre => {
-            $('.genres').append(`<li><small>${genre.name}</small></li> `);
-        });
-        /**
-         * Cast / Crew Area
-         * Need to truncate results because some movies have very big cast/crew. Display only the first ten
-         */
-        var truncCast = response.credits.cast.slice(0, 10);
-        truncCast.forEach(cast => {
-            $('.list-group-cast').append(`
-            <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
-            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cast.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${cast.id}-${cast.name}">${cast.name}</a></span>
-            <span class="badge badge-pill text-dark">${cast.character}</span>
-        </li>`);
-        });
-        var truncCrew = response.credits.crew.slice(0, 10);
-        truncCrew.forEach(crew => {
-            $('.list-group-crew').append(`
-            <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
-            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}-${crew.name}">${crew.name}</a></span>
-            <span class="badge badge-pill text-dark">${crew.job}</span>
-        </li>`);
-        });
+    $.ajax(settings).done(function (people) {
+        console.log(people);
     });
+}
+    function displayPeopleCredits() {
+        id = window.location.search.substr(4);
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": `https://api.themoviedb.org/3/person/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc&combined_credits`,
+            "method": "GET",
+            "headers": {},
+            "data": "{}"
+        }
+    
+        $.ajax(settings).done(function (credits) {
+            console.log(credits);
+        });
 }

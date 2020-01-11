@@ -179,7 +179,7 @@ function displayMovie() {
             $('.list-group-cast').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${casting.profile_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}-${casting.name}">${casting.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}">${casting.name}</a></span>
             <span class="badge badge-pill text-dark">${casting.character}</span>
         </p>`);
         });
@@ -189,7 +189,7 @@ function displayMovie() {
             $('.list-group-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}-${crew.name}">${crew.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </p>`);
         });
@@ -275,7 +275,7 @@ function displayShow() {
             $('.list-group-cast').append(`
             <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cast.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${cast.id}-${cast.name}">${cast.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes?id=${cast.id}">${cast.name}</a></span>
             <span class="badge badge-pill text-dark">${cast.character}</span>
         </li>`);
         });
@@ -284,7 +284,7 @@ function displayShow() {
             $('.list-group-crew').append(`
             <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}-${crew.name}">${crew.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </li>`);
         });
