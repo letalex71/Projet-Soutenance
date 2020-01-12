@@ -32,9 +32,9 @@
 
 function checkSession(isLogged) {
 
-    let itemsToChange =  $("[id*='itemMovies-'], [id*='itemShows-']")
+    let itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-']")
     if (isLogged === true) {
-        itemsToChange.each(function (){
+        itemsToChange.each(function () {
             $(this).append(`
                 <div class="c-tooltip">
                     <a href="/like">
@@ -54,7 +54,7 @@ function checkSession(isLogged) {
                 </div>`);
         });
     } else {
-        itemsToChange.each(function (){
+        itemsToChange.each(function () {
             $(this).append(`
                     <div class="c-tooltip">
                         <a href="/login">
@@ -72,20 +72,23 @@ function checkSession(isLogged) {
                         </a>
                         <div class="c-tooltip-text">Vous devez être connecté pour ajouter en favori</div>
                     </div>`);
-                });
+        });
     }
 }
-    
+
 // 1.1 - 
 
 
-async function displayMovies(movies){
+async function displayMovies(movies) {
 
-    return new Promise( resolve => { 
+
+    console.log(movies);
+
+    return new Promise(resolve => {
         let movieId = 0;
 
         for (movie of movies) {
-                $('#popular-movies').before(`
+            $('#popular-movies').before(`
                     <article class="grid-item">
                         <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">
                         <i class="far fa-star">
@@ -102,9 +105,9 @@ async function displayMovies(movies){
                                 loading="lazy" class="grid-item-image u-inset">
                         </a>
                     </article>`);
-              }
+        }
 
-       resolve('Success');
+        resolve('Success');
     });
 
 }
@@ -113,11 +116,12 @@ async function displayMovies(movies){
 
 async function displayShows(shows) {
 
-    return new Promise ( (resolve) => { 
-     
+    return new Promise((resolve) => {
+
         let showInd = 0;
 
         for (show of shows) {
+            var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${show.poster_path}`;
             $('#popular-shows').before(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemShows-${showInd}">
@@ -127,11 +131,12 @@ async function displayShows(shows) {
                     </div> 
                     <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
                         <div class="grid-item-content">
-                        <div class="grid-item-content-divider"></div>
-                           <h3 class="grid-item-content-title">${show.name}</h3>
-                         </div>
+                            <div class="grid-item-content-divider"></div>
+                                <h3 class="grid-item-content-title">${show.name}</h3>
+                            </div>
+                            
                         <img
-                            src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
+                            src=" ${poster} "
                             loading="lazy" class="grid-item-image u-inset">
                     </a>
                 </article>`);
@@ -162,7 +167,7 @@ function displayMovie() {
     $.ajax(settings).done(function (response) {
         console.log(response);
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}` ;
+        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
         $('title').prepend(response.title);
         $('.overview-content').text(overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
@@ -203,8 +208,8 @@ function displayMovie() {
             studios.push(studio.name);
         });
 
-        $('.country').append( countries.join(', ') );
-        $('.studio').append( studios.join(', ') );
+        $('.country').append(countries.join(', '));
+        $('.studio').append(studios.join(', '));
         $('.year').append(`${response.release_date.substr(0, 4)}`);
         $('.budget').append(`${response.budget} $`);
         $('.revenues').append(`${response.revenue} $`)
@@ -285,25 +290,25 @@ function displayShow() {
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </li>`);
         });
-    /**
-     * Details Area
-     */
-    let countries = [];
-    response.production_countries.forEach(country => {
-        countries.push(country.name);
-    });
+        /**
+         * Details Area
+         */
+        let countries = [];
+        response.production_countries.forEach(country => {
+            countries.push(country.name);
+        });
 
-    let studios = [];
-    response.production_companies.forEach(studio => {
-        studios.push(studio.name);
-    });
+        let studios = [];
+        response.production_companies.forEach(studio => {
+            studios.push(studio.name);
+        });
 
-    $('.country').append( countries.join(', ') );
-    $('.studio').append( studios.join(', ') );
-    $('.year').append(`${response.release_date.substr(0, 4)}`);
-    $('.budget').append(`${response.budget} $`);
-    $('.revenues').append(`${response.revenue} $`)
-    $('.votes').append(`<span class="fa-layers fa-fw">
+        $('.country').append(countries.join(', '));
+        $('.studio').append(studios.join(', '));
+        $('.year').append(`${response.release_date.substr(0, 4)}`);
+        $('.budget').append(`${response.budget} $`);
+        $('.revenues').append(`${response.revenue} $`)
+        $('.votes').append(`<span class="fa-layers fa-fw">
     <i class="fas fa-star"></i>
         <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
     </span>`)
@@ -395,5 +400,4 @@ function fillGenres()
            
         });
     });
-
 }
