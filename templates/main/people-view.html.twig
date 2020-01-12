@@ -6,8 +6,8 @@
 <h1 class="text-center">Test bootstrap</h1>
 {% endblock %}
 {% block javascripts %}
-<script src="{{ asset('js/tmdb_api.js') }} "></script>
-<script src="{{ asset('js/display.js') }} "></script>
+<script src="{{ asset('js/api/tmdb_api.js') }} "></script>
+<script src="{{ asset('js/display/display.js') }} "></script>
 <script>
     let id = window.location.search.substr(4);
     person = tmdbApi.people(id, 'fr-FR')

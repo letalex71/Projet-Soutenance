@@ -1,81 +1,144 @@
 {# pages/search.html.twig #}
 {% extends "base.html.twig" %}
 {% block title %}Rechercher {% endblock %}
-{% block stylesheets %}
-<link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
-{% endblock %}
 {% block body %}
-<main class="page projects-page">
-    <div class="row">
-        <div class="col-8 offset-2">
-            <div class="input-group md-form form-sm form-2 pl-0">
-                <input class="form-control my-0 py-1 red-border" type="text" placeholder="Rechercher" aria-label="Search">
-                <div class="input-group-append">
-                    <span class="input-group-text red lighten-3" id="basic-text1"><i class="fas fa-search text-grey"
-                            aria-hidden="true"></i></span>
+
+    <h1 class="text-center mt-3">Rechercher :</h1>
+    <main class="page projects-page">
+
+        <div class="container-fluid">
+            <div class="row col-md-6 offset-md-3 search-type">
+                <div class="col-6 offset">
+                    <h2 data-filter="type" id="movie" class="col-md-6 offset-3 text-center">Films</h2>
+                </div>
+                <div class="col-6">
+                    <h2 data-filter="type" id="tv" class="col-md-6 offset-3 text-center filter-active">Séries</h2>
+                </div>
+            </div>
+            <div class="row col-xl-8 offset-xl-2 col-md-12">
+
+                <div class="col-sm-12 text-center mt-3 col-md-3">
+                    <h5 class="text-center">Trier par</h5>
+                    <div class="input-group">
+                        <select class="custom-select" id="inputGroupSelect02">
+                            <option data-filter="sort" value="popularity.desc">Les plus populaires</option>
+                            <option data-filter="sort" value="popularity.asc">Les moins populaires</option>
+                            <option data-filter="sort" value="release_date.desc">Les plus récents</option>
+                            <option data-filter="sort" value="release_date.asc">Les moins récents</option>
+                            <option data-filter="sort" value="original_tilte.desc">Titre A-Z</option>
+                            <option data-filter="sort" value="original_tilte.asc">Titre Z-A</option>
+                            <option data-filter="sort" value="vote_average.desc">Meilleurs notes</option>
+                            <option data-filter="sort" value="vote_average.asc">Moins bonnes notes</option>
+                            <option data-filter="sort" value="vote_count.desc">Le plus de vote</option>
+                            <option data-filter="sort" value="vote_count.asc">Le moins de vote</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-3 col-md-2">
+                    <h5 class="text-center">Année</h5>
+                    <div class="input-group">
+                        <select class="year-select custom-select" id="inputGroupSelect02">
+                            <option data-filter="year" value="none">Aucune</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="mt-3 col-md-7 col-sm-12">
+                    <h5 class="text-center">Genres</h5>
+                    <label class="col-12 genres-group p-0 m-0" for="genres-search">
+                        <div class="genres-form p-0 border rounded-lg">
+                            <input type="text" class="genres-search" id="genres-search">
+                        </div>
+                    </label>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <section class="portfolio-block projects-with-sidebar">
-        <!-- Start: portfolio heading -->
-        <!-- End: portfolio heading -->
-        <div class="row">
-            <div class="col-1">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <h5 class="nav-link " id="v-pills-filter-tab" data-toggle="pill" href="#v-pills-filter"
-                        role="tab" aria-controls="v-pills-filter" aria-selected="false">Filtres</h5>
-                    <a class="nav-link active" id="v-pills-none-tab" data-toggle="pill" href="#v-pills-none"
-                        role="tab" aria-controls="v-pills-none" aria-selected="true">Aucun</a>
-                    <a class="nav-link" id="v-pills-movie-tab" data-toggle="pill" href="#v-pills-movie"
-                        role="tab" aria-controls="v-pills-movie" aria-selected="true">Film</a>
-                    <a class="nav-link" id="v-pills-shows-tab" data-toggle="pill" href="#v-pills-shows" role="tab"
-                        aria-controls="v-pills-shows" aria-selected="false">Série</a>
-                    <a class="nav-link" id="v-pills-actors-tab" data-toggle="pill" href="#v-pills-actors" role="tab"
-                        aria-controls="v-pills-actors" aria-selected="false">Acteur</a>
-                </div>
-            </div>
-            <div class="col-11">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-none" role="tabpanel"
-                        aria-labelledby="v-pills-none-tab">
-                        <h6>En utilisant ce filtre par défaut, l'appel API matchera pour films, séries TV et personnalités.</h6>
-                    </div>
-                    <div class="tab-pane fade show" id="v-pills-movie" role="tabpanel"
-                        aria-labelledby="v-pills-movie-tab">
-                        <h6>En utilisant ce filtre, l'appel API se fera à nouveau pour n'afficher que les
-                            résultats correspondant à un film.</h6>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-shows" role="tabpanel"
-                        aria-labelledby="v-pills-shows-tab">
-                        <h6>En utilisant ce filtre, l'appel API se fera à nouveau pour n'afficher que les
-                            résultats correspondant à une série.</h6>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-actors" role="tabpanel"
-                        aria-labelledby="v-pills-actors-tab">
-                        <h6>En utilisant ce filtre, l'appel API se fera à nouveau pour n'afficher que les
-                            résultats correspondant une personnalité.</h6>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+        <section class="portfolio-block projects-with-sidebar">
+            <!-- Start: portfolio heading -->
+            <!-- End: portfolio heading -->
+
+
+
+         </section>
+    </main>
+
     
 
-    <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
-  <option value="AL">Alabama</option>
-    ...
-  <option value="WY">Wyoming</option>
-</select>
 
-    </section>
-</main>{% endblock %}
+{% endblock %}
 {% block javascripts %}
+    <script src=" {{asset('js/api/tmdb_api_calls.js')}} "></script>
+    <script src=" {{asset('js/api/tmdb_api.js')}} "></script>
+    <script src=" {{asset('js/display/display.js')}} "></script>
 
-<script>
-$(document).ready(function() {
-    $('.js-example-basic-multiple').select2();
+    <script>
+
+    // $(document).click(function (event) {
+    //     console.log($(event.target));
+    // })
+
+   toggleRemoveEvent = true;
+
+    fillGenres();
+    fillYears({{ date|date('Y') }});
+    filterSearch();
+
+    
+    $('h2[data-filter="type"]').click( function() {
+
+        if ( $(this)[0].className.includes('filter-active') === false )
+        {
+            
+            $('.selected-genre').remove();
+
+            $('h2[data-filter="type"]').removeClass('filter-active');
+
+            $(this).addClass('filter-active');
+                   
+            fillGenres();
+            filterSearch(); 
+        }
+    
+    });
+
+    $('[data-filter="sort"]').click(function() {
+
+        $('h2[data-filter="sort"]').removeClass('filter-active');
+        $(this).addClass('filter-active');
+
+        filterSearch(); 
+
+    })
+
+    $('[data-filter="year"]').click( function() {
+
+        $('[data-filter="year"]').removeClass('filter-active');
+        
+        $(this).addClass('filter-active');
+
+        filterSearch();
+    });
+
+    $('[data-filter="genres"]').click( () => {
+
+        $(this).addClass('filter-active');
+
+        $('select2-selection__choice__remove').click(() => {
+            console.log('here');
+        });
+
+        filterSearch();
+    });
+
+    $('#my-div').on('click','button',function(){
+    alert('button inside my-div clicked!');
 });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+
+    </script>
+
 {% endblock %}

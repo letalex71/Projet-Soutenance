@@ -594,3 +594,56 @@ li.nav-item-right{
     }
 
 }
+
+h2.filter-active {
+    color: #7f70f5;
+}
+
+.search-type h2:hover {
+    cursor: pointer;
+}
+
+.genres-search {
+    border: 0px;
+}
+
+.genre-option:hover{
+    cursor: default;
+    background-color: #7f70f5;
+}
+
+.genres-options {
+
+    height: 250px   ;
+    overflow-y: scroll;
+}
+
+.genres-form {
+    min-height: calc(1.5em + .75rem + 2px);
+}
+
+.genres-form {
+    cursor: text;
+}
+
+.remove-selected-genre {
+    color: #c1bdbd;
+    padding-right: 5px;
+}
+
+.selected-genre {
+
+    border: solid 1px;
+    border-color: #a8a8a8;
+    border-radius: 5px;
+    background: #7f70f5;
+    padding: 2px;
+    margin: 2px;
+    height: 85%;
+    display: inline-block;
+    color: white;
+}
+
+.remove-selected-genre:hover {
+    cursor: pointer;
+}

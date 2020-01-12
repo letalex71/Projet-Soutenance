@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Routing\Annotation\Route;
+use \DateTime;
 
 class MainController extends AbstractController
 {
@@ -26,8 +27,11 @@ class MainController extends AbstractController
      * @Route("/rechercher", name="search")
      */
     public function search()
-    {
-        return $this->render('main/search.html.twig');
+    {   
+
+        return $this->render('main/search.html.twig', [
+            "date" => new DateTime()
+        ]);
     }
     /**
      * @Route("/forum", name="forum")

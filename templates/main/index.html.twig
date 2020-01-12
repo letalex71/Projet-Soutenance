@@ -27,35 +27,14 @@
 
 {% endblock %}
 {% block javascripts %}
-<script src="{{ asset('js/tmdb_api.js') }} "></script>
-<script src="{{ asset('js/display.js') }} "></script>
+<script src="{{ asset('js/api/tmdb_api.js') }} "></script>
+<script src="{{ asset('js/api/tmdb_api_calls.js') }}"></script>
+<script src="{{ asset('js/display/display.js') }} "></script>
 <script>
-
-let isLogged = {{ (app.user is not empty) ? 'true' : 'false' }}; 
-
-let movies = tmdbApi.discover('movie', {
-        'include_video' : 'false',
-        'include_adult' : 'false',
-        'sort_by' : 'popularity.desc',
-        'total_result' : '5',
-        'language' : 'fr-FR',
-        })
-.then( movies => { return displayMovies(movies.results) })
-
-let shows = tmdbApi.discover('tv', {
-            'include_null_first_air_dates' : 'false',
-            'timezone' : 'Europe%2FParis',
-            'page' : '1',
-            'sort_by' : 'popularity.desc',
-            'language' : 'fr-FR',
-        })
-.then( shows => { return displayShows(shows.results) });
-
-Promise.all([movies, shows]).then( () => checkSession(isLogged));
-
-
-
-
+    
+    let isLogged = {{ (app.user is not empty) ? 'true' : 'false' }};
+    
+    homePage(isLogged);
 
 </script>
 {% endblock %}
