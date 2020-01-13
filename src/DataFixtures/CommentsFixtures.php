@@ -26,7 +26,6 @@ class CommentsFixtures extends Fixture implements OrderedFixtureInterface
                 ;
                 $manager->persist($newComment);
         }
-
         $manager->flush();
     }
 

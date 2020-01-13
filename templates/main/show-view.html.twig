@@ -88,36 +88,32 @@
     <section class="portfolio-block photography primary-block" id="movie-backdrop">
         <div class="backdrop primary-block">
         </div>
-        <div class="row ">
-            <img class="offset-1 col-md-3 img-fluid image poster" src="">
-            <div class="offset-1 col-md-7 synopsis">
-                <!-- <!-- Commentaires / Medias --> -->
-                <div class="container text-center overview">
-                    <h3>Synopsis</h3>
-                    <p class="overview-content"></p>
-                    <h3>Ratings</h3>
-                </div>
-            </div>
-        </div>
+    
         <div class="row">
             <div class="offset-1 col-md-3 mt-2 buttons">
-                <div class="btn-group dropdown">
-                    <button type="button" id="add-to-list" class="btn btn-sm btn-primary add-to-list">Ajouter à
-                        ma liste</button>
-                    <button type="button" id="add-to-list-dd"
-                        class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
+                {% for comment in comments %}
+                <div class="container">
+                    <div class="row">
+                    <div class="col-sm-12">
+                    </div><!-- /col-sm-12 -->
+                    </div><!-- /row -->
+                    <div class="row">
+                    <div class="col-sm-1">
+                    <div class="thumbnail">
+                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                    </div><!-- /thumbnail -->
+                    </div><!-- /col-sm-1 -->
+                    <div class="col-sm-5">
+                    <div class="panel panel-default">
+                    <div class="panel-heading">
+                    <strong>{{ comment.author.getEmail() }}</strong> <span class="text-muted"> ICI LA DATE </span>
                     </div>
-                </div>
-                <button class="btn btn-sm btn-danger" id="like"><i class="far fa-heart">J'ai aimé ce film !</i></button>
+                    <div class="panel-body">
+                    {{comment.content}}
+                    </div><!-- /panel-body -->
+                    </div><!-- /panel panel-default -->
+                    </div><!-- /col-sm-5 -->
+                {% endfor %}
             </div>
         </div>
     </section>
@@ -126,6 +122,6 @@
 {% block javascripts %}
 <script src="{{ asset('js/display/display.js') }} "></script>
 <script>
-    displayShow();
+    displayShow({{ id }});
 </script>
 {% endblock %}

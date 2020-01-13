@@ -38,14 +38,21 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Watchlist", mappedBy="user")
+     */
+    private $watchlists;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="author")
      */
     private $comments;
 
     public function __construct()
     {
+        $this->watchlists = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -126,6 +133,37 @@ class User implements UserInterface
     }
 
     /**
+     * @return Collection|Watchlist[]
+     */
+    public function getWatchlists(): Collection
+    {
+        return $this->watchlists;
+    }
+
+    public function addWatchlist(Watchlist $watchlist): self
+    {
+        if (!$this->watchlists->contains($watchlist)) {
+            $this->watchlists[] = $watchlist;
+            $watchlist->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWatchlist(Watchlist $watchlist): self
+    {
+        if ($this->watchlists->contains($watchlist)) {
+            $this->watchlists->removeElement($watchlist);
+            // set the owning side to null (unless already changed)
+            if ($watchlist->getUser() === $this) {
+                $watchlist->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection|Comments[]
      */
     public function getComments(): Collection
@@ -155,4 +193,5 @@ class User implements UserInterface
 
         return $this;
     }
+
 }

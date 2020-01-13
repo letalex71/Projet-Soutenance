@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use AppBundle\AppBundle;
-use AppBundle\Entity\user;
+use AppBundle\Entity\User;
+use App\Entity\Comments;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -63,19 +64,27 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/series", name="display_show")
+     * @Route("/series/{id}/", name="display_show")
      */
-    public function displayShow()
+    public function displayShow($id)
     {
-        return $this->render('main/show-view.html.twig');
+        $comments = $this->getDoctrine()->getRepository(Comments::class)->findBy(['itemId' => $id, 'type' => 's'], ['publicationDate' => 'desc']);
+        return $this->render('main/show-view.html.twig',[
+            'comments' => $comments,
+            "id" => $id
+        ]);
     }
 
     /**
-     * @Route("/films", name="display_movie")
+     * @Route("/films/{id}/", name="display_movie")
      */
-    public function displayMovie()
+    public function displayMovie($id)
     {
-        return $this->render('main/movie-view.html.twig');
+        $comments = $this->getDoctrine()->getRepository(Comments::class)->findBy(['itemId' => $id, 'type' => 'm'], ['publicationDate' => 'desc']);
+        return $this->render('main/movie-view.html.twig',[
+            'comments' => $comments,
+            "id" => $id
+        ]);
     }
     /**
      * @Route("/personnes", name="display_people")

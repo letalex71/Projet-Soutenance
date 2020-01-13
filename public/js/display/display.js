@@ -92,7 +92,7 @@ async function displayMovies(movies) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films?id=${movie.id}" class="grid-item-link">
+                        <a href="films/${movie.id}" class="grid-item-link">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>
@@ -217,8 +217,7 @@ function displayCast(response){
 
 // 2.2 - Display TV Show
 /* Get last characters of URL to have only the ID */
-function displayShow() {
-    id = window.location.search.substr(4);
+function displayShow(id) {
     var settings = {
         "async": true,
         "crossDomain": true,

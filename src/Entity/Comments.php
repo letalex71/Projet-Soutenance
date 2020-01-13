@@ -28,19 +28,19 @@ class Comments
     private $author;
 
     /**
-     * @ORM\Column(type="string", length=1)
-     */
-    private $type;
-
-    /**
      * @ORM\Column(type="integer")
      */
-    private $item_id;
+    private $itemId;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $publication_date;
+    private $publicationDate;
+
+    /**
+     * @ORM\Column(type="string", length=1)
+     */
+    private $type;
 
     public function getId(): ?int
     {
@@ -71,6 +71,30 @@ class Comments
         return $this;
     }
 
+    public function getItemId(): ?int
+    {
+        return $this->itemId;
+    }
+
+    public function setItemId(int $itemId): self
+    {
+        $this->itemId = $itemId;
+
+        return $this;
+    }
+
+    public function getPublicationDate(): ?\DateTimeInterface
+    {
+        return $this->publicationDate;
+    }
+
+    public function setPublicationDate(\DateTimeInterface $publicationDate): self
+    {
+        $this->publicationDate = $publicationDate;
+
+        return $this;
+    }
+
     public function getType(): ?string
     {
         return $this->type;
@@ -79,30 +103,6 @@ class Comments
     public function setType(string $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getItemId(): ?int
-    {
-        return $this->item_id;
-    }
-
-    public function setItemId(int $item_id): self
-    {
-        $this->item_id = $item_id;
-
-        return $this;
-    }
-
-    public function getPublicationDate(): ?\DateTimeInterface
-    {
-        return $this->publication_date;
-    }
-
-    public function setPublicationDate(\DateTimeInterface $publication_date): self
-    {
-        $this->publication_date = $publication_date;
 
         return $this;
     }
