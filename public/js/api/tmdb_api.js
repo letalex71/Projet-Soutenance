@@ -49,7 +49,6 @@ var tmdbApi = {
 		for (filter in filters)
 			url += `&${filter}=${filters[filter]}`;
 
-		console.log(url);
 		return this.apiRequest(url);
 	},
 

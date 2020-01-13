@@ -81,14 +81,11 @@ function checkSession(isLogged) {
 
 async function displayMovies(movies) {
 
-
-    console.log(movies);
-
     return new Promise(resolve => {
         let movieId = 0;
 
         for (movie of movies) {
-            $('#popular-movies').before(`
+            $('#popular-movies').append(`
                     <article class="grid-item">
                         <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">
                         <i class="far fa-star">
@@ -122,7 +119,7 @@ async function displayShows(shows) {
 
         for (show of shows) {
             var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${show.poster_path}`;
-            $('#popular-shows').before(`
+            $('#popular-shows').append(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemShows-${showInd}">
                     <i class="far fa-star">
@@ -154,20 +151,12 @@ async function displayShows(shows) {
 
 // 2.1 - Display Movie
 // Get last characters of URL to have only the ID
-function displayMovie() {
-    id = window.location.search.substr(4);
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": `https://api.themoviedb.org/3/movie/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc&append_to_response=credits`,
-        "method": "GET",
-        "headers": {},
-        "data": "{}"
-    }
-    $.ajax(settings).done(function (response) {
+function displayMovie(response) {
+
         console.log(response);
-        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var overview = ( response.overview.length == '' ) ? "Ce film n'a pas encore de synopsis" : response.overview;
+        var backdrop = ( response.backdrop_path == null ) ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
+        
         $('title').prepend(response.title);
         $('.overview-content').text(overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
@@ -217,8 +206,6 @@ function displayMovie() {
         <i class="fas fa-star"></i>
             <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
         </span>`)
-    });
-
 }
 
 
@@ -400,4 +387,12 @@ function fillGenres()
            
         });
     });
+}
+
+
+function displayResults(results)
+{
+    $('.contents-container').before(`
+        <h2 class="text-center col-12 m-5 total-results">Nombre total de résultats : ${results}</h2>    
+    `);
 }

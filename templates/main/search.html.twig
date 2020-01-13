@@ -9,10 +9,10 @@
         <div class="container-fluid">
             <div class="row col-md-6 offset-md-3 search-type">
                 <div class="col-6 offset">
-                    <h2 data-filter="type" id="movie" class="col-md-6 offset-3 text-center">Films</h2>
+                    <h2 data-filter="type" id="movie" class="col-md-6 offset-3 text-center filter-active">Films</h2>
                 </div>
                 <div class="col-6">
-                    <h2 data-filter="type" id="tv" class="col-md-6 offset-3 text-center filter-active">Séries</h2>
+                    <h2 data-filter="type" id="tv" class="col-md-6 offset-3 text-center">Séries</h2>
                 </div>
             </div>
             <div class="row col-xl-8 offset-xl-2 col-md-12">
@@ -50,21 +50,21 @@
                     <h5 class="text-center">Genres</h5>
                     <label class="col-12 genres-group p-0 m-0" for="genres-search">
                         <div class="genres-form p-0 border rounded-lg">
-                            <input type="text" class="genres-search" id="genres-search">
+                            <input type="text" class="genres-search" disabled="disabled" id="genres-search">
                         </div>
                     </label>
                 </div>
             </div>
+        
+
+                <section class="portfolio-block projects-with-sidebar contents-container row col-md-10 offset-md-1">
+                <!-- Start: portfolio heading -->
+                <!-- End: portfolio heading -->
+
+
+
+                </section>
         </div>
-
-
-        <section class="portfolio-block projects-with-sidebar">
-            <!-- Start: portfolio heading -->
-            <!-- End: portfolio heading -->
-
-
-
-         </section>
     </main>
 
     
@@ -82,6 +82,7 @@
     //     console.log($(event.target));
     // })
 
+    page = 1;
    toggleRemoveEvent = true;
 
     fillGenres();
