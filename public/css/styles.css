@@ -2,6 +2,23 @@
     color: #42d342;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #0ea0ff;
+    background-color:#fff!important;
+    border-radius: .25rem .25rem 0 0;
+}
+
+.nav-pills .nav-link {
+    border-radius: .25rem .25rem 0 0;
+    color: #fff;
+    background-color:#0ea0ff;
+    -webkit-border-radius: .25rem .25rem 0 0;
+    -moz-border-radius: .25rem .25rem 0 0;
+    -ms-border-radius: .25rem .25rem 0 0;
+    -o-border-radius: .25rem .25rem 0 0;
+}
+
+
 .btn-outline-light:hover {
     color: #fff;
     background: #0ea0ff;

@@ -118,24 +118,23 @@ async function displayShows(shows) {
         let showInd = 0;
 
         for (show of shows) {
-            var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${show.poster_path}`;
+            var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
             $('#popular-shows').append(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemShows-${showInd}">
                     <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
-                    </div> 
+                    </div>
                     <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${show.name}</h3>
                             </div>
-                            
-                        <img
-                            src=" ${poster} "
-                            loading="lazy" class="grid-item-image u-inset">
-                    </a>
+                            <img
+                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
+                                loading="lazy" class="grid-item-image u-inset">
+                        </a>
                 </article>`);
         }
 
@@ -154,6 +153,7 @@ async function displayShows(shows) {
 function displayMovie(response) {
 
         console.log(response);
+
         var overview = ( response.overview.length == '' ) ? "Ce film n'a pas encore de synopsis" : response.overview;
         var backdrop = ( response.backdrop_path == null ) ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
         
@@ -161,29 +161,7 @@ function displayMovie(response) {
         $('.overview-content').text(overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
         $('.backdrop').css('background-image', 'url("' + backdrop + '")');
-        /**
-         * Cast / Crew Area
-         * Need to truncate results because some movies have very big cast/crew. Display only the first ten
-         */
-        var truncCast = response.credits.cast.slice(0, 10);
-        truncCast.forEach(casting => {
-            $('.list-group-cast').append(`
-            <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
-            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${casting.profile_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}">${casting.name}</a></span>
-            <span class="badge badge-pill text-dark">${casting.character}</span>
-        </p>`);
-        });
 
-        var truncCrew = response.credits.crew.slice(0, 10);
-        truncCrew.forEach(crew => {
-            $('.list-group-crew').append(`
-            <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
-            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
-            <span class="badge badge-pill text-dark">${crew.job}</span>
-        </p>`);
-        });
         /**
          * Details Area
          */
@@ -205,7 +183,35 @@ function displayMovie(response) {
         $('.votes').append(`<span class="fa-layers fa-fw">
         <i class="fas fa-star"></i>
             <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
-        </span>`)
+        </span>`);
+
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
+}
+
+function displayCast(response){
+            /**
+         * Cast / Crew Area
+         * Need to truncate results because some movies have very big cast/crew. Display only the first ten
+         */
+        var truncCast = response.cast.slice(0, 10);
+        truncCast.forEach(casting => {
+            $('.list-group-cast').append(`
+            <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
+            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${casting.profile_path}" loading="lazy" class="casting-list-img">
+            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}">${casting.name}</a></span>
+            <span class="badge badge-pill text-dark">${casting.character}</span>
+        </p>`);
+        });
+
+        var truncCrew = response.crew.slice(0, 10);
+        truncCrew.forEach(crew => {
+            $('.list-group-crew').append(`
+            <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
+            <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
+            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
+            <span class="badge badge-pill text-dark">${crew.job}</span>
+        </p>`);
+        });
 }
 
 
@@ -296,9 +302,10 @@ function displayShow() {
         $('.budget').append(`${response.budget} $`);
         $('.revenues').append(`${response.revenue} $`)
         $('.votes').append(`<span class="fa-layers fa-fw">
-    <i class="fas fa-star"></i>
-        <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
-    </span>`)
+        <i class="fas fa-star"></i>
+            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
+        </span>`)
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
     });
 }
 
@@ -306,8 +313,7 @@ function displayShow() {
 /* Fills year select from 1900 to current year */
 function fillYears(currentYear) {
 
-    while ( currentYear > 1899)
-    {
+    while (currentYear > 1899) {
         $('.year-select').append(`
             <option data-filter="year" value="${currentYear}">${currentYear--}</option>
         `);
@@ -315,8 +321,7 @@ function fillYears(currentYear) {
 }
 
 /* Fills genres select corresponding to the media type previously selected*/
-function fillGenres()
-{
+function fillGenres() {
     $('.genres-search').empty();
 
 
@@ -325,67 +330,65 @@ function fillGenres()
 
 
         tmdbApi.genres($('h2.filter-active[data-filter="type"]').attr('id'))
-        .then(response => {
-        
-            if ( ! $('.genres-options').length ){
+            .then(response => {
 
-                $('.genres-group').after(`
+                if (!$('.genres-options').length) {
+
+                    $('.genres-group').after(`
                     <div class="genres-options border py-2"></div>
                 `);
 
-                for (genre of response.genres)
-                {
-                    $('.genres-options').append(`
+                    for (genre of response.genres) {
+                        $('.genres-options').append(`
                         <span id="${genre.id}" class="genre-option col-12 d-block p-2">${genre.name}</span>
-                    `);          
+                    `);
+                    }
                 }
-            }
 
-            $(document).click(function(event) { 
+                $(document).click(function (event) {
 
-                if (  !$(event.target)[0].className.includes('genre-option')  &&
-                     $(event.target)[0] !== document.querySelector('.genres-options') &&
-                     !$(event.target)[0].className.includes('genres-form') &&
-                     !$(event.target)[0].className.includes('genres-search') &&
-                     !$(event.target)[0].className.includes('remove-selected-genre') &&
-                     !$(event.target)[0].className.includes('selected-genre')
-                    )
-                {
-                    $('.genres-options').remove();
-                } 
-            });
+                    if (!$(event.target)[0].className.includes('genre-option') &&
+                        $(event.target)[0] !== document.querySelector('.genres-options') &&
+                        !$(event.target)[0].className.includes('genres-form') &&
+                        !$(event.target)[0].className.includes('genres-search') &&
+                        !$(event.target)[0].className.includes('remove-selected-genre') &&
+                        !$(event.target)[0].className.includes('selected-genre')
+                    ) {
+                        $('.genres-options').remove();
+                    }
+                });
 
-            $('.genre-option').click( function () {
+                $('.genre-option').click(function () {
 
 
 
-                if (! $(`#genre-${$(this).attr('id')}`).length ) {
-                  
+                    if (!$(`#genre-${$(this).attr('id')}`).length) {
 
-                   $('.genres-form').prepend(`
+
+                        $('.genres-form').prepend(`
                         <span class="selected-genre text-center filter-active" data-filter="genre" id="genre-${$(this).attr('id')}">
                         <span class="remove-selected-genre">X</span>
                          ${$(this).text()}
                         </span>
                     `);
-                   
-                    $(`#genre-${$(this).attr('id')}`).children('.remove-selected-genre').click( function() {
-                        
-                        $(this).parent().remove();
+
+                        $(`#genre-${$(this).attr('id')}`).children('.remove-selected-genre').click(function () {
+
+                            $(this).parent().remove();
+                            filterSearch();
+
+                        });
+
                         filterSearch();
-
-                    });
-
-                   filterSearch();
-                }
+                    }
 
 
 
-  
+
+                });
+
+
             });
-
-           
-        });
     });
 }
 

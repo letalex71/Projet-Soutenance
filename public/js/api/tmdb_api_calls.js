@@ -32,6 +32,15 @@ function movieView(){
 	});
 }
 
+function castMovieView() {
+	
+	tmdbApi.movie( window.location.search.substr(4) , 'fr-FR', 'credits')
+	.then( response => {
+		displayCast(response);
+	});
+}
+
+
 function filterSearch() {
 
 	let filters = {

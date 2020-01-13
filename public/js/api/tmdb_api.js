@@ -121,6 +121,5 @@ var tmdbApi = {
 		url = `${this.baseURL}trending/${type}/${timeWindow}?api_key=${this.apiKey}`;
 
 		return this.apiRequest(url);
-	}, 
-	
+	},
 }
