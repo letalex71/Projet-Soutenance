@@ -101,7 +101,7 @@ function discoverMovies() {
                             <div class="grid-item-content-divider"></div>
                             <h3 class="grid-item-content-title">${movie.original_title}</h3>
                             </h4>
-                        </div> 
+                        </div>
                         <img
                             src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.poster_path}"
                             loading="lazy" class="grid-item-image u-inset">
@@ -213,8 +213,9 @@ function displayMovie() {
         $('.studio').append(studios.join(', '));
         $('.year').append(`${response.release_date.substr(0, 4)}`);
         $('.budget').append(`${response.budget} $`);
-        $('.revenues').append(`${response.revenue} $`)
-        $('.votes').append(`${response.vote_average} $`)
+        $('.revenues').append(`${response.revenue} $`);
+        $('.votes').append(`${response.vote_average} $`);
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
     });
 
 }
@@ -270,6 +271,11 @@ function displayShow() {
         $('.number-seasons').append(`<li class="details-li-content"><small>${response.number_of_seasons}</small></li>`);
         $('.number-episodes').append(`<li class="details-li-content"><small>${response.number_of_episodes}</small></li>`);
         $('.genres').append(`<li class="details-li-content"><small>${genres.join(', ')}</small></li> `);
+        $('.votes').append(`<span class="fa-layers fa-fw">
+        <i class="fas fa-star"></i>
+            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
+        </span>`);
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
         /**
          * Cast / Crew Area
          * Need to truncate results because some movies have very big cast/crew. Display only the first ten
