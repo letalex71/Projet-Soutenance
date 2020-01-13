@@ -126,6 +126,8 @@ function discoverShows() {
     $.ajax(settings).done(function (response) {
         for (var i = 0; i < 20; i++) {
             for (show of response.results) {
+                if (show.poster_path === 'null')
+                    return '../../img'
                 $('#popular-shows').before(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemShows-` + i++ + `">
@@ -168,7 +170,7 @@ function displayMovie() {
     $.ajax(settings).done(function (response) {
         console.log(response);
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.jpg` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
         $('title').prepend(response.title);
         $('.overview-content').text(overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
@@ -248,7 +250,7 @@ function displayShow() {
         };
         // Convert boolean value to sentance for better displaying
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.jpg` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
         let productionState = response.in_production;
         let search = new RegExp("^true$");
         if (search.test(productionState)) {
