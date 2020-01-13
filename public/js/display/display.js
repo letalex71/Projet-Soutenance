@@ -132,7 +132,7 @@ async function displayShows(shows) {
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${show.name}</h3>
-                            </div> 
+                            </div>
                             <img
                                 src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
                                 loading="lazy" class="grid-item-image u-inset">
@@ -215,6 +215,7 @@ function displayMovie() {
         <i class="fas fa-star"></i>
             <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
         </span>`)
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
     });
 
 }
@@ -307,9 +308,10 @@ function displayShow() {
         $('.budget').append(`${response.budget} $`);
         $('.revenues').append(`${response.revenue} $`)
         $('.votes').append(`<span class="fa-layers fa-fw">
-    <i class="fas fa-star"></i>
-        <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
-    </span>`)
+        <i class="fas fa-star"></i>
+            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
+        </span>`)
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
     });
 }
 
