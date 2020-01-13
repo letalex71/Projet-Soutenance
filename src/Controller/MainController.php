@@ -64,9 +64,9 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/series/{id}/", name="display_show")
+     * @Route("/series/{id}-{name}/", name="display_show")
      */
-    public function displayShow($id)
+    public function displayShow($id, $name)
     {
         $comments = $this->getDoctrine()->getRepository(Comments::class)->findBy(['itemId' => $id, 'type' => 's'], ['publicationDate' => 'desc']);
         return $this->render('main/show-view.html.twig',[
@@ -76,9 +76,9 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/films/{id}/", name="display_movie")
+     * @Route("/films/{id}-{name}/", name="display_movie")
      */
-    public function displayMovie($id)
+    public function displayMovie($id, $name)
     {
         $comments = $this->getDoctrine()->getRepository(Comments::class)->findBy(['itemId' => $id, 'type' => 'm'], ['publicationDate' => 'desc']);
         return $this->render('main/movie-view.html.twig',[

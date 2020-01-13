@@ -31,9 +31,12 @@
 
 .primary-block{
     background-color: #343a40;
-    color:  white;
     padding-bottom: 2.5rem!important;
     margin-top: 2rem;
+}
+
+.primary-block-text{
+    color:  white;
     text-shadow: 0em 0em 0em white, .1em .6em .4em black, 0em 0em 0em white;
     font-family: 'Open Sans', sans-serif;
     font-size: x-large;
@@ -82,7 +85,7 @@ li.nav-item-right{
 }
 
 .details{
-    z-index: 2
+    z-index: 2;
 }
 
 .buttons{

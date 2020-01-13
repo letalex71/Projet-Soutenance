@@ -83,8 +83,11 @@ async function displayMovies(movies) {
 
     return new Promise(resolve => {
         let movieId = 0;
+        
 
         for (movie of movies) {
+            let urlTitle = movie.title.split(" ").join("-");
+            console.log(urlTitle);
             $('#popular-movies').append(`
                     <article class="grid-item">
                         <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">
@@ -92,7 +95,7 @@ async function displayMovies(movies) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films/${movie.id}" class="grid-item-link">
+                        <a href="films/${movie.id}-${urlTitle}" class="grid-item-link">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>
@@ -118,7 +121,8 @@ async function displayShows(shows) {
         let showInd = 0;
 
         for (show of shows) {
-            var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
+            let urlTitle = show.name.split(" ").join("-");
+            var poster = show.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
             $('#popular-shows').append(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemShows-${showInd}">
@@ -126,13 +130,13 @@ async function displayShows(shows) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
                     </div>
-                    <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
+                    <a href="/series/${show.id}-${urlTitle}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${show.name}</h3>
                             </div>
                             <img
-                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
+                                src="${poster}"
                                 loading="lazy" class="grid-item-image u-inset">
                         </a>
                 </article>`);
@@ -154,7 +158,7 @@ function displayMovie(response) {
 
         console.log(response);
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
         var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
         $('title').prepend(response.title);
         $('.overview-content').text(overview);
@@ -239,7 +243,7 @@ function displayShow(id) {
             day: 'numeric'
         };
         var overview = response.overview.length == '' ? "Cette série n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `../../img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var backdrop = response.backdrop_path == null ? `../../img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
         var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
         // Convert boolean value to sentance for better displaying
         let productionState = response.in_production;
@@ -286,21 +290,6 @@ function displayShow(id) {
         /**
          * Details Area
          */
-        let countries = [];
-        response.production_countries.forEach(country => {
-            countries.push(country.name);
-        });
-
-        let studios = [];
-        response.production_companies.forEach(studio => {
-            studios.push(studio.name);
-        });
-
-        $('.country').append(countries.join(', '));
-        $('.studio').append(studios.join(', '));
-        $('.year').append(`${response.release_date.substr(0, 4)}`);
-        $('.budget').append(`${response.budget} $`);
-        $('.revenues').append(`${response.revenue} $`)
         $('.votes').append(`<span class="fa-layers fa-fw">
         <i class="fas fa-star"></i>
             <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
