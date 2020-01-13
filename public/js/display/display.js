@@ -166,9 +166,10 @@ function displayMovie() {
         console.log(response);
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
         var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.jpg` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
         $('title').prepend(response.title);
         $('.overview-content').text(overview);
-        $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
+        $('.poster').attr('src', poster);
         $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         /**
          * Cast / Crew Area
@@ -246,6 +247,9 @@ function displayShow() {
             month: 'long',
             day: 'numeric'
         };
+        var overview = response.overview.length == '' ? "Cette série n'a pas encore de synopsis" : response.overview;
+        var backdrop = response.backdrop_path == null ? `../../img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
         // Convert boolean value to sentance for better displaying
         let productionState = response.in_production;
         let search = new RegExp("^true$");
@@ -256,10 +260,9 @@ function displayShow() {
         }
         // Display other elements
         $('title').prepend(response.name);
-        $('.overview').text(response.overview);
-        $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`);
-        $('.backdrop').attr('src',
-            `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`);
+        $('.overview-content').text(overview);
+        $('.poster').attr('src', poster);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         $('.first-episode').append(`<li><small>${firstAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.last-episode').append(`<li><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.number-seasons').append(`<li><small>${response.number_of_seasons}</small></li>`);

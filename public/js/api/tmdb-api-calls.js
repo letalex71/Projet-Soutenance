@@ -250,7 +250,7 @@ function displayShow() {
         };
         // Convert boolean value to sentance for better displaying
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.jpg` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
         let productionState = response.in_production;
         let search = new RegExp("^true$");
         if (search.test(productionState)) {
