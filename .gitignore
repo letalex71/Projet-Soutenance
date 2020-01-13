@@ -14,7 +14,6 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
-*.php
 TODO_list.txt
 
 composer.phar
