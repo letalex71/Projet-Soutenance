@@ -153,10 +153,9 @@ async function displayShows(shows) {
 function displayMovie(response) {
 
         console.log(response);
-
-        var overview = ( response.overview.length == '' ) ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = ( response.backdrop_path == null ) ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
-        
+        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
+        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
         $('title').prepend(response.title);
         $('.overview-content').text(overview);
         $('.poster').attr('src', poster);
