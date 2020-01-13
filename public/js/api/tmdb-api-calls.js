@@ -31,9 +31,9 @@
  */
 
 function checkSession() {
-    var itemsToChange =  $("[id*='itemMovies-'], [id*='itemShows-']")
+    var itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-']")
     if (isLogged === true) {
-        itemsToChange.each(function (){
+        itemsToChange.each(function () {
             $(this).append(`
                 <div class="c-tooltip">
                     <a href="/like">
@@ -53,7 +53,7 @@ function checkSession() {
                 </div>`);
         });
     } else {
-        itemsToChange.each(function (){
+        itemsToChange.each(function () {
             $(this).append(`
                     <div class="c-tooltip">
                         <a href="/login">
@@ -71,7 +71,7 @@ function checkSession() {
                         </a>
                         <div class="c-tooltip-text">Vous devez être connecté pour ajouter en favori</div>
                     </div>`);
-                });
+        });
     }
 }
 
@@ -87,9 +87,9 @@ function discoverMovies() {
     }
 
     $.ajax(settings).done(function (response) {
-        for (var i = 0; i < 20; i++){
+        for (var i = 0; i < 20; i++) {
             for (movie of response.results) {
-            $('#popular-movies').before(`
+                $('#popular-movies').before(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemMovies-` + i++ + `">
                     <i class="far fa-star">
@@ -124,7 +124,7 @@ function discoverShows() {
     }
 
     $.ajax(settings).done(function (response) {
-        for (var i = 0; i < 20; i++){
+        for (var i = 0; i < 20; i++) {
             for (show of response.results) {
                 $('#popular-shows').before(`
                 <article class="grid-item">
@@ -168,7 +168,7 @@ function displayMovie() {
     $.ajax(settings).done(function (response) {
         console.log(response);
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}` ;
+        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
         $('title').prepend(response.title);
         $('.overview-content').text(overview);
         $('.poster').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${response.poster_path}`);
@@ -209,8 +209,8 @@ function displayMovie() {
             studios.push(studio.name);
         });
 
-        $('.country').append( countries.join(', ') );
-        $('.studio').append( studios.join(', ') );
+        $('.country').append(countries.join(', '));
+        $('.studio').append(studios.join(', '));
         $('.year').append(`${response.release_date.substr(0, 4)}`);
         $('.budget').append(`${response.budget} $`);
         $('.revenues').append(`${response.revenue} $`)
@@ -247,7 +247,7 @@ function displayShow() {
         };
         // Convert boolean value to sentance for better displaying
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}` ;
+        var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
         let productionState = response.in_production;
         let search = new RegExp("^true$");
         if (search.test(productionState)) {
@@ -312,18 +312,19 @@ function displayPeople() {
         console.log(people);
     });
 }
-    function displayPeopleCredits() {
-        id = window.location.search.substr(4);
-        var settings = {
-            "async": true,
-            "crossDomain": true,
-            "url": `https://api.themoviedb.org/3/person/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc&combined_credits`,
-            "method": "GET",
-            "headers": {},
-            "data": "{}"
-        }
-    
-        $.ajax(settings).done(function (credits) {
-            console.log(credits);
-        });
+
+function displayPeopleCredits() {
+    id = window.location.search.substr(4);
+    var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": `https://api.themoviedb.org/3/person/${id}?language=fr-FR&api_key=6bf0fa1291809ddcb8f6efb13f63ffbc&combined_credits`,
+        "method": "GET",
+        "headers": {},
+        "data": "{}"
+    }
+
+    $.ajax(settings).done(function (credits) {
+        console.log(credits);
+    });
 }

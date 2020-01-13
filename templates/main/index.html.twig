@@ -31,9 +31,9 @@
 <script src="{{ asset('js/api/tmdb_api_calls.js') }}"></script>
 <script src="{{ asset('js/display/display.js') }} "></script>
 <script>
-    
+
     let isLogged = {{ (app.user is not empty) ? 'true' : 'false' }};
-    
+
     homePage(isLogged);
 
 </script>

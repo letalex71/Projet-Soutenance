@@ -121,24 +121,22 @@ async function displayShows(shows) {
         let showInd = 0;
 
         for (show of shows) {
-            var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${show.poster_path}`;
             $('#popular-shows').before(`
                 <article class="grid-item">
                     <div class="grid-item-icons u-top" id="itemShows-${showInd}">
                     <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
-                    </div> 
+                    </div>
                     <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${show.name}</h3>
-                            </div>
-                            
-                        <img
-                            src=" ${poster} "
-                            loading="lazy" class="grid-item-image u-inset">
-                    </a>
+                            </div> 
+                            <img
+                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
+                                loading="lazy" class="grid-item-image u-inset">
+                        </a>
                 </article>`);
         }
 
@@ -319,8 +317,7 @@ function displayShow() {
 /* Fills year select from 1900 to current year */
 function fillYears(currentYear) {
 
-    while ( currentYear > 1899)
-    {
+    while (currentYear > 1899) {
         $('.year-select').append(`
             <option data-filter="year" value="${currentYear}">${currentYear--}</option>
         `);
@@ -328,8 +325,7 @@ function fillYears(currentYear) {
 }
 
 /* Fills genres select corresponding to the media type previously selected*/
-function fillGenres()
-{
+function fillGenres() {
     $('.genres-search').empty();
 
 
@@ -338,66 +334,64 @@ function fillGenres()
 
 
         tmdbApi.genres($('h2.filter-active[data-filter="type"]').attr('id'))
-        .then(response => {
-        
-            if ( ! $('.genres-options').length ){
+            .then(response => {
 
-                $('.genres-group').after(`
+                if (!$('.genres-options').length) {
+
+                    $('.genres-group').after(`
                     <div class="genres-options border py-2"></div>
                 `);
 
-                for (genre of response.genres)
-                {
-                    $('.genres-options').append(`
+                    for (genre of response.genres) {
+                        $('.genres-options').append(`
                         <span id="${genre.id}" class="genre-option col-12 d-block p-2">${genre.name}</span>
-                    `);          
+                    `);
+                    }
                 }
-            }
 
-            $(document).click(function(event) { 
+                $(document).click(function (event) {
 
-                if (  !$(event.target)[0].className.includes('genre-option')  &&
-                     $(event.target)[0] !== document.querySelector('.genres-options') &&
-                     !$(event.target)[0].className.includes('genres-form') &&
-                     !$(event.target)[0].className.includes('genres-search') &&
-                     !$(event.target)[0].className.includes('remove-selected-genre') &&
-                     !$(event.target)[0].className.includes('selected-genre')
-                    )
-                {
-                    $('.genres-options').remove();
-                } 
-            });
+                    if (!$(event.target)[0].className.includes('genre-option') &&
+                        $(event.target)[0] !== document.querySelector('.genres-options') &&
+                        !$(event.target)[0].className.includes('genres-form') &&
+                        !$(event.target)[0].className.includes('genres-search') &&
+                        !$(event.target)[0].className.includes('remove-selected-genre') &&
+                        !$(event.target)[0].className.includes('selected-genre')
+                    ) {
+                        $('.genres-options').remove();
+                    }
+                });
 
-            $('.genre-option').click( function () {
+                $('.genre-option').click(function () {
 
 
 
-                if (! $(`#genre-${$(this).attr('id')}`).length ) {
-                  
+                    if (!$(`#genre-${$(this).attr('id')}`).length) {
 
-                   $('.genres-form').prepend(`
+
+                        $('.genres-form').prepend(`
                         <span class="selected-genre text-center filter-active" data-filter="genre" id="genre-${$(this).attr('id')}">
                         <span class="remove-selected-genre">X</span>
                          ${$(this).text()}
                         </span>
                     `);
-                   
-                    $(`#genre-${$(this).attr('id')}`).children('.remove-selected-genre').click( function() {
-                        
-                        $(this).parent().remove();
+
+                        $(`#genre-${$(this).attr('id')}`).children('.remove-selected-genre').click(function () {
+
+                            $(this).parent().remove();
+                            filterSearch();
+
+                        });
+
                         filterSearch();
-
-                    });
-
-                   filterSearch();
-                }
+                    }
 
 
 
-  
+
+                });
+
+
             });
-
-           
-        });
     });
 }

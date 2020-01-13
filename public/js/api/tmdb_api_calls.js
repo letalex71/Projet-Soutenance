@@ -27,7 +27,7 @@ function homePage(isLogged) {
 function movieView(){
 
 	let id = window.location.search.substr(4);
-    
+
     tmdbApi.movie( id , 'fr-FR').then( response => {
         displayMovie(response.results);
     });
