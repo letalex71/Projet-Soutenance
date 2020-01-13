@@ -4,7 +4,7 @@
 {% block stylesheets %}{% endblock %}
 {% block body %}
 <main class="page projects-page" id="movie-item">
-    <section class="portfolio-block photography primary-block" id="movie-backdrop">
+    <section class="portfolio-block photography primary-block primary-block-text" id="movie-backdrop">
         <div class="backdrop primary-block">
         </div>
         <div class="row ">
@@ -83,45 +83,159 @@
                 <!-- Casting -->
             </div>
         </div>
-        </div>
     </section>
-    <section class="portfolio-block photography primary-block" id="movie-backdrop">
-        <div class="backdrop primary-block">
-        </div>
-    
+
+    <section class="container-fluid portfolio-block photography primary-block container-fluid ">
+        <h2 class="primary-block-text text-center offset-md-1 col-md-6 pt-4 pb-4">Votre avis compte !</h2>
         <div class="row">
-            <div class="offset-1 col-md-3 mt-2 buttons">
-                {% for comment in comments %}
-                <div class="container">
-                    <div class="row">
-                    <div class="col-sm-12">
-                    </div><!-- /col-sm-12 -->
-                    </div><!-- /row -->
-                    <div class="row">
-                    <div class="col-sm-1">
-                    <div class="thumbnail">
-                    <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-                    </div><!-- /thumbnail -->
-                    </div><!-- /col-sm-1 -->
-                    <div class="col-sm-5">
-                    <div class="panel panel-default">
-                    <div class="panel-heading">
-                    <strong>{{ comment.author.getEmail() }}</strong> <span class="text-muted"> ICI LA DATE </span>
+            
+            
+            <div class="offset-md-1 col-md-6 col-sm-6 col-12 comments-main pt-4 rounded">
+                <ul class="p-0">
+                    {% for comment in comments %}
+                    <li>
+                        <div class="row comments mb-2">
+                            <div class="col-md-2 col-sm-2 col-3 text-center user-img">
+                                <img id="profile-photo" src="http://nicesnippets.com/demo/man01.png"
+                                    class="rounded-circle" />
+                            </div>
+
+                            <div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
+                                <h4 class="m-0"><a href="#">{{ comment.author.getEmail() }}</a></h4>
+                                <time class="text-white ml-3">{{ comment.author.getEmail() }}</time>
+                                <like></like>
+                                <p class="mb-0 text-white">{{comment.content}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="row comment-box-main p-3 rounded-bottom">
+                    <div class="col-md-9 col-sm-9 col-9 pr-0 comment-box">
+                        <input type="text" class="form-control" placeholder="Ce que vous en pensez ...." />
                     </div>
-                    <div class="panel-body">
-                    {{comment.content}}
-                    </div><!-- /panel-body -->
-                    </div><!-- /panel panel-default -->
-                    </div><!-- /col-sm-5 -->
-                {% endfor %}
+                    <div class="col-md-3 col-sm-2 col-2 pl-0 text-center send-btn">
+                        <button class="btn btn-success">Envoyer</button>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+    <div class="container container-fluid">
+
+    </div>
+
+    <style>
+        .comments-main {
+            background: #FFF;
+            z-index: 1;
+        }
+
+        .comment time,
+        .comment:hover time,
+        .icon-rocknroll,
+        .like-count {
+            -webkit-transition: .25s opacity linear;
+            transition: .25s opacity linear;
+        }
+
+        .comments-main ul li {
+            list-style: none;
+        }
+
+        .comments .comment {
+            padding: 5px 10px;
+            background: #00AF90;
+        }
+
+        .comments .comment:hover time {
+            opacity: 1;
+        }
+
+        .comments .user-img img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .comments .comment h4 {
+            display: inline-block;
+            font-size: 16px;
+        }
+
+        .comments .comment h4 a {
+            color: #404040;
+            text-decoration: none;
+        }
+
+        .comments .comment .icon-rocknroll {
+            color: #545454;
+            font-size: .85rem;
+        }
+
+        .comments .comment .icon-rocknroll:hover {
+            opacity: .5;
+        }
+
+        .comments .comment time,
+        .comments .comment .like-count,
+        .comments .comment .icon-rocknroll {
+            font-size: .75rem;
+            opacity: 0;
+        }
+
+        .comments .comment time,
+        .comments .comment .like-count {
+            font-weight: 300;
+        }
+
+        .comments .comment p {
+            font-size: 13px;
+        }
+
+        .comments .comment p .reply {
+            color: #BFBFA8;
+            cursor: pointer;
+        }
+
+        .comments .comment .active {
+            opacity: 1;
+        }
+
+        .icon-rocknroll {
+            background: none;
+            outline: none;
+            cursor: pointer;
+            margin: 0 .125rem 0 0;
+        }
+
+        .comments .comment:hover .icon-rocknroll,
+        .comments .comment:hover .like-count {
+            opacity: 1;
+        }
+
+        .comment-box-main {
+            background: linear-gradient(120deg, #7f70f5, #0ea0ff);;
+        }
+
+        @media (min-width: 320px) and (max-width: 480px) {
+            .comments .comment h4 {
+                font-size: 12px;
+            }
+
+            .comments .comment p {
+                font-size: 11px;
+            }
+
+            .comment-box-main .send-btn button {
+                margin-left: 5px;
+            }
+        }
+    </style>
 </main>
 {% endblock %}
 {% block javascripts %}
 <script src="{{ asset('js/display/display.js') }} "></script>
 <script>
-    displayShow({{ id }});
+    displayShow({{id }});
 </script>
 {% endblock %}
