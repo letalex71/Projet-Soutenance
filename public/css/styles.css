@@ -39,20 +39,21 @@ a[id*="v-pills-"].nav-link{
     height: 100%;
     background-color: rgba(205, 204, 198, 0.05);
     width: 100%;
+    text-shadow: none!important;
 }
 
 
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-    color: #0ea0ff;
-    background-color: #fff !important;
+    color: #fff;
+    background-color: #0ea0ff !important;
     border-radius: .25rem .25rem 0 0;
 }
 
 .nav-pills .nav-link {
     border-radius: .25rem .25rem 0 0;
-    color: #fff;
-    background-color: #0ea0ff;
+    color: #0ea0ff;
+    background-color: #fff;
     -webkit-border-radius: .25rem .25rem 0 0;
     -moz-border-radius: .25rem .25rem 0 0;
     -ms-border-radius: .25rem .25rem 0 0;

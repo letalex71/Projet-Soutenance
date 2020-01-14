@@ -30,21 +30,23 @@
                     </div>
                     <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
                         aria-labelledby="v-pills-profile-tab">
-                        <p><span>Pseudo : {{ app.user.pseudo }}</span></p>
-                        <p><span>Adresse Email : {{ app.user.email }}</span></p>
-                        <p><span>Prenom : {{ app.user.firstname }}</span></p>
-                        <p><span>Nom : {{ app.user.lastname }}</span></p>
-                        <p><span>Age : {{ app.user.age }}</span></p>
-                        <p><span>Biographie : {{ app.user.biography }}</span></p>
-                        <p><span>Date d'inscription : {{ app.user.registerDate|date("Y/m/d") }}</span></p>
+                        <p><small>Pseudo : {{ app.user.pseudo }}</small></p>
+                        <p><small>Adresse Email : {{ app.user.email }}</small></p>
+                        <p><small>Prenom : {{ app.user.firstname }}</small></p>
+                        <p><small>Nom : {{ app.user.lastname }}</small></p>
+                        <p><small>Age : {{ app.user.age }}</small></p>
+                        <p><small>Biographie : {{ app.user.biography }}</small></p>
+                        <p><small>Inscrit le : {{ app.user.registerDate|date("d/m/Y") }}</small></p>
                     </div>
                     <div class="tab-pane fade" id="v-pills-activity" role="tabpanel"
                         aria-labelledby="v-pills-activity-tab">
                         {% for comment in comments %}
                         <div class="media ">
                             <div class="media-body border-light mb-3">
-                                <h5 class="mt-0">En rapport avec ... {{ comment.author.getEmail() }}</h5>
+                                <!-- {{ comment.author.getEmail() }} -->
+                                <h5 class="mt-0">En référance à <a href="`https://localhost:8000/{{ comment.type}}/{{ comment.itemId}}{{ comment.itemName}}`">{{ comment.itemName}}</a></h5>
                                 <p><small>{{comment.content}}</small></p>
+                                <p><small>Posté le {{ comment.publicationDate|date("d/m/Y") }}</small></p>
                             </div>
                         </div>
                         {% else %}
