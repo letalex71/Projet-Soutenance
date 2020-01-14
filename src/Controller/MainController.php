@@ -93,14 +93,4 @@ class MainController extends AbstractController
     {
         return $this->render('main/watchlist.html.twig');
     }
-    /**
-     * @Route("/profil", name="profile")
-     */
-    public function profile()
-    {
-        $comments = $this->getUser()->getComments();
-        return $this->render('main/profile.html.twig',[
-            'comments' => $comments,
-            ]);
-    }
 }
