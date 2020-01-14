@@ -9,7 +9,7 @@
     <section class="portfolio-block photography primary-block primary-block-text py-5">
         <div class="container-fluid">
             <div class="row offset-1 h-100 ">
-                <div class="col-2 text-white d-flex personal-infos" id="left">
+                <div class="col-12 col-md-2 text-white d-flex personal-infos" id="left">
                     <div class="nav flex-column nav-pills sidebar-profile menuuu" id="v-pills-tab" role="tablist"
                         aria-orientation="vertical">
                         <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
@@ -23,8 +23,8 @@
                             role="tab" aria-controls="v-pills-settings" aria-selected="false">Paramètres</a>
                     </div>
                 </div>
-                <div class="tab-content col-8 py-2 personal-infos" id="v-pills-tabContent">
-                    <div class="text-center">
+                <div class="tab-content col-md-8 col-12 py-2 personal-infos" id="v-pills-tabContent">
+                    <div class="text-center offset-1 offset-md-0">
                         <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="128" height="128"
                             class="d-inline-block align-top pb-5 img-fluid" alt="photodeprofil">
                     </div>
@@ -41,13 +41,22 @@
                     <div class="tab-pane fade" id="v-pills-activity" role="tabpanel"
                         aria-labelledby="v-pills-activity-tab">
                         {% for comment in comments %}
-                        <div class="media ">
-                            <div class="media-body border-light mb-3">
-                                <!-- {{ comment.author.getEmail() }} -->
-                                <h5 class="mt-0">En référance à <a href="`https://localhost:8000/{{ comment.type}}/{{ comment.itemId}}{{ comment.itemName}}`">{{ comment.itemName}}</a></h5>
-                                <p><small>{{comment.content}}</small></p>
-                                <p><small>Posté le {{ comment.publicationDate|date("d/m/Y") }}</small></p>
-                            </div>
+                        <div class="col-12 offset-md-1">
+                            <div class="card-deck card-no-shadow mb-3">
+                                <div class="card">
+                                    <div class="card-body text-dark">
+                                        <h5 class="card-title">En référance à <a
+                                                href="`https://localhost:8000/{{ comment.type}}/{{ comment.itemId}}{{ comment.itemName}}`">{{ comment.itemName}}</a>
+                                        </h5>
+                                        <p class="card-text">{{comment.content}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">Posté le
+                                            {{ comment.publicationDate|date("d/m/Y") }} à {{ comment.publicationDate|date("h:i:s") }}.</small>
+                                    </div>
+                                </div>
+                        </div>
+                        
                         </div>
                         {% else %}
                         <p class="mb-0 text-white">Vous n'avez pas encore posté de commentaires. Ajoutez-en pour

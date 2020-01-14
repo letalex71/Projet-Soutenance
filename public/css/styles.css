@@ -6,6 +6,10 @@
     z-index: 3;
 }
 
+.card-no-shadow{
+    text-shadow: none!important;
+}
+
 .sidebar-profile {
     width: 25%;
     height: 25vh; 
@@ -254,7 +258,9 @@ li {
         text-align: center;
         margin: 0;
     }
-
+    #v-pills-profile{
+        text-align: left!important;
+    }
     .synopsis {
         margin-top: 1rem !important;
     }
