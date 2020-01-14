@@ -42,13 +42,6 @@ class MainController extends AbstractController
         return $this->render('/forum/forum.html.twig');
     }
     /**
-     * @Route("/profil", name="profile")
-     */
-    public function profile()
-    {
-        return $this->render('main/profile.html.twig');
-    }
-    /**
      * @Route("/user/{id}", name="user-view")
      */
     public function userView()
@@ -72,10 +65,10 @@ class MainController extends AbstractController
         return $this->render('main/show-view.html.twig',[
             'comments' => $comments,
             "id" => $id
-        ]);
-    }
+            ]);
+        }
 
-    /**
+        /**
      * @Route("/films/{id}-{name}/", name="display_movie")
      */
     public function displayMovie($id, $name)
@@ -84,8 +77,8 @@ class MainController extends AbstractController
         return $this->render('main/movie-view.html.twig',[
             'comments' => $comments,
             "id" => $id
-        ]);
-    }
+            ]);
+        }
     /**
      * @Route("/personnes", name="display_people")
      */
@@ -99,5 +92,15 @@ class MainController extends AbstractController
     public function watchilists()
     {
         return $this->render('main/watchlist.html.twig');
+    }
+    /**
+     * @Route("/profil", name="profile")
+     */
+    public function profile()
+    {
+        $comments = $this->getUser()->getComments();
+        return $this->render('main/profile.html.twig',[
+            'comments' => $comments,
+            ]);
     }
 }

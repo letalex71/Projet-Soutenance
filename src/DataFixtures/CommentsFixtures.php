@@ -18,11 +18,12 @@ class CommentsFixtures extends Fixture implements OrderedFixtureInterface
         for($i = 0; $i < 25; $i++){
             $newComment = new Comments();
             $newComment
-                ->setContent($faker->sentence(500))
-                ->setType($faker->randomElement(['m', 'p', 's']))
-                ->setItemId($faker->randomNumber($nbDigits = 6, $strict = false))
+                ->setContent($faker->sentence(12))
+                ->setType($faker->randomElement(['films', 'series']))
+                ->setItemId('75450')
                 ->setPublicationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris' ))
                 ->setAuthor( $this->getReference('user' . $faker->numberBetween($min = 1, $max = 24)) )
+                ->setItemName( 'test' )
                 ;
                 $manager->persist($newComment);
         }

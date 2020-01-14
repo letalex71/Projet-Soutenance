@@ -29,6 +29,14 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $newUser
                 ->setEmail( $faker->email )
                 ->setPassword($this->passwordEncoder->encodePassword($newUser, 'azerty') )
+                ->setBiography($faker->text($maxNbChars = 200))
+                ->setAge($faker->numberBetween($min = 12, $max = 120))
+                ->setRegisterDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris' ))
+                ->setPseudo($faker->regexify('[A-Za-z0-9]{' . mt_rand(4, 20) . '}'))
+                ->setFirstname($faker->firstName)
+                ->setLastname($faker->lastName)
+                ->setAvatarPath('defaultAvatar.png')
+                ->setBannerPath('defaultBanner.png')
             ;
             if($i == 0){
 

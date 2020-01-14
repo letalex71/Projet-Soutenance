@@ -4,82 +4,79 @@
 {% block stylesheets %}{% endblock %}
 {% block body %}
 <main class="page projects-page">
-    <img class="backdrop" src="{{ asset('img/user_img/userID/banner.jpg') }}">
-    <h5 class="text-center text-uppercase font-weight-bold bg-secondary" style="margin-top: -28px;"><mark>Informations personnelles</mark></h5>
-    <section class="portfolio-block projects-with-sidebar">
-        <div class="row">
-            <div class="col-1">
-                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
-                        role="tab" aria-controls="v-pills-profile" aria-selected="true">Profil</a>
-                    <a class="nav-link" id="v-pills-my-lists-tab" data-toggle="pill" href="#v-pills-my-lists" role="tab"
-                        aria-controls="v-pills-my-lists" aria-selected="false">Mes Listes</a>
-                    <a class="nav-link" id="v-pills-activity-tab" data-toggle="pill" href="#v-pills-activity" role="tab"
-                        aria-controls="v-pills-activity" aria-selected="false">Activité</a>
-                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab"
-                        aria-controls="v-pills-settings" aria-selected="false">Paramètres</a>
+    <img src="{{ asset('img/user_img/' ~ app.user.bannerPath)}}" alt="banniere profil" class="backdrop"
+        style="background-size: cover;">
+    <section class="portfolio-block photography primary-block primary-block-text py-5">
+        <div class="container-fluid">
+            <div class="row offset-1 h-100 ">
+                <div class="col-2 text-white d-flex personal-infos" id="left">
+                    <div class="nav flex-column nav-pills sidebar-profile menuuu" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                            role="tab" aria-controls="v-pills-profile" aria-selected="true">Profil</a>
+                        <a class="nav-link" id="v-pills-activity-tab" data-toggle="pill" href="#v-pills-activity"
+                            role="tab" aria-controls="v-pills-activity" aria-selected="false">Activité</a>
+                        <a class="nav-link" id="v-pills-my-watchlists-tab" data-toggle="pill"
+                            href="#v-pills-my-watchlists" role="tab" aria-controls="v-pills-my-watchlists"
+                            aria-selected="false">Mes Watchlists</a>
+                        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings"
+                            role="tab" aria-controls="v-pills-settings" aria-selected="false">Paramètres</a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-10">
-                <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-content col-8 py-2 personal-infos" id="v-pills-tabContent">
+                    <div class="text-center">
+                        <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="128" height="128"
+                            class="d-inline-block align-top pb-5 img-fluid" alt="photodeprofil">
+                    </div>
                     <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
                         aria-labelledby="v-pills-profile-tab">
-                        <div class="row">
-                            <div class="offset-1 col-2">
-                                <img src="{{ asset('img/user_img/userID/avatar.jpg') }}" width="170" height="170" class="d-inline-block align-top mr-2" alt="photodeprofil">
-                            </div>
-                            <div class="col-3">
-                                <p>Adresse Email</p>
-                                <p>Pseudo</p>
-                                <p>Biographie</p>
-                                <p>Age</p>
-                                <p>Date d'inscription</p>
-                            </div>
-                            <div class="col-3">
-                                <p>Adresse Email</p>
-                                <p>Pseudo</p>
-                                <p>Biographie</p>
-                                <p>Age</p>
-                                <p>Date d'inscription</p>
-                            </div>
-                        </div>
+                        <p><span>Pseudo : {{ app.user.pseudo }}</span></p>
+                        <p><span>Adresse Email : {{ app.user.email }}</span></p>
+                        <p><span>Prenom : {{ app.user.firstname }}</span></p>
+                        <p><span>Nom : {{ app.user.lastname }}</span></p>
+                        <p><span>Age : {{ app.user.age }}</span></p>
+                        <p><span>Biographie : {{ app.user.biography }}</span></p>
+                        <p><span>Date d'inscription : {{ app.user.registerDate|date("Y/m/d") }}</span></p>
                     </div>
-                    <div class="col-10">
-                            <div class="tab-pane fade" id="v-pills-my-lists" role="tabpanel"
-                                aria-labelledby="v-pills-my-lists-tab">
-                                <h6>Ici se trouvera les listes crées par l'utilisateur</h6>
-                                <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui
-                                    magna. Ad
-                                    proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat
-                                    velit
-                                    nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor.
-                                    Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
-                            </div>
-                            <div class="tab-pane fade" id="v-pills-activity" role="tabpanel"
-                                aria-labelledby="v-pills-activity-tab">
-                                <h6>Ici se trouvera l'activité de l'utilisateur (likes, messages forum...)</h6>
-                                <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui
-                                    magna. Ad
-                                    proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat
-                                    velit
-                                    nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor.
-                                    Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
-                            </div>
-                            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
-                                aria-labelledby="v-pills-settings-tab">
-                                <h6>Ici se trouvera les paramètres (edition profils,</h6>
-                                <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui
-                                    magna. Ad
-                                    proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat
-                                    velit
-                                    nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor.
-                                    Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.</p>
+                    <div class="tab-pane fade" id="v-pills-activity" role="tabpanel"
+                        aria-labelledby="v-pills-activity-tab">
+                        {% for comment in comments %}
+                        <div class="media ">
+                            <div class="media-body border-light mb-3">
+                                <h5 class="mt-0">En rapport avec ... {{ comment.author.getEmail() }}</h5>
+                                <p><small>{{comment.content}}</small></p>
                             </div>
                         </div>
+                        {% else %}
+                        <p class="mb-0 text-white">Vous n'avez pas encore posté de commentaires. Ajoutez-en pour
+                            les retrouver sur cette page.</p>
+                        {% endfor %}
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-my-watchlists" role="tabpanel"
+                        aria-labelledby="v-pills-my-watchlists-tab">
+                        <h6>Ici se trouvera l'activité de l'utilisateur (likes, messages forum...)</h6>
+                        <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui
+                            magna. Ad
+                            proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat
+                            velit
+                            nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor.
+                            Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                        aria-labelledby="v-pills-settings-tab">
+                        <h6>Ici se trouvera les paramètres (edition profils,</h6>
+                        <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui
+                            magna. Ad
+                            proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat
+                            velit
+                            nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor.
+                            Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.
+                        </p>
                     </div>
                 </div>
             </div>
+        </div>
     </section>
-</main>
-{% endblock %}
-{% block javascripts %}{% endblock %}
+    {% endblock %}
+    {% block javascripts %}{% endblock %}

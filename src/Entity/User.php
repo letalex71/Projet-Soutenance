@@ -47,6 +47,46 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $biography;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $age;
+
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $firstname;
+
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $lastname;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatarPath;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $bannerPath;
+
+    /**
+     * @ORM\Column(type="string", length=60, nullable=true)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $registerDate;
+
     public function __construct()
     {
         $this->watchlists = new ArrayCollection();
@@ -190,6 +230,102 @@ class User implements UserInterface
                 $comment->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): self
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(?string $firstname): self
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): self
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getAvatarPath(): ?string
+    {
+        return $this->avatarPath;
+    }
+
+    public function setAvatarPath(?string $avatarPath): self
+    {
+        $this->avatarPath = $avatarPath;
+
+        return $this;
+    }
+
+    public function getBannerPath(): ?string
+    {
+        return $this->bannerPath;
+    }
+
+    public function setBannerPath(?string $bannerPath): self
+    {
+        $this->bannerPath = $bannerPath;
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(?string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getRegisterDate(): ?\DateTimeInterface
+    {
+        return $this->registerDate;
+    }
+
+    public function setRegisterDate(\DateTimeInterface $registerDate): self
+    {
+        $this->registerDate = $registerDate;
 
         return $this;
     }

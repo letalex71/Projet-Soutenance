@@ -17,7 +17,7 @@ class Comments
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=5000)
+     * @ORM\Column(type="string", length=2500)
      */
     private $content;
 
@@ -38,9 +38,14 @@ class Comments
     private $publicationDate;
 
     /**
-     * @ORM\Column(type="string", length=1)
+     * @ORM\Column(type="string", length=9)
      */
     private $type;
+
+    /**
+     * @ORM\Column(type="string", length=210)
+     */
+    private $itemName;
 
     public function getId(): ?int
     {
@@ -103,6 +108,18 @@ class Comments
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getItemName(): ?string
+    {
+        return $this->itemName;
+    }
+
+    public function setItemName(string $itemName): self
+    {
+        $this->itemName = $itemName;
 
         return $this;
     }
