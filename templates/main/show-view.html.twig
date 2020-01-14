@@ -90,25 +90,34 @@
         <div class="row">
             
             
-            <div class="offset-md-1 col-md-6 col-sm-6 col-12 comments-main pt-4 rounded">
+            <div class="offset-md-1 col-md-5 col-sm-5 col-12 comments-main pt-4 rounded">
                 <ul class="p-0">
-                    {% for comment in comments %}
                     <li>
                         <div class="row comments mb-2">
+                            {% for comment in comments %}
                             <div class="col-md-2 col-sm-2 col-3 text-center user-img">
                                 <img id="profile-photo" src="http://nicesnippets.com/demo/man01.png"
                                     class="rounded-circle" />
                             </div>
-
                             <div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
                                 <h4 class="m-0"><a href="#">{{ comment.author.getEmail() }}</a></h4>
                                 <time class="text-white ml-3">{{ comment.author.getEmail() }}</time>
                                 <like></like>
                                 <p class="mb-0 text-white">{{comment.content}}</p>
                             </div>
+                            {% else %}
+                            <div class="col-md-2 col-sm-2 col-3 text-center user-img">
+                                <img id="profile-photo" src="{{ asset('img/logo.png') }}" class="rounded-circle" />
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
+                                <h4 class="m-0"></a>MoviList Team</h4>
+                                <time class="text-white ml-3"></time>
+                                <like></like>
+                                <p class="mb-0 text-white">Il n'y a pas encore de commentaires, soyez le premier à en ajouter un !</p>
+                            </div>
+                            {% endfor %}
                         </div>
-                    </li>
-                    {% endfor %}
+                    </li>      
                 </ul>
                 <div class="row comment-box-main p-3 rounded-bottom">
                     <div class="col-md-9 col-sm-9 col-9 pr-0 comment-box">
