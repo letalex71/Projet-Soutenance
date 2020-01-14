@@ -101,7 +101,7 @@ a[id*="v-pills-"].nav-link{
 .navbar {
     padding-top: 0rem;
     padding-bottom: 0rem;
-    z-index: 99999;
+    z-index: 10;
 }
 
 /* ITEM PAGES */
@@ -217,6 +217,8 @@ li {
         -ms-border-radius: .5em !important;
         -o-border-radius: .5em !important;
     }
+
+
 
 }
 
@@ -665,6 +667,15 @@ li {
 
 }
 
+@media only screen and (max-width: 768px){
+    
+    .watchlist-form {
+        position: fixed;
+        max-height: 600px;
+        overflow-y: scroll;
+    }
+}
+
 h2.filter-active {
     color: #7f70f5;
 }
@@ -719,6 +730,26 @@ h2.filter-active {
 
 .remove-selected-genre:hover {
     cursor: pointer;
+}
+
+
+.overlay {
+
+  position: fixed; /* Sit on top of the page content */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 20; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+
+}
+
+.watchlist-form{
+    cursor: auto;
 }
 
 /* COMMENTS AREA */
