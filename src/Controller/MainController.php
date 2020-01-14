@@ -49,14 +49,6 @@ class MainController extends AbstractController
         return $this->render('main/user-view.html.twig');
     }
     /**
-     * @Route("/contactez-nous", name="contact")
-     */
-    public function contact()
-    {
-        return $this->render('main/contact.html.twig');
-    }
-
-    /**
      * @Route("/series/{id}-{name}/", name="display_show")
      */
     public function displayShow($id, $name)
