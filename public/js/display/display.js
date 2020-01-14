@@ -38,18 +38,16 @@ function checkSession(isLogged) {
             $(this).append(`
                 <div class="c-tooltip">
                     <a href="/like">
-                        <div class="c-reaction">
+                        <div class="c-reaction-heart">
                             <i class="c-reaction-icon far fa-heart"></i>
                         </div>
                     </a>
                     <div class="c-tooltip-text">Cette fonctionnalité n'est pas encore disponible</div>
                 </div>
                 <div class="c-tooltip">
-                    <a href="/prout">
-                        <div class="c-reaction">
+                        <div class="c-reaction-square">
                             <i class=" c-reaction-icon far fa-plus-square"></i>
-                        </div>
-                    </a>
+                        </div>    
                     <div class="c-tooltip-text">Cette fonctionnalité n'est pas encore disponible</div>
                 </div>`);
         });
@@ -65,7 +63,7 @@ function checkSession(isLogged) {
                         <div class="c-tooltip-text">Vous devez être connecté pour aimer ceci</div>
                     </div>
                     <div class="c-tooltip">
-                        <a href="/login">
+                        <a href="/connexion">
                             <div class="c-reaction">
                                 <i class=" c-reaction-icon c-reaction-icon-disabled far fa-plus-square"></i>
                             </div>
@@ -74,6 +72,8 @@ function checkSession(isLogged) {
                     </div>`);
         });
     }
+
+   formOverlay();
 }
 
 // 1.1 - 
@@ -86,7 +86,7 @@ async function displayMovies(movies) {
 
         for (movie of movies) {
             $('#popular-movies').append(`
-                    <article class="grid-item">
+                    <article class="grid-item" id="movie-${movie.id}">
                         <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">
                         <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
@@ -120,7 +120,7 @@ async function displayShows(shows) {
         for (show of shows) {
             var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
             $('#popular-shows').append(`
-                <article class="grid-item">
+                <article class="grid-item" id="tv-${show.id}">
                     <div class="grid-item-icons u-top" id="itemShows-${showInd}">
                     <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
@@ -321,24 +321,28 @@ function fillYears(currentYear) {
     }
 }
 
+
 /* Fills genres select corresponding to the media type previously selected*/
 function fillGenres() {
+
+    // Vide les genres du select car différents selon série ou film
     $('.genres-search').empty();
 
 
+    // Affichage des genres quand clique sur la barre de recherche
     $('label[for="genres-search"]').click(() => {
 
-
-
+        // Appelle les genres correspondant au type de média
         tmdbApi.genres($('h2.filter-active[data-filter="type"]').attr('id'))
             .then(response => {
 
+                // Ajoute la div ".genres-options" seulement si elle n'existe pas
                 if (!$('.genres-options').length) {
 
                     $('.genres-group').after(`
                     <div class="genres-options border py-2"></div>
                 `);
-
+                    // Affiche tous les genres à la manière d'un select
                     for (genre of response.genres) {
                         $('.genres-options').append(`
                         <span id="${genre.id}" class="genre-option col-12 d-block p-2">${genre.name}</span>
@@ -346,8 +350,10 @@ function fillGenres() {
                     }
                 }
 
+
                 $(document).click(function (event) {
 
+                    // Si on clique sur une de ces divs, la liste des genres s'enlèvera
                     if (!$(event.target)[0].className.includes('genre-option') &&
                         $(event.target)[0] !== document.querySelector('.genres-options') &&
                         !$(event.target)[0].className.includes('genres-form') &&
@@ -362,7 +368,7 @@ function fillGenres() {
                 $('.genre-option').click(function () {
 
 
-
+                    // Ajoute une étiquette au genre cliqué si il n'y en a pas déjà une
                     if (!$(`#genre-${$(this).attr('id')}`).length) {
 
 
@@ -372,7 +378,7 @@ function fillGenres() {
                          ${$(this).text()}
                         </span>
                     `);
-
+                        // Ajoute un eventlistener pour pouvoir supprimer le genre ajouté
                         $(`#genre-${$(this).attr('id')}`).children('.remove-selected-genre').click(function () {
 
                             $(this).parent().remove();
