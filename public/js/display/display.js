@@ -30,6 +30,10 @@
  * 1 :: DISCOVER PAGE
  */
 
+/**
+ * Check if user is logged : Display "add to list" button if logged
+ * @param {*} isLogged 
+ */
 function checkSession(isLogged) {
 
     let itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-']")
@@ -83,8 +87,11 @@ async function displayMovies(movies) {
 
     return new Promise(resolve => {
         let movieId = 0;
+        
 
         for (movie of movies) {
+            let urlTitle = movie.title.split(" ").join("-");
+            console.log(urlTitle);
             $('#popular-movies').append(`
                     <article class="grid-item" id="movie-${movie.id}">
                         <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">
@@ -92,7 +99,7 @@ async function displayMovies(movies) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films?id=${movie.id}" class="grid-item-link">
+                        <a href="films/${movie.id}-${urlTitle}" class="grid-item-link">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>
@@ -118,7 +125,8 @@ async function displayShows(shows) {
         let showInd = 0;
 
         for (show of shows) {
-            var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
+            let urlTitle = show.name.split(" ").join("-");
+            var poster = show.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
             $('#popular-shows').append(`
                 <article class="grid-item" id="tv-${show.id}">
                     <div class="grid-item-icons u-top" id="itemShows-${showInd}">
@@ -126,13 +134,13 @@ async function displayShows(shows) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
                     </div>
-                    <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
+                    <a href="/series/${show.id}-${urlTitle}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${show.name}</h3>
                             </div>
                             <img
-                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
+                                src="${poster}"
                                 loading="lazy" class="grid-item-image u-inset">
                         </a>
                 </article>`);
@@ -153,42 +161,45 @@ async function displayShows(shows) {
 function displayMovie(response) {
 
         console.log(response);
-        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
-        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
-        $('title').prepend(response.title);
-        $('.overview-content').text(overview);
-        $('.poster').attr('src', poster);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
 
         /**
-         * Details Area
+         * Variables declarations
          */
+        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
+        var poster = response.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
+        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
         let countries = [];
         response.production_countries.forEach(country => {
             countries.push(country.name);
         });
-
         let studios = [];
         response.production_companies.forEach(studio => {
             studios.push(studio.name);
         });
-
+        /**
+         * Synopsis Area
+         */ 
+        $('title').prepend(response.title);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
+        $('.poster').attr('src', poster);
+        $('.overview-content').text(overview);
+        $('.votes').append(`<span class="fa-layers fa-fw">
+        <i class="fas fa-star"></i>
+            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
+        </span>`);
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
+        /**
+         * Details Area
+         */
         $('.country').append(countries.join(', '));
         $('.studio').append(studios.join(', '));
         $('.year').append(`${response.release_date.substr(0, 4)}`);
         $('.budget').append(`${response.budget} $`);
         $('.revenues').append(`${response.revenue} $`)
-        $('.votes').append(`<span class="fa-layers fa-fw">
-        <i class="fas fa-star"></i>
-            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
-        </span>`);
-
-        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
 }
 
 function displayCast(response){
-            /**
+        /**
          * Cast / Crew Area
          * Need to truncate results because some movies have very big cast/crew. Display only the first ten
          */
@@ -215,10 +226,11 @@ function displayCast(response){
 
 
 
-// 2.2 - Display TV Show
-/* Get last characters of URL to have only the ID */
-function displayShow() {
-    id = window.location.search.substr(4);
+/**
+ * 2.2 - Display TV Show
+ * Get last characters of URL to have only the ID
+*/ 
+function displayShow(id) {
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -230,6 +242,16 @@ function displayShow() {
 
     $.ajax(settings).done(function (response) {
         console.log(response);
+
+        /**
+         * Variables declarations
+         */ 
+        var backdrop = response.backdrop_path == null ? `../../img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
+        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
+        var overview = response.overview.length == '' ? "Cette série n'a pas encore de synopsis" : response.overview;
+        // Convert boolean value to sentance for better displaying
+        let productionState = response.in_production;
+        let search = new RegExp("^true$");
         // Used to convert US dates to French dates
         const firstAired = new Date(response.first_air_date);
         const lastAired = new Date(response.last_air_date);
@@ -239,22 +261,26 @@ function displayShow() {
             month: 'long',
             day: 'numeric'
         };
-        var overview = response.overview.length == '' ? "Cette série n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `../../img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
-        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
-        // Convert boolean value to sentance for better displaying
-        let productionState = response.in_production;
-        let search = new RegExp("^true$");
+        /**
+         * Synopsis Area
+         */
+        $('title').prepend(response.name);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
+        $('.poster').attr('src', poster);
+        $('.overview-content').text(overview);
+        $('.votes').append(`<span class="fa-layers fa-fw">
+        <i class="fas fa-star"></i>
+            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
+        </span>`)
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
+        /**
+         * Details Area
+         */
         if (search.test(productionState)) {
             $('.in-production').append(`<li><small>En production</small></li>`);
         } else {
             $('.in-production').append(`<li><small>Terminée</small></li>`);
         }
-        // Display other elements
-        $('title').prepend(response.name);
-        $('.overview-content').text(overview);
-        $('.poster').attr('src', poster);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         $('.first-episode').append(`<li><small>${firstAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.last-episode').append(`<li><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.number-seasons').append(`<li><small>${response.number_of_seasons}</small></li>`);
@@ -284,29 +310,6 @@ function displayShow() {
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </li>`);
         });
-        /**
-         * Details Area
-         */
-        let countries = [];
-        response.production_countries.forEach(country => {
-            countries.push(country.name);
-        });
-
-        let studios = [];
-        response.production_companies.forEach(studio => {
-            studios.push(studio.name);
-        });
-
-        $('.country').append(countries.join(', '));
-        $('.studio').append(studios.join(', '));
-        $('.year').append(`${response.release_date.substr(0, 4)}`);
-        $('.budget').append(`${response.budget} $`);
-        $('.revenues').append(`${response.revenue} $`)
-        $('.votes').append(`<span class="fa-layers fa-fw">
-        <i class="fas fa-star"></i>
-            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
-        </span>`)
-        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
     });
 }
 
@@ -375,7 +378,7 @@ function fillGenres() {
                         $('.genres-form').prepend(`
                         <span class="selected-genre text-center filter-active" data-filter="genre" id="genre-${$(this).attr('id')}">
                         <span class="remove-selected-genre">X</span>
-                         ${$(this).text()}
+                        ${$(this).text()}
                         </span>
                     `);
                         // Ajoute un eventlistener pour pouvoir supprimer le genre ajouté

@@ -24,17 +24,17 @@ function homePage(isLogged) {
 
 }
 
-function movieView(){
+function movieView(id){
 
-	tmdbApi.movie( window.location.search.substr(4) , 'fr-FR')
+	tmdbApi.movie( id , 'fr-FR')
 	.then( response => {
 		displayMovie(response);
 	});
 }
 
-function castMovieView() {
-	
-	tmdbApi.movie( window.location.search.substr(4) , 'fr-FR', 'credits')
+function castMovieView(id) {
+
+	tmdbApi.movie(id , 'fr-FR', 'credits')
 	.then( response => {
 		displayCast(response);
 	});

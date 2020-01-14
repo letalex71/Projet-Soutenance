@@ -31,9 +31,12 @@
 
 .primary-block{
     background-color: #343a40;
-    color:  white;
     padding-bottom: 2.5rem!important;
     margin-top: 2rem;
+}
+
+.primary-block-text{
+    color:  white;
     text-shadow: 0em 0em 0em white, .1em .6em .4em black, 0em 0em 0em white;
     font-family: 'Open Sans', sans-serif;
     font-size: x-large;
@@ -82,7 +85,7 @@ li.nav-item-right{
 }
 
 .details{
-    z-index: 2
+    z-index: 2;
 }
 
 .buttons{
@@ -679,6 +682,7 @@ h2.filter-active {
     cursor: pointer;
 }
 
+
 .overlay {
 
   position: fixed; /* Sit on top of the page content */
@@ -696,4 +700,110 @@ h2.filter-active {
 
 .watchlist-form{
     cursor: auto;
+}
+
+/* COMMENTS AREA */
+.comments-main {
+    background: #FFF;
+    z-index: 1;
+}
+
+.comment time,
+.comment:hover time,
+.icon-rocknroll,
+.like-count {
+    -webkit-transition: .25s opacity linear;
+    transition: .25s opacity linear;
+}
+
+.comments-main ul li {
+    list-style: none;
+}
+
+.comments .comment {
+    padding: 5px 10px;
+    background: #00AF90;
+}
+
+.comments .comment:hover time {
+    opacity: 1;
+}
+
+.comments .user-img img {
+    width: 50px;
+    height: 50px;
+}
+
+.comments .comment h4 {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.comments .comment h4 a {
+    color: #404040;
+    text-decoration: none;
+}
+
+.comments .comment .icon-rocknroll {
+    color: #545454;
+    font-size: .85rem;
+}
+
+.comments .comment .icon-rocknroll:hover {
+    opacity: .5;
+}
+
+.comments .comment time,
+.comments .comment .like-count,
+.comments .comment .icon-rocknroll {
+    font-size: .75rem;
+    opacity: 0;
+}
+
+.comments .comment time,
+.comments .comment .like-count {
+    font-weight: 300;
+}
+
+.comments .comment p {
+    font-size: 13px;
+}
+
+.comments .comment p .reply {
+    color: #BFBFA8;
+    cursor: pointer;
+}
+
+.comments .comment .active {
+    opacity: 1;
+}
+
+.icon-rocknroll {
+    background: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0 .125rem 0 0;
+}
+
+.comments .comment:hover .icon-rocknroll,
+.comments .comment:hover .like-count {
+    opacity: 1;
+}
+
+.comment-box-main {
+    background: linear-gradient(120deg, #7f70f5, #0ea0ff);;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+    .comments .comment h4 {
+        font-size: 12px;
+    }
+
+    .comments .comment p {
+        font-size: 11px;
+    }
+
+    .comment-box-main .send-btn button {
+        margin-left: 5px;
+    }
 }
