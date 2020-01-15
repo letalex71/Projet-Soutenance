@@ -91,7 +91,6 @@ async function displayMovies(movies) {
 
         for (movie of movies) {
             let urlTitle = movie.title.split(" ").join("-");
-            console.log(urlTitle);
             $('#popular-movies').append(`
                     <article class="grid-item" id="movie-${movie.id}">
                         <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">

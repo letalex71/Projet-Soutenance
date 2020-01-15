@@ -27,7 +27,7 @@ function formOverlay() {
 		// Appel à l'api
 		apiCall = (media[0] == 'movie') ? tmdbApi.movie(media[1], 'fr-FR') : tmdbApi.tvShow(media[1], 'fr-FR'); 
 
-		apiCall.then(response => {
+		apiCall.then( function(response) {
 
 
 			// titre change selon si tv ou movie
@@ -36,7 +36,7 @@ function formOverlay() {
 			// Ajout de la div formulaire
 			$('.overlay').append(`
 							
-					<div class="container bg-dark rounded-lg col-10 offset-1 watchlist-form">
+					<div class="container bg-dark rounded-lg col-10 offset-1 watchlist-container">
 						<div class="row">
 							<img class="col-md-2" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}" alt="Image du film ${title}">
 						
@@ -48,7 +48,7 @@ function formOverlay() {
 						</div>
 					
 						<div class="form-container mx-1 row mt-3">
-							<form class="col-12" action="">
+							<form class="col-12 watchlist-form" action="">
 								<div class="form-row">
 
 									<div class="form-group col-md-6">
@@ -124,20 +124,29 @@ function formOverlay() {
 					errors = true;
 				}
 				
-				if ( score > 10 || score < 10 || score % 0.5 != 0)
+				if ( score > 10 || score < 0 || score % 0.5 != 0)
 				{
 					score.after('<p class="text-danger">Veuillez choisir un score valide</p>');
 					errors = true;
 				}
-
+                                        
 				if (!errors)
-				{
-					fetch('test.com', {
-						method: 'POST',
-						body : {score: score, status: status}
-					}).then( response => {
-						// Affichage si c'est bon :)
-					});
+				{	
+					let type = (media[0] == 'tv') ? 's' : 'm';
+
+					let formData = new FormData();
+
+					formData.append('type', type);
+					formData.append('score', score);
+					formData.append('status', status);
+					formData.append('itemsId', media[0]);
+			
+					let result = formCheck(formData);
+					
+					result.then(result => {
+						console.log(result);
+					})
+
 				}
 
 			});

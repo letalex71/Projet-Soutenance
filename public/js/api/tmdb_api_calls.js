@@ -159,3 +159,19 @@ function filterSearch() {
 	})());
 }
 
+async function formCheck(data){
+
+	return await fetch(formCheckPath, {
+
+		headers: {
+			'Accept' : 'application/json'
+		},
+
+		method: 'POST',
+		
+		body: data,
+	}).then(response => {
+		return response.json();
+	});
+	
+}
