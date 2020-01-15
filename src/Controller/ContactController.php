@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use App\Form\ContactType;
+use App\Form\ContactFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +13,7 @@ class ContactController extends AbstractController
     public function index(Request $request, \Swift_Mailer $mailer)
     {
 
-        $form = $this->createForm(ContactType::class);
+        $form = $this->createForm(ContactFormType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
