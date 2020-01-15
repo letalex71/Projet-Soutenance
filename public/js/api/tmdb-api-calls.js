@@ -227,7 +227,6 @@ function displayMovie() {
 // 2.2 - Display TV Show
 /* Get last characters of URL to have only the ID */
 function displayShow() {
-    id = window.location.search.substr(4);
     var settings = {
         "async": true,
         "crossDomain": true,

@@ -24,17 +24,17 @@ function homePage(isLogged) {
 
 }
 
-function movieView(){
+function movieView(id){
 
-	tmdbApi.movie( window.location.search.substr(4) , 'fr-FR')
+	tmdbApi.movie( id , 'fr-FR')
 	.then( response => {
 		displayMovie(response);
 	});
 }
 
-function castMovieView() {
-	
-	tmdbApi.movie( window.location.search.substr(4) , 'fr-FR', 'credits')
+function castMovieView(id) {
+
+	tmdbApi.movie(id , 'fr-FR', 'credits')
 	.then( response => {
 		displayCast(response);
 	});
@@ -43,12 +43,14 @@ function castMovieView() {
 
 function filterSearch() {
 
+
+	// Variable qui permettra d'appeler l'api avec les filtres correspondants
 	let filters = {
 
 		language: 'fr-FR'
 	};
 
-
+	// Hydratation de la varaible filter selon les div ayant la clase ".filter-active"
 	for (selectedFilter of $('.filter-active'))
 	{
 
@@ -85,14 +87,19 @@ function filterSearch() {
 	}
 
 
+	// ajoute la div qui contiendra les films ou séries
 	if (type == 'tv')
 		$('.contents-container').attr('id', `popular-shows`);
 	else
 		$('.contents-container').attr('id', `popular-movies`);
+	
+	// Appel api avec les filtres correspondants
 	tmdbApi.discover(type, filters)
 	.then( response => {
 
+		// Variable qui servira à 
 		page = 1;
+
 		$('.grid-item').remove();
 		$('.total-results').remove();
 		
@@ -205,3 +212,21 @@ function personCredits(){
 	});
 	//affichage...
 }
+
+async function formCheck(data){
+
+	return await fetch(formCheckPath, {
+
+		headers: {
+			'Accept' : 'application/json'
+		},
+
+		method: 'POST',
+		
+		body: data,
+	}).then(response => {
+		return response.json();
+	});
+	
+}
+

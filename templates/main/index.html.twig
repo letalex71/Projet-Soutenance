@@ -4,6 +4,10 @@
 {% block stylesheets %}{% endblock %}
 {% block body %}
 <main class="page projects-page">
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success col-12 text-center"> Bonjour {{ app.user.email }}, {{ message}} !
+    </div>
+    {% endfor %}
     <section class="portfolio-block projects-cards">
         <div class="heading">
             <h2>Découvrir</h2>
@@ -24,9 +28,19 @@
 <script src="{{ asset('js/api/tmdb_api.js') }} "></script>
 <script src="{{ asset('js/api/tmdb_api_calls.js') }}"></script>
 <script src="{{ asset('js/display/display.js') }} "></script>
+<script src="{{ asset('js/display/add_list_form.js') }}"></script>
 <script>
 
-    let isLogged = {{ (app.user is not empty) ? 'true' : 'false' }};
+    isLogged = {{ (app.user is not empty) ? 'true' : 'false' }};
+
+    {% if app.user is not empty %}
+
+        userId = {{ app.user.id }};
+
+    {% endif %}
+
+    formCheckPath = '{{ path('form_check') }}';
+
 
     homePage(isLogged);
 

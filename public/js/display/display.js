@@ -30,6 +30,10 @@
  * 1 :: DISCOVER PAGE
  */
 
+/**
+ * Check if user is logged : Display "add to list" button if logged
+ * @param {*} isLogged 
+ */
 function checkSession(isLogged) {
 
     let itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-']")
@@ -38,18 +42,16 @@ function checkSession(isLogged) {
             $(this).append(`
                 <div class="c-tooltip">
                     <a href="/like">
-                        <div class="c-reaction">
+                        <div class="c-reaction-heart">
                             <i class="c-reaction-icon far fa-heart"></i>
                         </div>
                     </a>
                     <div class="c-tooltip-text">Cette fonctionnalité n'est pas encore disponible</div>
                 </div>
                 <div class="c-tooltip">
-                    <a href="/prout">
-                        <div class="c-reaction">
+                        <div class="c-reaction-square">
                             <i class=" c-reaction-icon far fa-plus-square"></i>
-                        </div>
-                    </a>
+                        </div>    
                     <div class="c-tooltip-text">Cette fonctionnalité n'est pas encore disponible</div>
                 </div>`);
         });
@@ -65,7 +67,7 @@ function checkSession(isLogged) {
                         <div class="c-tooltip-text">Vous devez être connecté pour aimer ceci</div>
                     </div>
                     <div class="c-tooltip">
-                        <a href="/login">
+                        <a href="/connexion">
                             <div class="c-reaction">
                                 <i class=" c-reaction-icon c-reaction-icon-disabled far fa-plus-square"></i>
                             </div>
@@ -74,6 +76,8 @@ function checkSession(isLogged) {
                     </div>`);
         });
     }
+
+   formOverlay();
 }
 
 // 1.1 - 
@@ -83,16 +87,18 @@ async function displayMovies(movies) {
 
     return new Promise(resolve => {
         let movieId = 0;
+        
 
         for (movie of movies) {
+            let urlTitle = movie.title.split(" ").join("-");
             $('#popular-movies').append(`
-                    <article class="grid-item">
+                    <article class="grid-item" id="movie-${movie.id}">
                         <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">
                         <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films?id=${movie.id}" class="grid-item-link">
+                        <a href="films/${movie.id}-${urlTitle}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>
@@ -118,21 +124,22 @@ async function displayShows(shows) {
         let showInd = 0;
 
         for (show of shows) {
-            var poster = show.poster_path == null ? `img/ressources/image_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
+            let urlTitle = show.name.split(" ").join("-");
+            var poster = show.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
             $('#popular-shows').append(`
-                <article class="grid-item">
+                <article class="grid-item" id="tv-${show.id}">
                     <div class="grid-item-icons u-top" id="itemShows-${showInd}">
                     <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
                     </div>
-                    <a href="/series?id=${show.id}-${show.name}" class="grid-item-link">
+                    <a href="/series/${show.id}-${urlTitle}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${show.name}</h3>
                             </div>
                             <img
-                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${show.poster_path}"
+                                src="${poster}"
                                 loading="lazy" class="grid-item-image u-inset">
                         </a>
                 </article>`);
@@ -160,30 +167,41 @@ function displayMovie(response) {
         $('.poster').attr('src', poster);
         $('.backdrop').css('background-image', 'url("' + backdrop + '")');
 
+
         /**
-         * Details Area
+         * Variables declarations
          */
+        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
+        var poster = response.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
+        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
         let countries = [];
         response.production_countries.forEach(country => {
             countries.push(country.name);
         });
-
         let studios = [];
         response.production_companies.forEach(studio => {
             studios.push(studio.name);
         });
-
+        /**
+         * Synopsis Area
+         */ 
+        $('title').prepend(response.title);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
+        $('.poster').attr('src', poster);
+        $('.overview-content').text(overview);
+        $('.votes').append(`<span class="fa-layers fa-fw">
+        <i class="fas fa-star"></i>
+            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
+        </span>`);
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
+        /**
+         * Details Area
+         */
         $('.country').append(countries.join(', '));
         $('.studio').append(studios.join(', '));
         $('.year').append(`${response.release_date.substr(0, 4)}`);
         $('.budget').append(`${response.budget} $`);
         $('.revenues').append(`${response.revenue} $`)
-        $('.votes').append(`<span class="fa-layers fa-fw">
-        <i class="fas fa-star"></i>
-            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
-        </span>`);
-
-        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
 }
 
 /**
@@ -278,7 +296,7 @@ function displayPersonCredits(response){
 }
 
 function displayCast(response){
-            /**
+        /**
          * Cast / Crew Area
          * Need to truncate results because some movies have very big cast/crew. Display only the first ten
          */
@@ -305,10 +323,12 @@ function displayCast(response){
 
 
 
-// 2.3 - Display TV Show
-/* Get last characters of URL to have only the ID */
-function displayShow() {
-    id = window.location.search.substr(4);
+
+/**
+ * 2.2 - Display TV Show
+ * Get last characters of URL to have only the ID
+*/ 
+function displayShow(id) {
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -320,6 +340,16 @@ function displayShow() {
 
     $.ajax(settings).done(function (response) {
         console.log(response);
+
+        /**
+         * Variables declarations
+         */ 
+        var backdrop = response.backdrop_path == null ? `../../img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
+        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
+        var overview = response.overview.length == '' ? "Cette série n'a pas encore de synopsis" : response.overview;
+        // Convert boolean value to sentance for better displaying
+        let productionState = response.in_production;
+        let search = new RegExp("^true$");
         // Used to convert US dates to French dates
         const firstAired = new Date(response.first_air_date);
         const lastAired = new Date(response.last_air_date);
@@ -329,22 +359,26 @@ function displayShow() {
             month: 'long',
             day: 'numeric'
         };
-        var overview = response.overview.length == '' ? "Cette série n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `../../img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
-        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
-        // Convert boolean value to sentance for better displaying
-        let productionState = response.in_production;
-        let search = new RegExp("^true$");
+        /**
+         * Synopsis Area
+         */
+        $('title').prepend(response.name);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
+        $('.poster').attr('src', poster);
+        $('.overview-content').text(overview);
+        $('.votes').append(`<span class="fa-layers fa-fw">
+        <i class="fas fa-star"></i>
+            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
+        </span>`)
+        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
+        /**
+         * Details Area
+         */
         if (search.test(productionState)) {
             $('.in-production').append(`<li><small>En production</small></li>`);
         } else {
             $('.in-production').append(`<li><small>Terminée</small></li>`);
         }
-        // Display other elements
-        $('title').prepend(response.name);
-        $('.overview-content').text(overview);
-        $('.poster').attr('src', poster);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         $('.first-episode').append(`<li><small>${firstAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.last-episode').append(`<li><small>${lastAired.toLocaleDateString('fr-FR', options)}</small></li>`);
         $('.number-seasons').append(`<li><small>${response.number_of_seasons}</small></li>`);
@@ -374,29 +408,6 @@ function displayShow() {
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </li>`);
         });
-        /**
-         * Details Area
-         */
-        let countries = [];
-        response.production_countries.forEach(country => {
-            countries.push(country.name);
-        });
-
-        let studios = [];
-        response.production_companies.forEach(studio => {
-            studios.push(studio.name);
-        });
-
-        $('.country').append(countries.join(', '));
-        $('.studio').append(studios.join(', '));
-        $('.year').append(`${response.release_date.substr(0, 4)}`);
-        $('.budget').append(`${response.budget} $`);
-        $('.revenues').append(`${response.revenue} $`)
-        $('.votes').append(`<span class="fa-layers fa-fw">
-        <i class="fas fa-star"></i>
-            <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
-        </span>`)
-        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
     });
 }
 
@@ -411,24 +422,28 @@ function fillYears(currentYear) {
     }
 }
 
+
 /* Fills genres select corresponding to the media type previously selected*/
 function fillGenres() {
+
+    // Vide les genres du select car différents selon série ou film
     $('.genres-search').empty();
 
 
+    // Affichage des genres quand clique sur la barre de recherche
     $('label[for="genres-search"]').click(() => {
 
-
-
+        // Appelle les genres correspondant au type de média
         tmdbApi.genres($('h2.filter-active[data-filter="type"]').attr('id'))
             .then(response => {
 
+                // Ajoute la div ".genres-options" seulement si elle n'existe pas
                 if (!$('.genres-options').length) {
 
                     $('.genres-group').after(`
                     <div class="genres-options border py-2"></div>
                 `);
-
+                    // Affiche tous les genres à la manière d'un select
                     for (genre of response.genres) {
                         $('.genres-options').append(`
                         <span id="${genre.id}" class="genre-option col-12 d-block p-2">${genre.name}</span>
@@ -436,8 +451,10 @@ function fillGenres() {
                     }
                 }
 
+
                 $(document).click(function (event) {
 
+                    // Si on clique sur une de ces divs, la liste des genres s'enlèvera
                     if (!$(event.target)[0].className.includes('genre-option') &&
                         $(event.target)[0] !== document.querySelector('.genres-options') &&
                         !$(event.target)[0].className.includes('genres-form') &&
@@ -452,17 +469,17 @@ function fillGenres() {
                 $('.genre-option').click(function () {
 
 
-
+                    // Ajoute une étiquette au genre cliqué si il n'y en a pas déjà une
                     if (!$(`#genre-${$(this).attr('id')}`).length) {
 
 
                         $('.genres-form').prepend(`
                         <span class="selected-genre text-center filter-active" data-filter="genre" id="genre-${$(this).attr('id')}">
                         <span class="remove-selected-genre">X</span>
-                         ${$(this).text()}
+                        ${$(this).text()}
                         </span>
                     `);
-
+                        // Ajoute un eventlistener pour pouvoir supprimer le genre ajouté
                         $(`#genre-${$(this).attr('id')}`).children('.remove-selected-genre').click(function () {
 
                             $(this).parent().remove();
