@@ -22,7 +22,8 @@ class ApiController extends AbstractController
     {
 
     	$data = $request->request->all();
-    	$data['user'] = $this->getUser()->getId();
+
+    	$data['user'] = $this->getUser();
 
     	$watchlistValidator = new WatchlistValidator();
 
@@ -32,13 +33,22 @@ class ApiController extends AbstractController
     		$errors = (string)$errors;
     		return $this->json(['status' =>  $errors]);
     	}
-    	
-
+   
     	$watchlist = new Watchlist($data);
+
+    	$watchlist->setTitle($data['title']);
+        $watchlist->setStatus($data['status']);
+        $watchlist->setScore($data['score']);
+        $watchlist->setPosterPath($data['posterPath']);
+        $watchlist->setType($data['type']);
+        $watchlist->setItemId($data['itemID']);
+        $watchlist->setUser($data['user']);
+
 
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($watchlist);
     	$em->flush();
+
     	return $this->json(['status' => 'success']);
 
     }

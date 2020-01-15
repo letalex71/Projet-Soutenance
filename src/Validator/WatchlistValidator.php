@@ -66,7 +66,7 @@ class WatchlistValidator
 
         $metadata->addPropertyConstraint('itemID', new Type(['type' => 'integer']));
 
-        $metadata->addPropertyConstraint('user', new Type(['type' => 'digit']));
+        $metadata->addPropertyConstraint('user', new Type(['type' => 'User::class']));
     }
 
 
