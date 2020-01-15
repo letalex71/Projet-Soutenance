@@ -25,7 +25,7 @@ class Watchlist
     /**
      * @ORM\Column(type="integer")
      */
-    private $itemID;
+    private $itemId;
 
     /**
      * @ORM\Column(type="integer")
@@ -69,14 +69,15 @@ class Watchlist
         return $this;
     }
 
-    public function getItemID(): ?int
+    public function getItemId(): ?int
     {
-        return $this->itemID;
+        return $this->itemId;
     }
 
-    public function setItemID(int $itemID): self
+    public function setItemId(int $itemId): self
     {
-        $this->itemID = $itemID;
+
+        $this->itemId = $itemId;
 
         return $this;
     }
@@ -137,19 +138,6 @@ class Watchlist
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function __constructor(array $data): self
-    {
-        $this->setTitle($data['title']);
-        $this->setStatus($data['status']);
-        $this->setScore($data['score']);
-        $this->setPosterPath($data['posterPath']);
-        $this->setType($data['type']);
-        $this->setItemID($data['itemID']);
-        $this->setUser($data['user']->getId());
 
         return $this;
     }
