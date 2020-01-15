@@ -159,7 +159,14 @@ async function displayShows(shows) {
 // Get last characters of URL to have only the ID
 function displayMovie(response) {
 
-        console.log(response);
+        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
+        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
+        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
+        $('title').prepend(response.title);
+        $('.overview-content').text(overview);
+        $('.poster').attr('src', poster);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
+
 
         /**
          * Variables declarations
@@ -197,12 +204,103 @@ function displayMovie(response) {
         $('.revenues').append(`${response.revenue} $`)
 }
 
+/**
+ * 2.2 Display People 
+ */
+function displayPerson(response) {
+
+    id = window.location.search.substr(4);
+    var biography = response.biography.length == '' ? "Cet/cette acteur/actrice n'a pas de biographie" : response.biography;
+
+        // Used to convert US dates to French dates
+        const birthday = new Date(response.birthday);
+        const deathday = new Date(response.deathday);
+        const options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+
+        $('.overview-content').text(biography);
+        $('.name').prepend(response.name);
+        $('.profile').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.profile_path}`);
+        $('.birthday').append(`<li><small>${birthday.toLocaleDateString('fr-FR', options)}</small></li>`);
+        if(response.deathday !== null){
+        $('.deathday').append(`<li><small>${deathday.toLocaleDateString('fr-FR', options)}</small></li>`);
+        }else{
+            $('.death').remove;
+        }
+        $('.birthplace').append(`<li><small>${response.place_of_birth}</small></li>`);
+        $('.know-for-department').append(`<li><small>${response.known_for_department}</small></li>`);
+}
+
+function displayPersonCredits(response){
+
+    /**
+     * Credits area
+     * Need to truncate results because some people have a very big movies credits. Display only the first 5
+     */
+    
+       
+    var trunCreditsCast = response.cast.slice(0,5); 
+
+    if(response.cast.length != 0){
+
+     trunCreditsCast.forEach(creditsCast => {
+         let title = creditsCast.title
+         let character = creditsCast.character
+            
+         if((window.innerWidth < 768)){
+
+             title = title.substr(0, 10);
+             character = character.substr(0, 15);
+
+             title += (title.length == creditsCast.title.length) ? '' : '...';
+                
+             character += (character.length == creditsCast.character.length) ? '' : '...';
+         }
+         $('.list-cast').append(`
+         <div class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCast">
+             <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCast.poster_path}" loading="lazy" class="casting-list-img">
+             <p class="badge badge-pill text-dark">${character}</p>
+             <p class="badge badge-pill text-dark">dans : <a href="/films?id=${creditsCast.id}">${title}</a></p>
+         </div>`);
+        });
+    }
+
+    
+
+    var trunCreditsCrew = response.crew.slice(0,5);
+    if(response.crew.length != 0){
+
+        trunCreditsCrew.forEach(creditsCrew => {
+
+            let title = creditsCrew.title
+            
+            if((window.innerWidth < 960) && title.length >= 26){
+
+                title = title.substr(0, 25);
+
+                title += (title.length == creditsCast.title.length) ? '' : '...';
+
+            }
+            $('.list-crew').append(`
+            <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCrew">
+            <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCrew.poster_path}" loading="lazy" class="casting-list-img">
+            <span class="badge badge-pill align-self-center"><a href="/films?id=${creditsCrew.id}">${title}</a></span></p>`);
+        });
+    }else{
+       $('.list-crew').append('<p class="text-dark" id="creditsCrew">Pas de production fait</p>')
+    }
+}
+
 function displayCast(response){
         /**
          * Cast / Crew Area
          * Need to truncate results because some movies have very big cast/crew. Display only the first ten
          */
-        var truncCast = response.cast.slice(0, 10);
+        var truncCast = response.cast.slice(0, 5);
         truncCast.forEach(casting => {
             $('.list-group-cast').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
@@ -212,7 +310,7 @@ function displayCast(response){
         </p>`);
         });
 
-        var truncCrew = response.crew.slice(0, 10);
+        var truncCrew = response.crew.slice(0, 5);
         truncCrew.forEach(crew => {
             $('.list-group-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
@@ -222,6 +320,7 @@ function displayCast(response){
         </p>`);
         });
 }
+
 
 
 

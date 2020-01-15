@@ -1,60 +1,84 @@
 {# pages/people-view.html.twig #}
 {% extends "base.html.twig" %}
 {% block title %}Nom personnalité {% endblock %}
-{% block stylesheets %}{% endblock %}
+{% block stylesheets %}
+{% endblock %}
 {% block body %}
-<h1 class="text-center">Test bootstrap</h1>
+<main class="page projects-page" id="movie-item">
+    <section class="portfolio-block photography primary-block" id="movie-backdrop">
+        <div class="backdrop primary-block">
+        </div>
+        <div class="row">
+            <div class="container">
+                <h1 class="mt-3 md-2 offset-1 col-md-7 text-center name"></h1>
+            </div>
+        </div>
+
+        <div class="row ">
+            <img class="mt-4 offset-1 col-md-3 img-fluid image profile h-50" src="">
+            <div class="mt-3 offset-1 col-md-7 biography">
+                <div class="container text-center overview">
+                    <div class="mt-3 primary-details">
+                        <h3>Biographie</h3>
+                        <p class="mt-3 overview-content mb-2"></p>
+                    </div>
+                </div>
+                <div class="offset-1 col-md-5 container-fluid text-wrap details overview">
+                    <ul class="details-content">
+                        <h4 class="text-left details-content mb-3">
+                            <ins>Détails : </ins>
+                        </h4>
+                        <li class="mb-3">Année de naissance : <span class="details-li-content birthday"></span></li>
+                        <li class="mb-3 death">Année de la mort : <span class="details-li-content deathday"></span></li>
+                        <li class="mb-3">Lieu de naissance : <span class="details-li-content birthplace"></span></li>
+                        <li class="mb-3">Activité principal : <span class="details-li-content know-for-department"></span></li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="portfolio-block photography gradient secondary-block">
+        <div class="row no-gutters pt-3">
+            <div class="container-fluid text-wrap details overview">
+                <div class="container-fluid details">
+                    <!-- Casting -->
+                    <ul class="nav nav-pills offset-md-5" id="pills-tab" role="tablist">
+                        <li class="nav-item nav-item-left">
+                            <a class="nav-link active" id="pills-cast-tab" data-toggle="pill" href="#pills-credits-cast" role="tab"
+                                aria-controls="pills-cast" aria-selected="true">A joué(e):</a>
+                        </li>
+                        <li class="nav-item nav-item-right">
+                            <a class="nav-link" id="pills-crew-tab" data-toggle="pill" href="#pills-credits-crew" role="tab"
+                                aria-controls="pills-crew" aria-selected="false">A produit :</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-credits-cast" role="tabpanel"
+                            aria-labelledby="pills-cast-tab">
+                            <p class="list-cast"></p>
+                        </div>
+                        <div class="tab-pane fade" id="pills-credits-crew" role="tabpanel" aria-labelledby="pills-crew-tab">
+                            <p class="list-crew"></p>
+                        </div>
+                        <div class="selector"></div>
+                    </div>
+                </div>
+            </div>
+    
+        </section>
+
 {% endblock %}
 {% block javascripts %}
 <script src="{{ asset('js/api/tmdb_api.js') }} "></script>
+<script src="{{ asset('js/api/tmdb_api_calls.js') }} "></script>
 <script src="{{ asset('js/display/display.js') }} "></script>
 <script>
-    let id = window.location.search.substr(4);
-    person = tmdbApi.people(id, 'fr-FR')
-        .then(function (person) {
-            console.log(person);
-            let knownFor = person.known_for_department;
-            switch (person.known_for_department) {
-                case 'Acting':
-                    knownFor = 'Interprétation';
-                    break;
-                case 'Art':
-                    knownFor = 'Artistique';
-                    break;
-                case 'Camera':
-                    knownFor = 'Image';
-                    break;
-                case 'Costume & Make-Up':
-                    knownFor = 'Costumes et Maquillage';
-                    break;
-                case 'Crew':
-                    knownFor = 'Equipe Technique';
-                    break;
-                case 'Directing':
-                    knownFor = 'Réalisation';
-                    break;
-                case 'Editing':
-                    knownFor = 'Montage';
-                    break;
-                case 'Lighting':
-                    knownFor = 'Éclairage';
-                    break;
-                case 'Art':
-                    knownFor = 'Artistique';
-                    break;
-                case 'Visual Effects':
-                    knownFor = 'Effets visuels';
-                    break;
-                default:
-                    knownFor;
-            };
-            console.log("known for : " + knownFor)
-        });
 
-    personCredits = tmdbApi.people(id, 'fr-FR', 'combined_credits')
-        .then(function (personCredits) {
-            console.log(personCredits);
-            //affichage...
-        });
+    let id = window.location.search.substr(4);
+
+
+    peopleView();
+    personCredits();
 </script>
 {% endblock %}

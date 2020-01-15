@@ -16,9 +16,11 @@ class UserController extends AbstractController
      */
     public function profile(AuthenticationUtils $authenticationUtils): Response
     {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('home');
+        }
         $form = $this->createForm(UserFormType::class, );
         $comments = $this->getUser()->getComments();
-
         return $this->render('user/profile.html.twig', [
             'userForm' => $form->createView(),
             'comments' => $comments,

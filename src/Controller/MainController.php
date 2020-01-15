@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use AppBundle\AppBundle;
-use AppBundle\Entity\User;
+use App\Entity\User;
 use App\Entity\Comments;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,25 +27,11 @@ class MainController extends AbstractController
      * @Route("/rechercher", name="search")
      */
     public function search()
-    {   
+    {
 
         return $this->render('main/search.html.twig', [
             "date" => new DateTime()
         ]);
-    }
-    /**
-     * @Route("/forum", name="forum")
-     */
-    public function forum()
-    {
-        return $this->render('/forum/forum.html.twig');
-    }
-    /**
-     * @Route("/user/{id}", name="user-view")
-     */
-    public function userView()
-    {
-        return $this->render('main/user-view.html.twig');
     }
     /**
      * @Route("/series/{id}-{name}/", name="display_show")
@@ -81,7 +66,7 @@ class MainController extends AbstractController
     /**
      * @Route("/profil/watchlists", name="watchlists")
      */
-    public function watchilists()
+    public function watchlists()
     {
         return $this->render('main/watchlist.html.twig');
     }
