@@ -152,3 +152,56 @@ function filterSearch() {
 	})());
 }
 
+function peopleView() {
+
+	person = tmdbApi.people(id, 'fr-FR')
+	.then(function (person) {
+		switch (person.known_for_department) {
+			case 'Acting':
+				person.known_for_department = 'Interprétation';
+				break;
+			case 'Art':
+				person.known_for_department = 'Artistique';
+				break;
+			case 'Camera':
+				person.known_for_department = 'Image';
+				break;
+			case 'Costume & Make-Up':
+				person.known_for_department = 'Costumes et Maquillage';
+				break;
+			case 'Crew':
+				person.known_for_department = 'Equipe Technique';
+				break;
+			case 'Directing':
+				person.known_for_department = 'Réalisation';
+				break;
+			case 'Editing':
+				person.known_for_department = 'Montage';
+				break;
+			case 'Lighting':
+				person.known_for_department = 'Éclairage';
+				break;
+			case 'Art':
+				person.known_for_department = 'Artistique';
+				break;
+			case 'Visual Effects':
+				person.known_for_department = 'Effets visuels';
+				break;
+			default:
+				person.known_for_department;
+		};
+		displayPerson(person);
+	});
+
+
+}
+
+
+function personCredits(){
+	
+	tmdbApi.people(id, 'fr-FR', 'combined_credits')
+	.then(response => {
+		displayPersonCredits(response);
+	});
+	//affichage...
+}
