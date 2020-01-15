@@ -42,6 +42,11 @@ class Comments
      */
     private $type;
 
+    /**
+     * @ORM\Column(type="string", length=210)
+     */
+    private $itemName;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +108,18 @@ class Comments
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getItemName(): ?string
+    {
+        return $this->itemName;
+    }
+
+    public function setItemName(string $itemName): self
+    {
+        $this->itemName = $itemName;
 
         return $this;
     }

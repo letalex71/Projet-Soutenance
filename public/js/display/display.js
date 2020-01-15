@@ -98,7 +98,7 @@ async function displayMovies(movies) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films/${movie.id}-${urlTitle}" class="grid-item-link">
+                        <a href="films/${movie.id}-${urlTitle}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>

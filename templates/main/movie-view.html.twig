@@ -139,8 +139,9 @@
 <script src="{{ asset('js/display/display.js') }} "></script>
 
 <script>
-    movieView({{ id }});
-    castMovieView({{ id }});
+    id = {{ id }};
+    movieView(id);
+    castMovieView(id);
 </script>
 
 {% endblock %}

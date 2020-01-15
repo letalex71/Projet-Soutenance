@@ -7,12 +7,10 @@ function formOverlay() {
 	// Overlay s'affiche quand on clique sur icone
 	$('.c-reaction-square').click( function () {
 
-		let media; // aura le type du media ajouté et son id 
 		let apiCall; // recevra la promesse de l'api
 
-		$('body').prepend('<div class="overlay d-flex align-items-center justify-content-center"></div>');
 
-
+		var media; // aura le type du media ajouté et son id 
 
 
 		// Si page d'accueil, media sera rempli selon sur quelle icone on a cliqué, sinon selon l'id reçu et l'url
@@ -21,17 +19,22 @@ function formOverlay() {
 			media[0] = 'quelque chose on verra plus tard';
 			media[1] = id;
 		}
-		else
+		else {
 			media =  $(this).parent().parent().parent().attr('id').split('-');
+
+
+		}
+
+		$('body').prepend('<div class="overlay d-flex align-items-center justify-content-center"></div>');
 
 		// Appel à l'api
 		apiCall = (media[0] == 'movie') ? tmdbApi.movie(media[1], 'fr-FR') : tmdbApi.tvShow(media[1], 'fr-FR'); 
 
-		apiCall.then( function(response) {
+		apiCall.then( response => {
 
 
 			// titre change selon si tv ou movie
-			let title = (typeof response.title !== 'undefined') ? response.title : response.name;
+			var title = (typeof response.title !== 'undefined') ? response.title : response.name;
 
 			// Ajout de la div formulaire
 			$('.overlay').append(`
@@ -41,7 +44,7 @@ function formOverlay() {
 							<img class="col-md-2" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}" alt="Image du film ${title}">
 						
 							<div class="col-md-10">
-								<h2 class="col-md-4 offset-md-4 text-center text-light">${title}</h2>
+								<h2 class="col-md-4 offset-md-4 text-center text-light" id="media-title">${title}</h2>
 								<p class="mt-5 text-light">${response.overview}</p>
 							</div>
 						
@@ -110,44 +113,30 @@ function formOverlay() {
 			// Vérifie le formulaire et envoit le formulaire à notre API PHP + l'API TMDB sir tout est bon
 			$('.send-button').click( function(e) {
 				
+				
+				
 				e.preventDefault();
 
 				let status = $('#inputStatus').val();
 				let score = $('#inputScore').val();
-				let errors = false;
-
-				if (status != 'completed' &&
-					status != 'plan_to_watch' &&
-					status != 'dropped')
-				{
-					status.after('<p class="text-danger">Veuillez choisir le statut</p>');
-					errors = true;
-				}
 				
-				if ( score > 10 || score < 0 || score % 0.5 != 0)
-				{
-					score.after('<p class="text-danger">Veuillez choisir un score valide</p>');
-					errors = true;
-				}
-                                        
-				if (!errors)
-				{	
-					let type = (media[0] == 'tv') ? 's' : 'm';
+                                    	
+				let type = (media[0] == 'tv') ? 's' : 'm';
 
-					let formData = new FormData();
+				let formData = new FormData();
 
-					formData.append('type', type);
-					formData.append('score', score);
-					formData.append('status', status);
-					formData.append('itemsId', media[0]);
-			
-					let result = formCheck(formData);
+				formData.append('type', type);
+				formData.append('score', score * 10);
+				formData.append('title', title);
+				formData.append('status', status);
+				formData.append('itemID', media[1]);
+				formData.append('posterPath', response.poster_path);
+		
+				let result = formCheck(formData);
 					
-					result.then(result => {
-						console.log(result);
-					})
-
-				}
+				result.then(result => {
+					console.log(result);
+				});
 
 			});
 

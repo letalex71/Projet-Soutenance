@@ -23,6 +23,7 @@ class CommentsFixtures extends Fixture implements OrderedFixtureInterface
                 ->setItemId($faker->randomNumber($nbDigits = 6, $strict = false))
                 ->setPublicationDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris' ))
                 ->setAuthor( $this->getReference('user' . $faker->numberBetween($min = 1, $max = 24)) )
+                ->setItemName('test')
                 ;
                 $manager->persist($newComment);
         }
