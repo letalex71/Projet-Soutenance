@@ -42,6 +42,16 @@ class Watchlist
      */
     private $status;
 
+    /**
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private $posterPath;
+
+    /**
+     * @ORM\Column(type="string", length=210)
+     */
+    private $title;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +113,43 @@ class Watchlist
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getPosterPath(): ?string
+    {
+        return $this->posterPath;
+    }
+
+    public function setPosterPath(?string $posterPath): self
+    {
+        $this->posterPath = $posterPath;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function __constructor(array $data): self
+    {
+        $this->setTitle($data['title']);
+        $this->setStatus($data['status']);
+        $this->setScore($data['score']);
+        $this->setPosterPath($data['posterPath']);
+        $this->setType($data['type']);
+        $this->setItemID($data['itemID']);
+        $this->setUser($data['user']->getId());
 
         return $this;
     }

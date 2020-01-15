@@ -26,6 +26,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
         // Creation de 5 users
         for($i = 0; $i < 25; $i++){
             $newUser = new User();
+            
             $newUser
                 ->setEmail( $faker->email )
                 ->setPassword($this->passwordEncoder->encodePassword($newUser, 'azerty') )

@@ -7,12 +7,10 @@ function formOverlay() {
 	// Overlay s'affiche quand on clique sur icone
 	$('.c-reaction-square').click( function () {
 
-		let media; // aura le type du media ajouté et son id 
 		let apiCall; // recevra la promesse de l'api
 
-		$('body').prepend('<div class="overlay d-flex align-items-center justify-content-center"></div>');
 
-
+		var media; // aura le type du media ajouté et son id 
 
 
 		// Si page d'accueil, media sera rempli selon sur quelle icone on a cliqué, sinon selon l'id reçu et l'url
@@ -21,34 +19,39 @@ function formOverlay() {
 			media[0] = 'quelque chose on verra plus tard';
 			media[1] = id;
 		}
-		else
+		else {
 			media =  $(this).parent().parent().parent().attr('id').split('-');
+
+
+		}
+
+		$('body').prepend('<div class="overlay d-flex align-items-center justify-content-center"></div>');
 
 		// Appel à l'api
 		apiCall = (media[0] == 'movie') ? tmdbApi.movie(media[1], 'fr-FR') : tmdbApi.tvShow(media[1], 'fr-FR'); 
 
-		apiCall.then(response => {
+		apiCall.then( response => {
 
 
 			// titre change selon si tv ou movie
-			let title = (typeof response.title !== 'undefined') ? response.title : response.name;
+			var title = (typeof response.title !== 'undefined') ? response.title : response.name;
 
 			// Ajout de la div formulaire
 			$('.overlay').append(`
 							
-					<div class="container bg-dark rounded-lg col-10 offset-1 watchlist-form">
+					<div class="container bg-dark rounded-lg col-10 offset-1 watchlist-container">
 						<div class="row">
 							<img class="col-md-2" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}" alt="Image du film ${title}">
 						
 							<div class="col-md-10">
-								<h2 class="col-md-4 offset-md-4 text-center text-light">${title}</h2>
+								<h2 class="col-md-4 offset-md-4 text-center text-light" id="media-title">${title}</h2>
 								<p class="mt-5 text-light">${response.overview}</p>
 							</div>
 						
 						</div>
 					
 						<div class="form-container mx-1 row mt-3">
-							<form class="col-12" action="">
+							<form class="col-12 watchlist-form" action="">
 								<div class="form-row">
 
 									<div class="form-group col-md-6">
@@ -110,35 +113,30 @@ function formOverlay() {
 			// Vérifie le formulaire et envoit le formulaire à notre API PHP + l'API TMDB sir tout est bon
 			$('.send-button').click( function(e) {
 				
+				
+				
 				e.preventDefault();
 
 				let status = $('#inputStatus').val();
 				let score = $('#inputScore').val();
-				let errors = false;
-
-				if (status != 'completed' &&
-					status != 'plan_to_watch' &&
-					status != 'dropped')
-				{
-					status.after('<p class="text-danger">Veuillez choisir le statut</p>');
-					errors = true;
-				}
 				
-				if ( score > 10 || score < 10 || score % 0.5 != 0)
-				{
-					score.after('<p class="text-danger">Veuillez choisir un score valide</p>');
-					errors = true;
-				}
+                                    	
+				let type = (media[0] == 'tv') ? 's' : 'm';
 
-				if (!errors)
-				{
-					fetch('test.com', {
-						method: 'POST',
-						body : {score: score, status: status}
-					}).then( response => {
-						// Affichage si c'est bon :)
-					});
-				}
+				let formData = new FormData();
+
+				formData.append('type', type);
+				formData.append('score', score * 10);
+				formData.append('title', title);
+				formData.append('status', status);
+				formData.append('itemID', media[1]);
+				formData.append('posterPath', response.poster_path);
+		
+				let result = formCheck(formData);
+					
+				result.then(result => {
+					console.log(result);
+				});
 
 			});
 

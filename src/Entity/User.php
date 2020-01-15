@@ -22,7 +22,7 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @ORM\Column(type="string", length=320, unique=true)
      */
     private $email;
 
@@ -48,12 +48,12 @@ class User implements UserInterface
     private $comments;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=500, nullable=true)
      */
     private $biography;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $age;
 
@@ -68,12 +68,12 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $avatarPath;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $bannerPath;
 
@@ -251,7 +251,8 @@ class User implements UserInterface
         return $this->age;
     }
 
-    public function setAge(int $age): self
+
+    public function setAge(?int $age): self
     {
         $this->age = $age;
 
@@ -275,7 +276,7 @@ class User implements UserInterface
         return $this->lastname;
     }
 
-    public function setLastname(?string $lastname): self
+    public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
 

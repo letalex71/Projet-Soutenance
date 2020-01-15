@@ -24,6 +24,9 @@ class WatchlistsFixtures extends Fixture implements OrderedFixtureInterface
         ->setType($faker->randomElement(['m', 's']))
         ->setStatus($faker->randomElement(['plan to watch', 'completed', 'dropped']))
         ->setItemId($faker->randomNumber($nbDigits = 6, $strict = false))
+        ->setStatus($faker->randomElement(['p', 'c', 'd']))
+        ->setTitle('test')
+        ->setPosterPath(md5((string)$faker->randomNumber(6)))
         ;
         $manager->persist($newWatchlist);
     }

@@ -31,7 +31,16 @@
 <script src="{{ asset('js/display/add_list_form.js') }}"></script>
 <script>
 
-    let isLogged = {{ (app.user is not empty) ? 'true' : 'false' }};
+    isLogged = {{ (app.user is not empty) ? 'true' : 'false' }};
+
+    {% if app.user is not empty %}
+
+        userId = {{ app.user.id }};
+
+    {% endif %}
+
+    formCheckPath = '{{ path('form_check') }}';
+
 
     homePage(isLogged);
 
