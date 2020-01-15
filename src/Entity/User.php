@@ -251,6 +251,7 @@ class User implements UserInterface
         return $this->age;
     }
 
+
     public function setAge(?int $age): self
     {
         $this->age = $age;

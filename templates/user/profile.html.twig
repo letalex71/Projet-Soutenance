@@ -1,0 +1,103 @@
+{# pages/discover.html.twig #}
+{% extends "base.html.twig" %}
+{% block title %}Mon Profil {% endblock %}
+{% block stylesheets %}{% endblock %}
+{% block body %}
+<main class="page projects-page">
+    <img src="{{ asset('img/user_img/' ~ app.user.bannerPath)}}" alt="banniere profil" class="backdrop"
+        style="background-size: cover;">
+    <section class="portfolio-block photography primary-block primary-block-text py-5">
+        <div class="container-fluid">
+            <div class="row offset-1 h-100 ">
+                <div class="col-12 col-md-2 text-white d-flex personal-infos" id="left">
+                    <div class="nav flex-column nav-pills sidebar-profile menuuu" id="v-pills-tab" role="tablist"
+                        aria-orientation="vertical">
+                        <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
+                            role="tab" aria-controls="v-pills-profile" aria-selected="true">Profil</a>
+                        <a class="nav-link" id="v-pills-activity-tab" data-toggle="pill" href="#v-pills-activity"
+                            role="tab" aria-controls="v-pills-activity" aria-selected="false">Activité</a>
+                        <a class="nav-link" id="v-pills-my-watchlists-tab" data-toggle="pill"
+                            href="#v-pills-my-watchlists" role="tab" aria-controls="v-pills-my-watchlists"
+                            aria-selected="false">Mes Watchlists</a>
+                        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings"
+                            role="tab" aria-controls="v-pills-settings" aria-selected="false">Paramètres</a>
+                    </div>
+                </div>
+                <div class="tab-content col-md-8 col-12 py-2 personal-infos" id="v-pills-tabContent">
+                    <div class="text-center offset-1 offset-md-0">
+                        <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="128" height="128"
+                            class="d-inline-block align-top pb-5 img-fluid" alt="photodeprofil">
+                    </div>
+                    <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
+                        aria-labelledby="v-pills-profile-tab">
+                        <p><small>Pseudo : {{ app.user.pseudo }}</small></p>
+                        <p><small>Adresse Email : {{ app.user.email }}</small></p>
+                        <p><small>Prenom : {{ app.user.firstname }}</small></p>
+                        <p><small>Nom : {{ app.user.lastname }}</small></p>
+                        <p><small>Age : {{ app.user.age }}</small></p>
+                        <p><small>Biographie : {{ app.user.biography }}</small></p>
+                        <p><small>Inscrit le : {{ app.user.registerDate|date("d/m/Y") }}</small></p>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-activity" role="tabpanel"
+                        aria-labelledby="v-pills-activity-tab">
+                        {% for comment in comments %}
+                        <div class="col-12 offset-md-1">
+                            <div class="card-deck card-no-shadow mb-3">
+                                <div class="card">
+                                    <div class="card-body text-dark">
+                                        <h5 class="card-title">En référance à <a
+                                                href="`https://localhost:8000/{{ comment.type}}/{{ comment.itemId}}{{ comment.itemName}}`">{{ comment.itemName}}</a>
+                                        </h5>
+                                        <p class="card-text">{{comment.content}}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">Posté le
+                                            {{ comment.publicationDate|date("d/m/Y") }} à {{ comment.publicationDate|date("h:i:s") }}.</small>
+                                    </div>
+                                </div>
+                        </div>
+                        
+                        </div>
+                        {% else %}
+                        <p class="mb-0 text-white">Vous n'avez pas encore posté de commentaires. Ajoutez-en pour
+                            les retrouver sur cette page.</p>
+                        {% endfor %}
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-my-watchlists" role="tabpanel"
+                        aria-labelledby="v-pills-my-watchlists-tab">
+                        <h6>Ici se trouvera l'activité de l'utilisateur (likes, messages forum...)</h6>
+                        <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui
+                            magna. Ad
+                            proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat
+                            velit
+                            nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor.
+                            Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.
+                        </p>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                        aria-labelledby="v-pills-settings-tab">
+                        <form class="form-signin" method="POST">
+                            {{ form_start(userForm) }}
+                            <div class="form-label-group">
+                                {{ form_row(userForm.email, {
+                                    'label': 'Adresse Email ',
+                                    'attr': {'placeholder': 'Adresse email'}
+                                    }) 
+                                }}
+                            </div>
+                            <div class="form-label-group">
+                                {{ form_row(userForm.password, {
+                                    'label': 'Mot de passe ',
+                                    'attr': {'placeholder': 'Mot de passe'}
+                                    })
+                                }}
+                            </div>
+                            {{ form_end(userForm) }}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock %}
+    {% block javascripts %}{% endblock %}
