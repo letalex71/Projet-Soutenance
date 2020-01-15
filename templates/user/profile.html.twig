@@ -78,11 +78,6 @@
                         <form class="form-signin" method="POST">
                             {{ form_start(userForm) }}
                             <div class="form-label-group">
-                                {{ form_row(userForm.email, {
-                                    'label': 'Adresse Email ',
-                                    'attr': {'placeholder': 'Adresse email'}
-                                    }) 
-                                }}
                             </div>
                             <div class="form-label-group">
                                 {{ form_row(userForm.password, {
