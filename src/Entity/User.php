@@ -43,11 +43,6 @@ class User implements UserInterface
     private $watchlists;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comments", mappedBy="author")
-     */
-    private $comments;
-
-    /**
      * @ORM\Column(type="string", length=500, nullable=true)
      */
     private $biography;
@@ -87,6 +82,11 @@ class User implements UserInterface
      * @ORM\Column(type="date", nullable=true)
      */
     private $birthday;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="author")
+     */
+    private $comments;
 
     public function __construct()
     {
@@ -204,37 +204,6 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Comments[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comments $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setAuthor($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): self
-    {
-        if ($this->comments->contains($comment)) {
-            $this->comments->removeElement($comment);
-            // set the owning side to null (unless already changed)
-            if ($comment->getAuthor() === $this) {
-                $comment->setAuthor(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getBiography(): ?string
     {
         return $this->biography;
@@ -327,6 +296,37 @@ class User implements UserInterface
     public function setBirthday(?\DateTime $birthday): self
     {
         $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getAuthor() === $this) {
+                $comment->setAuthor(null);
+            }
+        }
 
         return $this;
     }

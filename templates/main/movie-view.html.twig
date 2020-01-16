@@ -89,9 +89,10 @@
     <section class="container-fluid portfolio-block photography primary-block container-fluid ">
         <h2 class="primary-block-text text-center offset-md-1 col-md-6 pt-4 pb-4">Votre avis compte !</h2>
         <div class="row">
-            <div class="offset-md-1 col-md-5 col-sm-5 col-12 comments-main pt-4 rounded">
-                <ul class="p-0">
+            <div class="offset-md-1 col-md-5 col-sm-5 col-12 comments-main rounded">
+                <ul class="p-0 m-0">
                     <li>
+                        {{ form_start(commentForm) }}
                         <div class="row comments mb-2">
                             {% for comment in comments %}
                             <div class="col-md-2 col-sm-2 col-3 text-center user-img">
@@ -117,16 +118,13 @@
                             </div>
                             {% endfor %}
                         </div>
+                        {{ form_widget(commentForm) }}
+                        <div class="col-md-3 col-sm-2 col-2 pl-0 text-center send-btn">
+                            <button class="btn btn-success">Envoyer</button>
+                        </div>
+                        {{ form_end(commentForm) }}
                     </li>
                 </ul>
-                <div class="row comment-box-main p-3 rounded-bottom">
-                    <div class="col-md-9 col-sm-9 col-9 pr-0 comment-box">
-                        <input type="text" class="form-control" placeholder="Ce que vous en pensez ...." />
-                    </div>
-                    <div class="col-md-3 col-sm-2 col-2 pl-0 text-center send-btn">
-                        <button class="btn btn-success">Envoyer</button>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

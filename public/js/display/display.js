@@ -71,10 +71,8 @@ async function displayMovies(movies) {
 
     return new Promise(resolve => {
         let movieId = 0;
-        
 
         for (movie of movies) {
-            let urlTitle = movie.title.split(" ").join("-");
             $('#popular-movies').append(`
                     <article class="grid-item" id="movie-${movie.id}">
                         <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">
@@ -82,7 +80,7 @@ async function displayMovies(movies) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films/${movie.id}-${urlTitle}" class="grid-item-link media-id">
+                        <a href="films/${movie.id}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>
@@ -100,13 +98,10 @@ async function displayMovies(movies) {
 }
 
 async function displayTrendings(trendings) {
-    console.log(trendings);
     return new Promise(resolve => {
         let itemId = 0;
         for (item of trendings) {
             var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
-            console.log(trueTitle);
-            let urlTitle = trueTitle.split(" ").join("-");
             $('#trendings').append(`
                     <article class="grid-item" id="movie-${item.id}">
                         <div class="grid-item-icons u-top" id="item-` + itemId++ + `">
@@ -114,7 +109,7 @@ async function displayTrendings(trendings) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${item.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films/${item.id}-${urlTitle}" class="grid-item-link media-id">
+                        <a href="films/${item.id}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${trueTitle}</h3>
@@ -149,7 +144,7 @@ async function displayShows(shows) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
                     </div>
-                    <a href="/series/${show.id}-${urlTitle}" class="grid-item-link">
+                    <a href="/series/${show.id}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${show.name}</h3>
@@ -175,15 +170,6 @@ async function displayShows(shows) {
 // Get last characters of URL to have only the ID
 function displayMovie(response) {
 
-        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
-        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
-        $('title').prepend(response.title);
-        $('.overview-content').text(overview);
-        $('.poster').attr('src', poster);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
-
-
         /**
          * Variables declarations
          */
@@ -198,13 +184,14 @@ function displayMovie(response) {
         response.production_companies.forEach(studio => {
             studios.push(studio.name);
         });
+
         /**
          * Synopsis Area
-         */ 
+         */
         $('title').prepend(response.title);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
-        $('.poster').attr('src', poster);
         $('.overview-content').text(overview);
+        $('.poster').attr('src', poster);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         $('.votes').append(`<span class="fa-layers fa-fw">
         <i class="fas fa-star"></i>
             <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>

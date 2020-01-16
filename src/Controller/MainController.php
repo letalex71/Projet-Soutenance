@@ -4,7 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
-use App\Entity\Comments;
+use App\Entity\Comment;
+use App\Form\CommentFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,26 +35,39 @@ class MainController extends AbstractController
         ]);
     }
     /**
-     * @Route("/series/{id}-{name}/", name="display_show")
+     * @Route("/series/{id}/", name="display_show")
      */
-    public function displayShow($id, $name)
+    public function displayShow($id)
     {
-        $comments = $this->getDoctrine()->getRepository(Comments::class)->findBy(['itemId' => $id, 'type' => 's'], ['publicationDate' => 'desc']);
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['itemId' => $id, 'type' => 'series'], ['publicationDate' => 'desc']);
+        $comment = new Comment();
+
         return $this->render('main/show-view.html.twig',[
-            'comments' => $comments,
+            'comments' => $form,
             "id" => $id
             ]);
         }
 
         /**
-     * @Route("/films/{id}-{name}/", name="display_movie")
+     * @Route("/films/{id}/", name="display_movie")
      */
-    public function displayMovie($id, $name)
+    public function displayMovie($id, Request $request)
     {
-        $comments = $this->getDoctrine()->getRepository(Comments::class)->findBy(['itemId' => $id, 'type' => 'm'], ['publicationDate' => 'desc']);
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['itemId' => $id, 'type' => 'm'], ['publicationDate' => 'desc']);
+        dump($comments);
+        $commentForm = $this->createForm(CommentFormType::class);
+        $commentForm->handleRequest($request);
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+
+        }
+
         return $this->render('main/movie-view.html.twig',[
             'comments' => $comments,
-            "id" => $id
+            'commentForm' => $commentForm->createView(),
+            'id' => $id
             ]);
         }
     /**
