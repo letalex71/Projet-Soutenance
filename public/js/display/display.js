@@ -36,7 +36,7 @@
  */
 function checkSession(isLogged) {
 
-    let itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-']")
+    let itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-'], [id*='item-']")
     if (isLogged === true) {
         itemsToChange.each(function () {
             $(this).append(`
@@ -104,7 +104,9 @@ async function displayTrendings(trendings) {
     return new Promise(resolve => {
         let itemId = 0;
         for (item of trendings) {
-            let urlTitle = item.title.split(" ").join("-");
+            var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
+            console.log(trueTitle);
+            let urlTitle = trueTitle.split(" ").join("-");
             $('#trendings').append(`
                     <article class="grid-item" id="movie-${item.id}">
                         <div class="grid-item-icons u-top" id="item-` + itemId++ + `">
@@ -115,7 +117,7 @@ async function displayTrendings(trendings) {
                         <a href="films/${item.id}-${urlTitle}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
-                                <h3 class="grid-item-content-title">${item.title}</h3>
+                                <h3 class="grid-item-content-title">${trueTitle}</h3>
                             </div>
                             <img
                                 src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}"
