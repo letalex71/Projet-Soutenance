@@ -22,20 +22,20 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $faker = \Faker\Factory::create('fr_FR');
+        $faker = Faker\Factory::create('fr_FR');
         // Creation de 5 users
         for($i = 0; $i < 25; $i++){
             $newUser = new User();
-            
+
             $newUser
                 ->setEmail( $faker->email )
                 ->setPassword($this->passwordEncoder->encodePassword($newUser, 'azerty') )
                 ->setBiography($faker->text($maxNbChars = 200))
-                ->setAge($faker->numberBetween($min = 12, $max = 120))
-                ->setRegisterDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris' ))
                 ->setPseudo($faker->regexify('[A-Za-z0-9]{' . mt_rand(4, 20) . '}'))
                 ->setFirstname($faker->firstName)
                 ->setLastname($faker->lastName)
+                ->setBirthday(new \DateTime($faker->date($format = 'Y-m-d', $max = 'now')))
+                ->setRegisterDate($faker->dateTimeThisDecade($max = 'now', $timezone = 'Europe/Paris' ))
                 ->setAvatarPath('defaultAvatar.png')
                 ->setBannerPath('defaultBanner.png')
             ;
@@ -50,13 +50,13 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
     }
 
     /**
-  * Get the order of this fixture
-  * @return integer
-  */
-  public function getOrder()
-  {
-    return 1;
-  }
+    * Get the order of this fixture
+    * @return integer
+    */
+    public function getOrder()
+    {
+        return 1;
+    }
 
 }
 

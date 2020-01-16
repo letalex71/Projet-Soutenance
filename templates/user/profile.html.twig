@@ -34,7 +34,7 @@
                         <p><small>Adresse Email : {{ app.user.email }}</small></p>
                         <p><small>Prenom : {{ app.user.firstname }}</small></p>
                         <p><small>Nom : {{ app.user.lastname }}</small></p>
-                        <p><small>Age : {{ app.user.age }}</small></p>
+                        <p><small>Age : {{ app.user.birthday|date("d/m/Y") }}</small></p>
                         <p><small>Biographie : {{ app.user.biography }}</small></p>
                         <p><small>Inscrit le : {{ app.user.registerDate|date("d/m/Y") }}</small></p>
                     </div>
@@ -76,17 +76,22 @@
                     <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
                         aria-labelledby="v-pills-settings-tab">
                         <form class="form-signin" method="POST">
-                            {{ form_start(userForm) }}
+                            <h3 class="text-center">Personnalisation du compte</h3>
+                            {{ form_start(userCustomizationForm) }}
                             <div class="form-label-group">
+                                {{ form_widget(userCustomizationForm) }}
                             </div>
+                            <button class="btn btn-lg btn-block btn-primary mt-2" type="submit">Enregistrer</button>
+                            {{ form_end(userCustomizationForm) }}
+                        </form>
+                        <form class="form-signin" method="POST">
+                            <h3 class="text-center">Changement du mot de passe</h3>
+                            {{ form_start(userPasswordForm) }}
                             <div class="form-label-group">
-                                {{ form_row(userForm.password, {
-                                    'label': 'Mot de passe ',
-                                    'attr': {'placeholder': 'Mot de passe'}
-                                    })
-                                }}
+                                {{ form_row(userPasswordForm.password) }}
                             </div>
-                            {{ form_end(userForm) }}
+                            <button class="btn btn-lg btn-block btn-primary mt-2" type="submit">Enregistrer</button>
+                            {{ form_end(userPasswordForm) }}
                         </form>
                     </div>
                 </div>

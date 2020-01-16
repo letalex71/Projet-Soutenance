@@ -53,13 +53,9 @@ class User implements UserInterface
     private $biography;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $age;
-
-    /**
      * @ORM\Column(type="string", length=128, nullable=true)
      */
+
     private $firstname;
 
     /**
@@ -86,6 +82,11 @@ class User implements UserInterface
      * @ORM\Column(type="datetime")
      */
     private $registerDate;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $birthday;
 
     public function __construct()
     {
@@ -246,19 +247,6 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAge(): ?int
-    {
-        return $this->age;
-    }
-
-
-    public function setAge(?int $age): self
-    {
-        $this->age = $age;
-
-        return $this;
-    }
-
     public function getFirstname(): ?string
     {
         return $this->firstname;
@@ -327,6 +315,18 @@ class User implements UserInterface
     public function setRegisterDate(\DateTimeInterface $registerDate): self
     {
         $this->registerDate = $registerDate;
+
+        return $this;
+    }
+
+    public function getBirthday(): ?\DateTime
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(?\DateTime $birthday): self
+    {
+        $this->birthday = $birthday;
 
         return $this;
     }
