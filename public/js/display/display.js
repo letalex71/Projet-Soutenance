@@ -180,7 +180,6 @@ async function displayShows(shows) {
  */
 
 // 2.1 - Display Movie
-// Get last characters of URL to have only the ID
 function displayMovie(response) {
 
         /**
@@ -202,6 +201,7 @@ function displayMovie(response) {
          * Synopsis Area
          */
         $('title').prepend(response.title);
+        $('#comment_form_itemName').val(response.title);
         $('.overview-content').text(overview);
         $('.poster').attr('src', poster);
         $('.backdrop').css('background-image', 'url("' + backdrop + '")');
@@ -258,31 +258,32 @@ function displayPersonCredits(response){
      * Need to truncate results because some people have a very big movies credits. Display only the first 5
      */
     
-       
     var trunCreditsCast = response.cast.slice(0,5); 
 
     if(response.cast.length != 0){
 
-     trunCreditsCast.forEach(creditsCast => {
-         let title = creditsCast.title
-         let character = creditsCast.character
+    trunCreditsCast.forEach(creditsCast => {
+        let title = creditsCast.title
+        let character = creditsCast.character
             
-         if((window.innerWidth < 768)){
+        if((window.innerWidth < 768)){
 
-             title = title.substr(0, 10);
-             character = character.substr(0, 15);
+            title = title.substr(0, 10);
+            character = character.substr(0, 15);
 
-             title += (title.length == creditsCast.title.length) ? '' : '...';
-                
-             character += (character.length == creditsCast.character.length) ? '' : '...';
-         }
-         $('.list-cast').append(`
-         <div class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCast">
-             <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCast.poster_path}" loading="lazy" class="casting-list-img">
-             <p class="badge badge-pill text-dark">${character}</p>
-             <p class="badge badge-pill text-dark">dans : <a href="/films?id=${creditsCast.id}">${title}</a></p>
-         </div>`);
+            title += (title.length == creditsCast.title.length) ? '' : '...';
+            
+            character += (character.length == creditsCast.character.length) ? '' : '...';
+        }
+        $('.list-cast').append(`
+        <div class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCast">
+            <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCast.poster_path}" loading="lazy" class="casting-list-img">
+            <p class="badge badge-pill text-dark">${character}</p>
+            <p class="badge badge-pill text-dark">dans : <a href="/films?id=${creditsCast.id}">${title}</a></p>
+        </div>`);
         });
+    }else{
+        $('.list-cast').append('<p class="text-dark" id="creditsCrew">Cette personne n\'a jamais eu de rôle.</p>');
     }
 
     
@@ -304,10 +305,11 @@ function displayPersonCredits(response){
             $('.list-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCrew">
             <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCrew.poster_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill align-self-center"><a href="/films?id=${creditsCrew.id}">${title}</a></span></p>`);
+            <span class="badge badge-pill align-self-center"><a href="/films?id=${creditsCrew.id}">${title}</a></span></p>`
+            );
         });
     }else{
-       $('.list-crew').append('<p class="text-dark" id="creditsCrew">Pas de production fait</p>')
+        $('.list-crew').append('<p class="text-dark" id="creditsCrew">Cette personne n\'a jamais fait partie d\'une équipe de production.</p>');
     }
 }
 
@@ -379,6 +381,7 @@ function displayShow(id) {
          * Synopsis Area
          */
         $('title').prepend(response.name);
+        $('#comment_form_itemName').val(response.name);
         $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         $('.poster').attr('src', poster);
         $('.overview-content').text(overview);

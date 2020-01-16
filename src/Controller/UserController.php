@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Comment;
 use App\Form\UserPasswordType;
 use App\Form\UserCustomizationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('home');
         }
         $user = $this->getUser();
-        $userPasswordForm = $this->createForm(UserPasswordType::class, );
+        $userPasswordForm = $this->createForm(UserPasswordType::class, $user);
         $userPasswordForm->handleRequest($request);
         if ($userPasswordForm->isSubmitted() && $userPasswordForm->isValid()) {
             // encode the plain password
