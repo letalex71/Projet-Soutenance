@@ -45,8 +45,12 @@
                             <div class="card-deck card-no-shadow mb-3">
                                 <div class="card">
                                     <div class="card-body text-dark">
-                                        <h5 class="card-title">En référance à <a
-                                                href="`https://localhost:8000/{{ comment.type}}/{{ comment.itemId}}{{ comment.itemName}}`">{{ comment.itemName}}</a>
+                                        <h5 class="card-title">En référance à 
+                                        {% if comment.type == 'm' %}
+                                            <a href="films/{{ comment.itemId}}">{{ comment.itemName}}</a>
+                                        {% else %}
+                                            <a href="series/{{ comment.itemId}}">{{ comment.itemName}}</a>
+                                        {% endif %}
                                         </h5>
                                         <p class="card-text">{{comment.content}}</p>
                                     </div>

@@ -118,12 +118,9 @@
                             </div>
                             {% endfor %}
                         </div>
-                        {{ form_widget(commentForm) }}
-                        <div class="col-md-3 col-sm-2 col-2 pl-0 text-center send-btn">
-                            <button class="btn btn-success">Envoyer</button>
-                        </div>
-                        {{ form_end(commentForm) }}
                     </li>
+                    {{ form_widget(commentForm) }}
+                    {{ form_end(commentForm) }}
                 </ul>
             </div>
         </div>

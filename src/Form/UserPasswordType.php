@@ -29,7 +29,7 @@ class UserPasswordType extends AbstractType
                     'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
                 ]),
             ],
-            'invalid_message' => 'Les mot de passe doivent correspondre.',
+            'invalid_message' => 'Les mots de passe doivent correspondre.',
             'options' => ['attr' => ['class' => 'password-field']],
             'first_options'  => ['label' => 'Mot de passe'],
             'second_options' => ['label' => 'Repetez mot de passe'],
