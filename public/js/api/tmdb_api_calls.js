@@ -22,7 +22,7 @@ function homePage(isLogged) {
 
 	let trendings = tmdbApi.trendings(
 		'all',
-		'day',
+		'week',
 	)
 	.then( trendings => { return displayTrendings(trendings.results) });
 

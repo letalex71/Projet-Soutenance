@@ -36,7 +36,7 @@
  */
 function checkSession(isLogged) {
 
-    let itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-']")
+    let itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-'], [id*='item-']")
     if (isLogged === true) {
         itemsToChange.each(function () {
             $(this).append(`
@@ -108,11 +108,16 @@ async function displayTrendings(trendings) {
     return new Promise(resolve => {
         let itemId = 0;
         for (item of trendings) {
-            if (trueTitle = item.title){
-                let urlTitle = item.title.split(" ").join("-");
-            }else if(trueTitle = item.name){
-                let urlTitle = item.name.split(" ").join("-");
+            var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
+            if(item.media_type == 'tv'){
+                var trueType = 'series';
+            } else if(item.media_type == 'movie' ){
+                var trueType = 'films';
+            }else if(item.media_type == "person"){
+                var trueType = 'personnes';
             }
+            console.log(trueTitle);
+            let urlTitle = trueTitle.split(" ").join("-");
             $('#trendings').append(`
                     <article class="grid-item" id="movie-${item.id}">
                         <div class="grid-item-icons u-top" id="item-` + itemId++ + `">
@@ -120,10 +125,10 @@ async function displayTrendings(trendings) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${item.vote_average}</span>
                         </i>
                         </div>
-                        <a href="${item.media_type}/${item.id}-${urlTitle}" class="grid-item-link media-id">
+                        <a href="${trueType}/${item.id}-${urlTitle}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
-                                <h3 class="grid-item-content-title">${item.title}</h3>
+                                <h3 class="grid-item-content-title">${trueTitle}</h3>
                             </div>
                             <img
                                 src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}"
