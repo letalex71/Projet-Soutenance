@@ -98,13 +98,21 @@ async function displayMovies(movies) {
     });
 
 }
+/**
+ * 1.3 Trending
+ * @param {*} trendings 
+ */
 
 async function displayTrendings(trendings) {
     console.log(trendings);
     return new Promise(resolve => {
         let itemId = 0;
         for (item of trendings) {
-            let urlTitle = item.title.split(" ").join("-");
+            if (trueTitle = item.title){
+                let urlTitle = item.title.split(" ").join("-");
+            }else if(trueTitle = item.name){
+                let urlTitle = item.name.split(" ").join("-");
+            }
             $('#trendings').append(`
                     <article class="grid-item" id="movie-${item.id}">
                         <div class="grid-item-icons u-top" id="item-` + itemId++ + `">
@@ -112,7 +120,7 @@ async function displayTrendings(trendings) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${item.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films/${item.id}-${urlTitle}" class="grid-item-link media-id">
+                        <a href="${item.media_type}/${item.id}-${urlTitle}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${item.title}</h3>
