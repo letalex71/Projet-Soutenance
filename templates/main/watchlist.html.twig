@@ -8,29 +8,82 @@
     </section>
     <section class="portfolio-block photography">
         <div class="row no-gutters">
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Active</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
-            </ul>
-            <div class="offset-1 col-md-10">
+            
+            <div class="offset-3 col-md-6">
                 <!-- Synopsis -->
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action justify-content justify-content-around justify-between active">Cras justo odio</a>
-                    <a href="#" class="list-group-item list-group-item-action justify-content justify-content-around justify-between">Dapibus ac facilisis in</a>
-                    <a href="#" class="list-group-item list-group-item-action justify-content justify-content-around justify-between">Morbi leo risus</a>
-                    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-                    <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
-                </div>
+                <h2 class="text-center mt-5">Complétés</h2>
+                
+                <table class="table table-bordered rounded-lg">
+                  
+                    <thead class="bg-info">
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">Titre</th>
+                          <th scope="col">Score</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for media in watchlist.m %}
+                             {% if media.status == "c" %}
+                               <tr>
+                                  <th scope="row"></th>
+                                  <td>{{media.title}}</td>
+                                  <td>{{media.score / 10}}</td>
+                                </tr>
+                             {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2 class="text-center mt-5">Abandonnés</h2>
+                
+                <table class="table table-bordered rounded-lg">
+                  
+                    <thead class="bg-info">
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">Titre</th>
+                          <th scope="col">Score</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for media in watchlist.m %}
+                             {% if media.status == "d" %}
+                               <tr>
+                                  <th scope="row"></th>
+                                  <td>{{media.title}}</td>
+                                  <td>{{media.score / 10}}</td>
+                                </tr>
+                             {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <h2 class="text-center mt-5">A regarder plus tard</h2>
+                <table class="table table-bordered rounded-lg">
+                  
+                    <thead class="bg-info">
+                        <tr>
+                          <th scope="col"></th>
+                          <th scope="col">Titre</th>
+                          <th scope="col">Score</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for media in watchlist.m %}
+                             {% if media.status == "c" %}
+                               <tr>
+                                  <th scope="row"></th>
+                                  <td>{{media.title}}</td>
+                                  <td>{{media.score / 10}}</td>
+                                </tr>
+                             {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
 
             </div>
         </div>
