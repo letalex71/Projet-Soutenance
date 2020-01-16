@@ -238,7 +238,7 @@ function displayPerson(response) {
 
     id = window.location.search.substr(4);
     var biography = response.biography.length == '' ? "Cet/cette acteur/actrice n'a pas de biographie" : response.biography;
-
+    
         // Used to convert US dates to French dates
         const birthday = new Date(response.birthday);
         const deathday = new Date(response.deathday);
