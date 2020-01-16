@@ -40,15 +40,7 @@ function checkSession(isLogged) {
     if (isLogged === true) {
         itemsToChange.each(function () {
             $(this).append(`
-                <div class="c-tooltip">
-                    <a href="/like">
-                        <div class="c-reaction-heart">
-                            <i class="c-reaction-icon far fa-heart"></i>
-                        </div>
-                    </a>
-                    <div class="c-tooltip-text">Cette fonctionnalité n'est pas encore disponible</div>
-                </div>
-                <div class="c-tooltip">
+                <div class="c-tooltip ml-1">
                         <div class="c-reaction-square">
                             <i class=" c-reaction-icon far fa-plus-square"></i>
                         </div>    
@@ -58,15 +50,7 @@ function checkSession(isLogged) {
     } else {
         itemsToChange.each(function () {
             $(this).append(`
-                    <div class="c-tooltip">
-                        <a href="/login">
-                            <div class="c-reaction">
-                                <i class="c-reaction-icon c-reaction-icon-disabled far fa-heart"></i>
-                            </div>
-                        </a>
-                        <div class="c-tooltip-text">Vous devez être connecté pour aimer ceci</div>
-                    </div>
-                    <div class="c-tooltip">
+                    <div class="c-tooltip ml-1">
                         <a href="/connexion">
                             <div class="c-reaction">
                                 <i class=" c-reaction-icon c-reaction-icon-disabled far fa-plus-square"></i>
@@ -77,7 +61,7 @@ function checkSession(isLogged) {
         });
     }
 
-   formOverlay();
+    formOverlay();
 }
 
 // 1.1 - 
