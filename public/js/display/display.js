@@ -99,6 +99,36 @@ async function displayMovies(movies) {
 
 }
 
+async function displayTrendings(trendings) {
+    console.log(trendings);
+    return new Promise(resolve => {
+        let itemId = 0;
+        for (item of trendings) {
+            let urlTitle = item.title.split(" ").join("-");
+            $('#trendings').append(`
+                    <article class="grid-item" id="movie-${item.id}">
+                        <div class="grid-item-icons u-top" id="item-` + itemId++ + `">
+                        <i class="far fa-star">
+                        <span id="js-glamour-likes-28145" class="c-reaction-icon">${item.vote_average}</span>
+                        </i>
+                        </div>
+                        <a href="films/${item.id}-${urlTitle}" class="grid-item-link media-id">
+                            <div class="grid-item-content">
+                                <div class="grid-item-content-divider"></div>
+                                <h3 class="grid-item-content-title">${item.title}</h3>
+                            </div>
+                            <img
+                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}"
+                                loading="lazy" class="grid-item-image u-inset">
+                        </a>
+                    </article>`);
+        }
+
+        resolve('Success');
+    });
+
+}
+
 // 1.2 - Popular TV Shows
 
 async function displayShows(shows) {
@@ -488,6 +518,6 @@ function fillGenres() {
 function displayResults(results)
 {
     $('.contents-container').before(`
-        <h2 class="text-center col-12 m-5 total-results">Nombre total de résultats : ${results}</h2>    
+        <h2 class="text-center col-12 m-5 total-results">Nombre total de résultats : ${results}</h2>
     `);
 }

@@ -20,7 +20,13 @@ function homePage(isLogged) {
 	})
 	.then( shows => { return displayShows(shows.results) });
 
-	Promise.all([movies, shows]).then( () => checkSession(isLogged));
+	let trendings = tmdbApi.trendings(
+		'all',
+		'day',
+	)
+	.then( trendings => { return displayTrendings(trendings.results) });
+
+	Promise.all([movies, shows, trendings]).then( () => checkSession(isLogged));
 
 }
 
