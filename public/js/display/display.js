@@ -96,12 +96,25 @@ async function displayMovies(movies) {
     });
 
 }
+/**
+ * 1.3 Trending
+ * @param {*} trendings 
+ */
 
 async function displayTrendings(trendings) {
     return new Promise(resolve => {
         let itemId = 0;
         for (item of trendings) {
             var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
+            if(item.media_type == 'tv'){
+                var trueType = 'series';
+            } else if(item.media_type == 'movie' ){
+                var trueType = 'films';
+            }else if(item.media_type == "person"){
+                var trueType = 'personnes';
+            }
+            console.log(trueTitle);
+            let urlTitle = trueTitle.split(" ").join("-");
             $('#trendings').append(`
                     <article class="grid-item" id="movie-${item.id}">
                         <div class="grid-item-icons u-top" id="item-` + itemId++ + `">
@@ -214,7 +227,7 @@ function displayPerson(response) {
 
     id = window.location.search.substr(4);
     var biography = response.biography.length == '' ? "Cet/cette acteur/actrice n'a pas de biographie" : response.biography;
-
+    
         // Used to convert US dates to French dates
         const birthday = new Date(response.birthday);
         const deathday = new Date(response.deathday);
