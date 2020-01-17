@@ -31,8 +31,7 @@ class RegistrationFormType extends AbstractType
                 // this is read and encoded in the controller
                 'mapped' => false,
                 'label' => 'Mot de passe',
-                'attr' => [
-                    'placeholder' => 'Mot de passe'],
+                'attr' => ['placeholder' => 'Mot de passe'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Veuillez entrer un mot de passe',
@@ -40,6 +39,8 @@ class RegistrationFormType extends AbstractType
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
                     ]),
                 ],
             ])
