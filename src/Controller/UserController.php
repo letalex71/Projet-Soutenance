@@ -67,6 +67,7 @@ class UserController extends AbstractController
 
         $watchlistRepo = $this->getDoctrine()->getRepository(Watchlist::class);
 
+        dump($user);
 
 
         $watchlist = $watchlistRepo->findByUser($user);

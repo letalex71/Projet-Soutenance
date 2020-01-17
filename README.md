@@ -76,7 +76,7 @@ formulaire watchlist :
 
 Rechercher :
  - [ ] changer système d'ajout des films (pagination ?)
- - [] implémenter barre de recherche textuelle
+ - [x] implémenter barre de recherche textuelle
  - [ ] Ajax loader en bas du scroll infini
 
 Pages d'affichage média :

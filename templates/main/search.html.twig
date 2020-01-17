@@ -75,19 +75,29 @@
     <script src=" {{asset('js/api/tmdb_api_calls.js')}} "></script>
     <script src=" {{asset('js/api/tmdb_api.js')}} "></script>
     <script src=" {{asset('js/display/display.js')}} "></script>
+    <script src=" {{asset('js/display/add_list_form.js')}} "></script>
+
 
     <script>
 
-    // $(document).click(function (event) {
-    //     console.log($(event.target));
-    // })
+    isLogged = {{ (app.user is not empty) ? 'true' : 'false' }};
+
+    {% if app.user is not empty %}
+
+        userId = {{ app.user.id }};
+        watchlistPath = '{{ path('send_watchlist') }}';
+        redirectionPath = '{{ path('search')}}';
+        deleteItemPath = '{{ path('delete_item') }}';
+        formCheckPath = '{{path('form_check')}}';
+
+    {% endif %}
 
     page = 1;
-   toggleRemoveEvent = true;
 
     fillGenres();
     fillYears({{ date|date('Y') }});
     filterSearch();
+    checkSession();
 
     
     $('h2[data-filter="type"]').click( function() {
@@ -102,17 +112,19 @@
             $(this).addClass('filter-active');
                    
             fillGenres();
-            filterSearch(); 
+            filterSearch();
+            checkSession();
         }
     
     });
 
     $('[data-filter="sort"]').click(function() {
 
-        $('h2[data-filter="sort"]').removeClass('filter-active');
+        $('[data-filter="sort"]').removeClass('filter-active');
         $(this).addClass('filter-active');
 
-        filterSearch(); 
+        filterSearch();
+        checkSession();
 
     })
 
@@ -123,6 +135,7 @@
         $(this).addClass('filter-active');
 
         filterSearch();
+        checkSession();
     });
 
     $('[data-filter="genres"]').click( () => {
@@ -134,6 +147,7 @@
         });
 
         filterSearch();
+        checkSession();
     });
 
     $('#my-div').on('click','button',function(){

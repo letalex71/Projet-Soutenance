@@ -114,6 +114,7 @@ function filterSearch() {
 			displayMovies(response.results);
 		else
 			displayShows(response.results);
+		checkSession();
 	});
 
 	function addEvent(node, type, callback) {
@@ -158,6 +159,7 @@ function filterSearch() {
 								displayMovies(response.results);
 							else
 								displayShows(response.results);
+							checkSession();
 						});
 	    			}
 	    		lastSt = stObj[ stProp ];

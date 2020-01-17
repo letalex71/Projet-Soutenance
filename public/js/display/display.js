@@ -34,13 +34,13 @@
  * Check if user is logged : Display "add to list" button if logged
  * @param {*} isLogged 
  */
-async function checkSession(isLogged) {
+async function checkSession() {
 
     
 
-    let itemsToChange = $("[class*='itemMovies'], [class*='itemShows']");
+    let itemsToChange = $("[class*='itemMovies']:not('.added-fav'), [class*='itemShows']:not('.added-fav')");
 
-
+    itemsToChange.addClass('added-fav');
 
     if (isLogged === true) {
 
@@ -108,7 +108,6 @@ async function checkSession(isLogged) {
                     </div>`);
         });
     }
-
     formOverlay();
 }
 
