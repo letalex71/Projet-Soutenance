@@ -16,11 +16,11 @@ class WatchlistsFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $faker = \Faker\Factory::create('fr_FR');
-        for($i = 0; $i < 20; $i++){
+        for($i = 0; $i < 2000; $i++){
             $newWatchlist = new Watchlist();
             $newWatchlist
         ->setUser( $this->getReference('user' . $faker->numberBetween($min = 1, $max = 24)) )
-        ->setScore($faker->numberBetween($min = 0, $max = 10))
+        ->setScore($faker->numberBetween($min = 0, $max = 10) * 10)
         ->setType($faker->randomElement(['m', 's']))
         ->setStatus($faker->randomElement(['plan to watch', 'completed', 'dropped']))
         ->setItemId($faker->randomNumber($nbDigits = 6, $strict = false))

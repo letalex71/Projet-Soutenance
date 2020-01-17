@@ -58,20 +58,38 @@ php bin/console doctrine:migrations:migrate
 Voilà !
 
 ***
-## MaJ 08/01/2020 : 
+## MaJ 16/01/2020 : 
 ***
-### Reboot du projet
-* Possibilité de créer des comptes et se connecter
-* Menu redéfini
-* contenu des pages mieux rendu
-* Boutons "ajouter watchlist/like" cliquables uniquement si utilisateur connecté (redirection vers /connexion sinon)
-* Bundle pour de meilleurs promesses préinstallée. Documentation ici https://github.com/guzzle/promises
-	
-### A faire : 
-* Fix : banniere lors de l'affichage d'un film/serie
-* Vue des watchlist/like
-* Table BDD "comments" (+ relation avec table users)
-* Page "rechercher"
-* Affichage des reviews
-* Génération de l'affichage des commentaires sur les articles (films/series/personnes)
-* Vue des personnes
+### Ajout : trendings
+* Ajout : formulaires personnalisation utilisateur
+* Ajout : formulaire commentaires (movies seulement)
+* Ajout image utilisateur dans navbar
+* Divers fix
+
+
+### A faire :
+formulaire watchlist :
+ - [x] système validation / message erreur
+ - [ ] L'implémenter dans Rechercher / pages d'affichage
+ - [x] supression de l'item quand déjà ajouté
+ - [x] mettre une croix a la place du + si déjà ajouté
+
+Rechercher :
+ - [ ] changer système d'ajout des films (pagination ?)
+ - [ ] implémenter barre de recherche textuelle
+
+
+Pages d'affichage média :
+ - [x]  Ajouter présentation commentaires
+ - [ ]  Pagination pour casting (optionnel)
+
+
+Page watchlist :
+ - [x] Créer la page
+ - [ ] Faire un affichage pour les séries
+ - [ ] Améliorer le visuel
+ - [ ] Améliorer réception de la watchlist (ne recevoir que film ou série par exemple)
+
+
+
+- [x] Trouver des images quand image originale non dispo

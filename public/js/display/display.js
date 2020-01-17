@@ -38,7 +38,7 @@ async function checkSession(isLogged) {
 
     
 
-    let itemsToChange = $("[class*='itemMovies'], [class*='itemShows'], [id*='item-']");
+    let itemsToChange = $("[class*='itemMovies'], [class*='itemShows']");
 
 
 
@@ -59,19 +59,15 @@ async function checkSession(isLogged) {
 
              
 
-            let media = $(this).parent().attr('id').split('-');
-            media[1] = parseInt(media[1]);
-
-            console.log(`movie condition = ${media[0] == 'tv' && watchlist['t'].length == 1 || ( watchlist['t'].length > 1 && !watchlist['t'].includes(media[1]) )}`  );
-            console.log(`tv condition = ${media[0] == 'movie' && ( watchlist['m'].length == 1 || ( watchlist['m'].length > 1 &&  !watchlist['m'].includes(media[1]) ) )}`  );
-
+            mediaCS = $(this).parent().attr('id').split('-');
+            mediaCS[1] = parseInt(mediaCS[1]);
 
 
                 /* Cette condition vérifie si l'item a déjà été ajouté a la watchlist par l'utilisateur.
                    Si c'est le cas, un bouton de suppression sera affiché à la place */
             if (
-                ( media[0] == 'tv' && ( watchlist['t'].length == 1 || ( watchlist['t'].length > 1 && !watchlist['t'].includes(media[1]) ) ) ) ||           
-                ( media[0] == 'movie' && ( watchlist['m'].length == 1 || ( watchlist['m'].length > 1 &&  !watchlist['m'].includes(media[1]) ) ) ) 
+                ( mediaCS[0] == 'tv' && ( watchlist['t'].length == 1 || ( watchlist['t'].length > 1 && !watchlist['t'].includes(mediaCS[1]) ) ) ) ||           
+                ( mediaCS[0] == 'movie' && ( watchlist['m'].length == 1 || ( watchlist['m'].length > 1 &&  !watchlist['m'].includes(mediaCS[1]) ) ) ) 
                ) 
             {    
 
@@ -123,10 +119,8 @@ async function displayMovies(movies) {
 
     return new Promise(resolve => {
         let movieId = 0;
-        
 
         for (movie of movies) {
-            let urlTitle = movie.title.split(" ").join("-");
             $('#popular-movies').append(`
                     <article class="grid-item" id="movie-${movie.id}">
                         <div class="grid-item-icons u-top itemMovies">
@@ -134,7 +128,7 @@ async function displayMovies(movies) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films/${movie.id}-${urlTitle}" class="grid-item-link media-id">
+                        <a href="films/${movie.id}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>
@@ -150,22 +144,37 @@ async function displayMovies(movies) {
     });
 
 }
-
-async function displayTrendings(trendings) {  
+/**
+ * 1.3 Trending
+ * @param {*} trendings 
+ */
+async function displayTrendings(trendings) {
     return new Promise(resolve => {
+        
         let itemId = 0;
         for (item of trendings) {
             var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
 
+            if(item.media_type == 'tv'){
+                var trueType = 'tv';
+                var itemType = 'itemShows';
+            } else if(item.media_type == 'movie' ){
+                var trueType = 'movie';
+                var itemType = 'itemMovies'
+            }else if(item.media_type == "person"){
+                var trueType = 'personnes';
+            }
+
             let urlTitle = trueTitle.split(" ").join("-");
+
             $('#trendings').append(`
-                    <article class="grid-item" id="movie-${item.id}">
-                        <div class="grid-item-icons u-top" id="item-` + itemId++ + `">
+                    <article class="grid-item" id="${trueType}-${item.id}">
+                        <div class="grid-item-icons u-top ${itemType}">
                         <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${item.vote_average}</span>
                         </i>
                         </div>
-                        <a href="films/${item.id}-${urlTitle}" class="grid-item-link media-id">
+                        <a href="films/${item.id}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${trueTitle}</h3>
@@ -200,7 +209,7 @@ async function displayShows(shows) {
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
                     </div>
-                    <a href="/series/${show.id}-${urlTitle}" class="grid-item-link">
+                    <a href="/series/${show.id}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${show.name}</h3>
@@ -223,17 +232,7 @@ async function displayShows(shows) {
  */
 
 // 2.1 - Display Movie
-// Get last characters of URL to have only the ID
 function displayMovie(response) {
-
-        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
-        var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
-        $('title').prepend(response.title);
-        $('.overview-content').text(overview);
-        $('.poster').attr('src', poster);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
-
 
         /**
          * Variables declarations
@@ -249,13 +248,15 @@ function displayMovie(response) {
         response.production_companies.forEach(studio => {
             studios.push(studio.name);
         });
+
         /**
          * Synopsis Area
-         */ 
+         */
         $('title').prepend(response.title);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
-        $('.poster').attr('src', poster);
+        $('#comment_form_itemName').val(response.title);
         $('.overview-content').text(overview);
+        $('.poster').attr('src', poster);
+        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         $('.votes').append(`<span class="fa-layers fa-fw">
         <i class="fas fa-star"></i>
             <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
@@ -278,7 +279,7 @@ function displayPerson(response) {
 
     id = window.location.search.substr(4);
     var biography = response.biography.length == '' ? "Cet/cette acteur/actrice n'a pas de biographie" : response.biography;
-
+    
         // Used to convert US dates to French dates
         const birthday = new Date(response.birthday);
         const deathday = new Date(response.deathday);
@@ -309,31 +310,32 @@ function displayPersonCredits(response){
      * Need to truncate results because some people have a very big movies credits. Display only the first 5
      */
     
-       
     var trunCreditsCast = response.cast.slice(0,5); 
 
     if(response.cast.length != 0){
 
-     trunCreditsCast.forEach(creditsCast => {
-         let title = creditsCast.title
-         let character = creditsCast.character
+    trunCreditsCast.forEach(creditsCast => {
+        let title = creditsCast.title
+        let character = creditsCast.character
             
-         if((window.innerWidth < 768)){
+        if((window.innerWidth < 768)){
 
-             title = title.substr(0, 10);
-             character = character.substr(0, 15);
+            title = title.substr(0, 10);
+            character = character.substr(0, 15);
 
-             title += (title.length == creditsCast.title.length) ? '' : '...';
-                
-             character += (character.length == creditsCast.character.length) ? '' : '...';
-         }
-         $('.list-cast').append(`
-         <div class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCast">
-             <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCast.poster_path}" loading="lazy" class="casting-list-img">
-             <p class="badge badge-pill text-dark">${character}</p>
-             <p class="badge badge-pill text-dark">dans : <a href="/films?id=${creditsCast.id}">${title}</a></p>
-         </div>`);
+            title += (title.length == creditsCast.title.length) ? '' : '...';
+            
+            character += (character.length == creditsCast.character.length) ? '' : '...';
+        }
+        $('.list-cast').append(`
+        <div class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCast">
+            <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCast.poster_path}" loading="lazy" class="casting-list-img">
+            <p class="badge badge-pill text-dark">${character}</p>
+            <p class="badge badge-pill text-dark">dans : <a href="/films?id=${creditsCast.id}">${title}</a></p>
+        </div>`);
         });
+    }else{
+        $('.list-cast').append('<p class="text-dark" id="creditsCrew">Cette personne n\'a jamais eu de rôle.</p>');
     }
 
     
@@ -355,10 +357,11 @@ function displayPersonCredits(response){
             $('.list-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCrew">
             <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCrew.poster_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill align-self-center"><a href="/films?id=${creditsCrew.id}">${title}</a></span></p>`);
+            <span class="badge badge-pill align-self-center"><a href="/films?id=${creditsCrew.id}">${title}</a></span></p>`
+            );
         });
     }else{
-       $('.list-crew').append('<p class="text-dark" id="creditsCrew">Pas de production fait</p>')
+        $('.list-crew').append('<p class="text-dark" id="creditsCrew">Cette personne n\'a jamais fait partie d\'une équipe de production.</p>');
     }
 }
 
@@ -430,6 +433,7 @@ function displayShow(id) {
          * Synopsis Area
          */
         $('title').prepend(response.name);
+        $('#comment_form_itemName').val(response.name);
         $('.backdrop').css('background-image', 'url("' + backdrop + '")');
         $('.poster').attr('src', poster);
         $('.overview-content').text(overview);

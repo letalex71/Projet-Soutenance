@@ -53,7 +53,7 @@ class ApiController extends AbstractController
     }
 
     /**
-     * [sendWatchlist description]
+     * [cette fonction sert à envoyer la watchlist d'une personne]
      * @Route ("api/send-watchlist", name="send_watchlist")
      */
     public function sendWatchlist(Request $request)
@@ -79,5 +79,38 @@ class ApiController extends AbstractController
     	}
 
     	return $this->json($itemList);
+    }
+
+    /** [ Cette fonction supprime un élément de la watchlist ]
+     * @Route("/api/delete-item", name="delete_item")
+     */
+    public function deleteItem(Request $request)
+    {
+        $data = $request->request->all();
+
+        $data['user'] = $this->getUser();
+
+        dump($data);
+        
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $watchlistRepository = $this->getDoctrine()->getRepository(Watchlist::class);
+       
+
+        $watchlistToDelete = $watchlistRepository->findOneBy(['itemId' => $data['itemId'], 'type' => $data['type'], 'user' => $data['user']->getId()]); 
+
+        
+        if($watchlistToDelete == NULL ){
+            return $this->json(['status' => 'error']);
+            
+        }else{
+            
+            $entityManager->remove($watchlistToDelete);
+    
+            $entityManager->flush();
+            
+            return $this->json(['status' => 'success']);
+
+        }
     }
 }

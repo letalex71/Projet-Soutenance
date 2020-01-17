@@ -48,10 +48,10 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class='menu_text'>Mon compte</span><i class="fas fa-user-circle menu_icon"></i>
+                            <span class='menu_text'>Mon compte</span><img src="{{ asset('img/user_img/'~ app.user.avatarPath ) }}"></img>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item{% if route == 'app_logout' %} active{% endif %}"
+                            <a class="dropdown-item{% if route == 'profile' %} active{% endif %}"
                                 href="{{ path('profile') }}">Mon Compte</a>
                             </a>
                             <a class="dropdown-item{% if route == 'app_logout' %} active{% endif %}"
@@ -76,9 +76,70 @@
         </nav>
     </header>
 
-    <div class="container-fluid">
+    <div class="container-fluid ">
+
         {% block body %}{% endblock %}
     </div>
+    <footer class="footer-bs gradient">
+        <div class="row">
+            <div class="col-md-4 offset-md-1 footer-brand animated fadeInLeft">
+                <img src="{{ asset('img/logo.png') }}"
+                    class="d-inline-block align-top mr-2" id="logo" alt="">
+                <p>Movilist est un site permettant de se tenir informé des derniers films ou des dernières séries sortis. Vous pouvez aussi rechercher des personnalités liées à des tournages. Le but de ce site, est aussi de vous faire découvrir de nouvelles choses, grâce à notre moteur de recommendations. Faites votre watchlist et voyez le résultat ! </p>
+                <p>© 2019 Movilist, Tout droits réservés</p>
+            </div>
+            <div class="col-md-4 footer-nav animated fadeInUp">
+                <h4>Menu —</h4>
+                <div class="col-md-6">
+                    <ul class="list footer">
+                        <li class="nav-item{% if route == 'home' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('home') }}">Accueil</a>
+                        </li>
+                        <li class="nav-item{% if route == 'search' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('search') }}">Rechercher</a>
+                        </li>
+                        {% if app.user %}
+                        <li class="nav-item{% if route == 'profile' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('profile') }}">Mon compte</a>
+                        </li>
+                        <li class="nav-item{% if route == 'profile' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('profile') }}">Mes watchlists</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item{% if route == 'app_login' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                        <li class="nav-item{% if route == 'app_register' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item{% if route == 'contact' %} active{% endif %}">
+                            <a class="nav-link" href="{{ path('contact') }}">Contactez-nous</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Termes et conditions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Politique de confidentialité</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2 footer-social animated fadeInDown">
+                <h4>Suivez-nous :</h4>
+                <ul>
+                    <li><a class="btn-link disabled" href="#">Facebook</a></li>
+                    <li><a class="btn-link disabled" href="#">Twitter</a></li>
+                    <li><a class="btn-link disabled" href="#">Instagram</a></li>
+                    <li><a class="btn-link disabled" href="#">RSS</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    {% block footer %}{% endblock %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>

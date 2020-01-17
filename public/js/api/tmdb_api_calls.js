@@ -22,7 +22,7 @@ function homePage(isLogged) {
 
 	let trendings = tmdbApi.trendings(
 		'all',
-		'day',
+		'week',
 	)
 	.then( trendings => { return displayTrendings(trendings.results) });
 
@@ -224,15 +224,33 @@ async function formCheck(data){
 	return await fetch(formCheckPath, {
 
 		headers: {
-			'Accept' : 'application/json'
+			'Accept': 'application/json'
 		},
 
 		method: 'POST',
 		
 		body: data,
-	}).then(response => {
+	}).then(function (response) {
 		return response.json();
 	});
 	
 }
 
+
+async function deleteItem(data) {
+
+	return await fetch(deleteItemPath, {
+		
+		headers: {
+			'Accept': 'application/json'
+		},
+
+		method: 'POST',
+
+		body: data,
+	}).then( function(response) {
+
+		return response.json();
+
+	});
+}
