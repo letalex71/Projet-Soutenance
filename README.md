@@ -80,7 +80,7 @@ Rechercher :
 
 
 Pages d'affichage média :
- 	- [ ]  Ajouter présentation commentaires
+ 	- [x]  Ajouter présentation commentaires
  	- [ ]  Pagination pour casting (optionnel)
 
 
