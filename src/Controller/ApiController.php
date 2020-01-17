@@ -52,4 +52,23 @@ class ApiController extends AbstractController
     	return $this->json(['status' => 'success']);
 
     }
+
+    /** [ itemId = int, type = 's' | 'm' ]
+     * @Route("/api/uncheck", name="uncheck")
+     */
+    public function Uncheck(Request $request)
+    {
+        $data = $request->query->all();
+
+        $data['user'] = $this->getUser();
+
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $watchlistRepository = $this->getDoctrine()->getRepository(Watchlist::class);
+       
+
+        $foundWatchlist = $watchlistRepository->findOneBy(['item_id' => ['itemID'], 'type' => 's' | 'm']); 
+
+        return $this->json(['status' => 'success']);
+    }
 }
