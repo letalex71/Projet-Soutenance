@@ -40,22 +40,23 @@ class MainController extends AbstractController
      */
     public function displayShow($id, Request $request)
     {
-        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['itemId' => $id, 'type' => 's'], ['publicationDate' => 'desc']);
         $commentToAdd = new Comment();
         $commentForm = $this->createForm(CommentFormType::class, $commentToAdd);
         $commentForm->handleRequest($request);
 
-        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+        if ($commentForm->isSubmitted() && $commentForm->isValid()){
             $commentToAdd
-                ->setType('s')
-                ->setItemId($id)
-                ->setPublicationDate(new \DateTime('now'))
-                ->setAuthor( $this->getUser() );
+            ->setType('s')
+            ->setItemId($id)
+            ->setPublicationDate(new \DateTime('now'))
+            ->setAuthor( $this->getUser() );
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($commentToAdd);
             $entityManager->flush();
-        }
+            }
+
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['itemId' => $id, 'type' => 's'], ['publicationDate' => 'desc']);
 
         return $this->render('main/show-view.html.twig',[
             'comments' => $comments,
@@ -70,31 +71,34 @@ class MainController extends AbstractController
     public function displayMovie($id, Request $request)
     {
 
-        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['itemId' => $id, 'type' => 'm'], ['publicationDate' => 'desc']);
 
         $commentToAdd = new Comment();
         $commentForm = $this->createForm(CommentFormType::class, $commentToAdd);
         $commentForm->handleRequest($request);
-
         if ($commentForm->isSubmitted() && $commentForm->isValid()) {
             $commentToAdd
                 ->setType('m')
                 ->setItemId($id)
                 ->setPublicationDate(new \DateTime('now'))
-                ->setAuthor( $this->getUser() );
+                ->setAuthor( $this->getUser() )
+            ;
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($commentToAdd);
             $entityManager->flush();
-            $this->addFlash('success', 'Article Created! Knowledge is power!');
+            $this->addFlash('success', 'Commentaire posté avec succès!');
         }
+
+        $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['itemId' => $id, 'type' => 'm'], ['publicationDate' => 'desc']);
 
         return $this->render('main/movie-view.html.twig',[
             'comments' => $comments,
             'commentForm' => $commentForm->createView(),
             'id' => $id,
-            ]);
-        }
+        ]);
+    }
+
+
     /**
      * @Route("/personnes/{id}", name="display_people")
      */

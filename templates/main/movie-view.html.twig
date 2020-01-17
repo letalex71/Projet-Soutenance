@@ -4,6 +4,11 @@
 {% block stylesheets %}{% endblock %}
 {% block body %}
 <main class="page projects-page" id="movie-item">
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+    {% endfor %}
     <section class="portfolio-block photography primary-block primary-block-text" id="movie-backdrop">
         <div class="backdrop primary-block">
         </div>
