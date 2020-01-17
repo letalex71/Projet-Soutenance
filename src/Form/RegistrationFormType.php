@@ -13,6 +13,8 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -20,14 +22,15 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-            'attr' => [
-                'placeholder' => 'Adresse email',
-                'label' => 'Adresse Email']
+                'label' => 'Adresse Email',
+                'attr' => ['placeholder' => 'Adresse email',
+                ]
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'label' => 'Mot de passe',
                 'attr' => [
                     'placeholder' => 'Mot de passe'],
                 'constraints' => [
@@ -40,8 +43,9 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('Inscription', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-block btn-info']
+            ->add('register', SubmitType::class, [
+                'label' => 'Inscription',
+                'attr' => ['class' => 'btn btn-sm btn-block btn-info']
             ])
         ;
     }

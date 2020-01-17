@@ -39,7 +39,7 @@ class MainController extends AbstractController
      * @Route("/series/{id}", name="display_show")
      */
     public function displayShow($id, Request $request)
-    {   
+    {
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['itemId' => $id, 'type' => 's'], ['publicationDate' => 'desc']);
         $commentToAdd = new Comment();
         $commentForm = $this->createForm(CommentFormType::class, $commentToAdd);
@@ -71,7 +71,7 @@ class MainController extends AbstractController
     {
 
         $comments = $this->getDoctrine()->getRepository(Comment::class)->findBy(['itemId' => $id, 'type' => 'm'], ['publicationDate' => 'desc']);
-        
+
         $commentToAdd = new Comment();
         $commentForm = $this->createForm(CommentFormType::class, $commentToAdd);
         $commentForm->handleRequest($request);
