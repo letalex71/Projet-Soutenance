@@ -76,8 +76,8 @@ formulaire watchlist :
 
 Rechercher :
  - [ ] changer système d'ajout des films (pagination ?)
- - [ ] implémenter barre de recherche textuelle
-
+ - [] implémenter barre de recherche textuelle
+ - [ ] Ajax loader en bas du scroll infini
 
 Pages d'affichage média :
  - [x]  Ajouter présentation commentaires
@@ -90,6 +90,24 @@ Page watchlist :
  - [ ] Améliorer le visuel
  - [ ] Améliorer réception de la watchlist (ne recevoir que film ou série par exemple)
 
+Pages "Item" :
 
+- [x] Affichage du backdrop
 
+Formulaires :
+
+- [x] Implémenter formulaires TWIG
+- [x] Gestion des messages de succes
+- [ ] Gestion des messages d'erreur
+- [ ] Implémenter regex pour mot de passe
+- [ ] CAPTCHAS !!!!!!!!!!!!!!!
+- [ ] ajouter "mot de passe actuel" page profile
+- [ ] Redirection formulaire profile
+
+Autre :
+- [x] Ajouter footer
 - [x] Trouver des images quand image originale non dispo
+- [ ] Barre transversale
+- [ ] Lorem pages inutiles
+- [ ] Div et icones page profile
+- [ ] Essayer d'assombrir la div "notes, watchlist" sur le poster (accueil)
