@@ -80,7 +80,7 @@ a[id*="v-pills-"].nav-link{
 }
 
 .primary-block {
-    background-color: #343a40;
+    background-color: rgba(0,0,0, .4);
     padding-bottom: 2.5rem !important;
     margin-top: 2rem;
 }
@@ -273,6 +273,15 @@ li {
 .nav-link {
     display: block;
     padding: .25rem .5rem !important;
+}
+.gradient {
+    background:linear-gradient(120deg,rgba(128, 112, 245, .8),#0ea0ff);
+    color:#fff
+}
+
+.gradient-nav {
+    background:linear-gradient(120deg,rgba(128, 112, 245, .8),#0ea0ff);
+    color:#fff
 }
 
 /** GRIDS **/

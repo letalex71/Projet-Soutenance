@@ -19,7 +19,7 @@
 <body>
     <header>
         {% set route = app.request.attributes.get('_route') %}
-        <nav id="main-navbar" class="navbar navbar-expand-md navbar-dark gradient">
+        <nav id="main-navbar" class="navbar navbar-expand-md navbar-dark gradient-nav">
             <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item{% if route == 'home' %} active{% endif %}">

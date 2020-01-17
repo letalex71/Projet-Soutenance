@@ -204,7 +204,7 @@ function displayMovie(response) {
         $('#comment_form_itemName').val(response.title);
         $('.overview-content').text(overview);
         $('.poster').attr('src', poster);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
+        $('body').css('background-image', 'url("' + backdrop + '")');
         $('.votes').append(`<span class="fa-layers fa-fw">
         <i class="fas fa-star"></i>
             <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
@@ -382,7 +382,7 @@ function displayShow(id) {
          */
         $('title').prepend(response.name);
         $('#comment_form_itemName').val(response.name);
-        $('.backdrop').css('background-image', 'url("' + backdrop + '")');
+        $('body').css('background-image', 'url("' + backdrop + '")');
         $('.poster').attr('src', poster);
         $('.overview-content').text(overview);
         $('.votes').append(`<span class="fa-layers fa-fw">

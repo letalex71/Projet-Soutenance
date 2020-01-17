@@ -3,11 +3,8 @@
 {% block title %}Mon Profil {% endblock %}
 {% block stylesheets %}{% endblock %}
 {% block body %}
-<main class="page projects-page">
-    <img src="{{ asset('img/user_img/' ~ app.user.bannerPath)}}" alt="banniere profil" class="backdrop"
-        style="background-size: cover;">
+<main class="page projects-page pb-4" id="movie-item">
     <section class="portfolio-block photography primary-block primary-block-text py-5">
-        <div class="container-fluid">
             <div class="row offset-1 h-100 ">
                 <div class="col-12 col-md-2 text-white d-flex personal-infos" id="left">
                     <div class="nav flex-column nav-pills sidebar-profile menuuu" id="v-pills-tab" role="tablist"
@@ -101,4 +98,14 @@
         </div>
     </section>
     {% endblock %}
-    {% block javascripts %}{% endblock %}
+    {% block javascripts %}
+    <script>
+        var profileBanner = "{{app.user.bannerPath }}";
+        var imgPath = "{{ asset('img/user_img/')}}";
+        console.log(imgPath + profileBanner);
+        function displayBanner(){
+            $('body').css('background-image', 'url("/img/user_img/defaultBanner.png")');
+        }
+        displayBanner();
+    </script>
+    {% endblock %}

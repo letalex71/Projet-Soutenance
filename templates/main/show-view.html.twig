@@ -3,132 +3,136 @@
 {% block title %} {% endblock %}
 {% block stylesheets %}{% endblock %}
 {% block body %}
-<main class="page projects-page" id="movie-item">
+<main class="page projects-page " id="movie-item">
     {% for message in app.flashes('success') %}
     <div class="alert alert-success">
         {{ message }}
     </div>
     {% endfor %}
     <section class="portfolio-block photography primary-block primary-block-text" id="movie-backdrop">
-        <div class="backdrop primary-block">
-        </div>
-        <div class="row ">
-            <img class="offset-1 col-md-3 img-fluid image poster" src="">
-            <div class="offset-1 col-md-7 synopsis">
-                <!-- Synopsis -->
-                <div class="container text-center overview">
-                    {% for message in app.flashes('success') %}
-                    <div class="alert alert-success">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-                    <div class="primary-details">
-                        <h3>Synopsis</h3>
-                        <p class="overview-content mb-2"></p>
-                    </div>
-                    <div class="mt-2">
-                        <h3 class="mt-2">Score</h3>
-                        <p class="votes"></p>
-                        <p class="votes-count"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="offset-1 col-md-3 mt-2 buttons">
-                <div class="btn-group dropdown">
-                    <button type="button" id="add-to-list" class="btn btn-sm btn-primary add-to-list">Ajouter à
-                        ma liste</button>
-                    <button type="button" id="add-to-list-dd"
-                        class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <span class="sr-only">Toggle Dropdown</span>
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Separated link</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <section class="portfolio-block photography gradient secondary-block">
-        </section>
-        <div class="row no-gutters pt-3">
-            <div class="offset-1 col-md-5 container-fluid text-wrap details overview">
-                <ul class="details-content">
-                    <h4 class="text-left mb-3"><ins>Détails</ins></h4>
-                    <li class="mb-3">Première diffusion : <span class="details-li-content first-episode"></span></li>
-                    <li class="mb-3">Dernière diffusion : <span class="details-li-content last-episode"></span></li>
-                    <li class="mb-3">Production : <span class="details-li-content in-production"></span></li>
-                    <li class="mb-3">Nombre de saisons : <span class="details-li-content number-seasons"></span></li>
-                    <li class="mb-3">Nombre d'épisodes : <span class="details-li-content number-episodes"></span></li>
-                    <li class="mb-3">Genres : <span class="details-li-content genres"></span></li>
-                </ul>
-            </div>
-            <div class="col-md-5 container-fluid border-bottom details">
-                <!-- Casting -->
-                <ul class="nav nav-pills offset-md-5 offset-3" id="pills-tab" role="tablist">
-                    <li class="nav-item nav-item-left">
-                        <a class="nav-link active" id="pills-cast-tab" data-toggle="pill" href="#pills-cast" role="tab"
-                            aria-controls="pills-cast" aria-selected="true">Casting</a>
-                    </li>
-                    <li class="nav-item nav-item-right">
-                        <a class="nav-link" id="pills-crew-tab" data-toggle="pill" href="#pills-crew" role="tab"
-                            aria-controls="pills-crew" aria-selected="false">Equipe</a>
-                    </li>
-                </ul>
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-cast" role="tabpanel"
-                        aria-labelledby="pills-cast-tab">
-                        <p class="list-group-cast"></p>
-                    </div>
-                    <div class="tab-pane fade" id="pills-crew" role="tabpanel" aria-labelledby="pills-crew-tab">
-                        <p class="list-group-crew"></p>
-                    </div>
-                </div>
-                <!-- Casting -->
-            </div>
-        </div>
-        
-        <section class="container-fluid portfolio-block photography primary-block container-fluid ">
-        </section>
-        <h2 class="primary-block-text text-center offset-md-1 col-md-6 pt-4 pb-4">Votre avis compte !</h2>
-        <div class="row">
-            <div class="offset-md-1 col-md-5 col-sm-5 col-12 comments-main rounded">
-                <ul class="p-0 m-0">
-                    <li>
-                        {{ form_start(commentForm) }}
-                        <div class="row comments mb-2">
-                            {% for comment in comments %}
-                            <div class="col-md-2 col-sm-2 col-3 text-center user-img">
-                                <img id="profile-photo" src="http://nicesnippets.com/demo/man01.png"
-                                    class="rounded-circle" />
-                            </div>
-                            <div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
-                                <h4 class="m-0"><a href="#">{{ comment.author.getEmail() }}</a></h4>
-                                <time class="text-white ml-3">{{ comment.author.getEmail() }}</time>
-                                <p class="mb-0 text-white">{{comment.content}}</p>
-                            </div>
-                            {% else %}
-                            <div class="col-md-2 col-sm-2 col-3 text-center user-img">
-                                <img id="profile-photo" src="{{ asset('img/logo.png') }}" class="rounded-circle" />
-                            </div>
-                            <div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
-                                <h4 class="m-0"></a>MoviList Team</h4>
-                                <time class="text-white ml-3"></time>
-                                <p class="mb-0 text-white">Il n'y a pas encore de commentaires, soyez le premier à en
-                                    ajouter un !</p>
-                            </div>
-                            {% endfor %}
+            <div class="row ">
+                <img class="offset-1 col-md-3 img-fluid image poster" src="">
+                <div class="offset-1 col-md-7 synopsis">
+                    <!-- Synopsis -->
+                    <div class="container text-center overview">
+                        {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
                         </div>
-                    </li>
-                    {{ form_widget(commentForm) }}
-                    {{ form_end(commentForm) }}
-                </ul>
+                        {% endfor %}
+                        <div class="primary-details">
+                            <h3>Synopsis</h3>
+                            <p class="overview-content mb-2"></p>
+                        </div>
+                        <div class="mt-2">
+                            <h3 class="mt-2">Score</h3>
+                            <p class="votes"></p>
+                            <p class="votes-count"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="row">
+                <div class="offset-1 col-md-3 mt-2 buttons">
+                    <div class="btn-group dropdown">
+                        <button type="button" id="add-to-list" class="btn btn-sm btn-primary add-to-list">Ajouter à
+                            ma liste</button>
+                        <button type="button" id="add-to-list-dd"
+                            class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="portfolio-block photography gradient secondary-block">
+            <div class="row no-gutters pt-3">
+                <div class="offset-1 col-md-5 container-fluid text-wrap details overview">
+                    <ul class="details-content">
+                        <h4 class="text-left mb-3"><ins>Détails</ins></h4>
+                        <li class="mb-3">Première diffusion : <span class="details-li-content first-episode"></span>
+                        </li>
+                        <li class="mb-3">Dernière diffusion : <span class="details-li-content last-episode"></span>
+                        </li>
+                        <li class="mb-3">Production : <span class="details-li-content in-production"></span></li>
+                        <li class="mb-3">Nombre de saisons : <span class="details-li-content number-seasons"></span>
+                        </li>
+                        <li class="mb-3">Nombre d'épisodes : <span class="details-li-content number-episodes"></span>
+                        </li>
+                        <li class="mb-3">Genres : <span class="details-li-content genres"></span></li>
+                    </ul>
+                </div>
+                <div class="col-md-5 container-fluid border-bottom details">
+                    <!-- Casting -->
+                    <ul class="nav nav-pills offset-md-5 offset-3" id="pills-tab" role="tablist">
+                        <li class="nav-item nav-item-left">
+                            <a class="nav-link active" id="pills-cast-tab" data-toggle="pill" href="#pills-cast"
+                                role="tab" aria-controls="pills-cast" aria-selected="true">Casting</a>
+                        </li>
+                        <li class="nav-item nav-item-right">
+                            <a class="nav-link" id="pills-crew-tab" data-toggle="pill" href="#pills-crew" role="tab"
+                                aria-controls="pills-crew" aria-selected="false">Equipe</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-cast" role="tabpanel"
+                            aria-labelledby="pills-cast-tab">
+                            <p class="list-group-cast"></p>
+                        </div>
+                        <div class="tab-pane fade" id="pills-crew" role="tabpanel" aria-labelledby="pills-crew-tab">
+                            <p class="list-group-crew"></p>
+                        </div>
+                    </div>
+                    <!-- Casting -->
+                </div>
+            </div>
+        </section>
+        <section class="container-fluid portfolio-block photography primary-block container-fluid ">
+            <h2 class="primary-block-text text-center offset-md-1 col-md-6 pt-4 pb-4">Votre avis compte !</h2>
+            <div class="row">
+                <div class="offset-md-1 col-md-5 col-sm-5 col-12 comments-main rounded">
+                    <ul class="p-0 m-0">
+                        <li>
+                            {{ form_start(commentForm) }}
+                            <div class="row comments mb-2">
+                                {% for comment in comments %}
+                                <div class="col-md-2 col-sm-2 col-3 text-center user-img">
+                                    <img id="profile-photo" src="http://nicesnippets.com/demo/man01.png"
+                                        class="rounded-circle" />
+                                </div>
+                                <div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
+                                    <h4 class="m-0"><a href="#">{{ comment.author.getEmail() }}</a></h4>
+                                    <time class="text-white ml-3">{{ comment.author.getEmail() }}</time>
+                                    <p class="mb-0 text-white">{{comment.content}}</p>
+                                </div>
+                                {% else %}
+                                <div class="col-md-2 col-sm-2 col-3 text-center user-img">
+                                    <img id="profile-photo" src="{{ asset('img/logo.png') }}" class="rounded-circle" />
+                                </div>
+                                <div class="col-md-9 col-sm-9 col-9 comment rounded mb-2">
+                                    <h4 class="m-0"></a>MoviList Team</h4>
+                                    <time class="text-white ml-3"></time>
+                                    <p class="mb-0 text-white">Il n'y a pas encore de commentaires, soyez le premier
+                                        à en
+                                        ajouter un !</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </li>
+                        {{ form_widget(commentForm) }}
+                        {{ form_end(commentForm) }}
+                    </ul>
+                </div>
+            </div>
+        </section>
         </div>
     </section>
 </main>
@@ -136,7 +140,7 @@
 {% block javascripts %}
 <script src="{{ asset('js/display/display.js') }} "></script>
 <script>
-    id = {{ id }};
-    displayShow({{id }});
+    id = {{id}};
+    displayShow({{id}});
 </script>
 {% endblock %}
