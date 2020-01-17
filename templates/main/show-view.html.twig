@@ -5,6 +5,11 @@
 {% block body %}
 <main class="page projects-page" id="movie-item">
     <section class="portfolio-block photography primary-block primary-block-text" id="movie-backdrop">
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
         <div class="backdrop primary-block">
         </div>
         <div class="row ">
@@ -12,6 +17,11 @@
             <div class="offset-1 col-md-7 synopsis">
                 <!-- Synopsis -->
                 <div class="container text-center overview">
+                    {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                     <div class="primary-details">
                         <h3>Synopsis</h3>
                         <p class="overview-content mb-2"></p>
@@ -42,7 +52,6 @@
                         <a class="dropdown-item" href="#">Separated link</a>
                     </div>
                 </div>
-                <button class="btn btn-sm btn-danger" id="like"><i class="far fa-heart">J'ai aimé ce film !</i></button>
             </div>
         </div>
     </section>
@@ -88,11 +97,10 @@
     <section class="container-fluid portfolio-block photography primary-block container-fluid ">
         <h2 class="primary-block-text text-center offset-md-1 col-md-6 pt-4 pb-4">Votre avis compte !</h2>
         <div class="row">
-            
-            
-            <div class="offset-md-1 col-md-5 col-sm-5 col-12 comments-main pt-4 rounded">
-                <ul class="p-0">
+            <div class="offset-md-1 col-md-5 col-sm-5 col-12 comments-main rounded">
+                <ul class="p-0 m-0">
                     <li>
+                        {{ form_start(commentForm) }}
                         <div class="row comments mb-2">
                             {% for comment in comments %}
                             <div class="col-md-2 col-sm-2 col-3 text-center user-img">
@@ -113,20 +121,15 @@
                                 <h4 class="m-0"></a>MoviList Team</h4>
                                 <time class="text-white ml-3"></time>
                                 <like></like>
-                                <p class="mb-0 text-white">Il n'y a pas encore de commentaires, soyez le premier à en ajouter un !</p>
+                                <p class="mb-0 text-white">Il n'y a pas encore de commentaires, soyez le premier à en
+                                    ajouter un !</p>
                             </div>
                             {% endfor %}
                         </div>
-                    </li>      
+                    </li>
+                    {{ form_widget(commentForm) }}
+                    {{ form_end(commentForm) }}
                 </ul>
-                <div class="row comment-box-main p-3 rounded-bottom">
-                    <div class="col-md-9 col-sm-9 col-9 pr-0 comment-box">
-                        <input type="text" class="form-control" placeholder="Ce que vous en pensez ...." />
-                    </div>
-                    <div class="col-md-3 col-sm-2 col-2 pl-0 text-center send-btn">
-                        <button class="btn btn-success">Envoyer</button>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -135,6 +138,7 @@
 {% block javascripts %}
 <script src="{{ asset('js/display/display.js') }} "></script>
 <script>
+    id = {{ id }};
     displayShow({{id }});
 </script>
 {% endblock %}

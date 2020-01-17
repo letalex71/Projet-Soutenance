@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserPasswordType extends AbstractType
 {
@@ -29,10 +30,13 @@ class UserPasswordType extends AbstractType
                     'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
                 ]),
             ],
-            'invalid_message' => 'Les mot de passe doivent correspondre.',
+            'invalid_message' => 'Les mots de passe doivent correspondre.',
             'options' => ['attr' => ['class' => 'password-field']],
             'first_options'  => ['label' => 'Mot de passe'],
             'second_options' => ['label' => 'Repetez mot de passe'],
+        ])
+        ->add('Enregistrer', SubmitType::class, [
+            'attr' => ['class' => 'btn btn-lg btn-block btn-info']
         ])
         ;
     }

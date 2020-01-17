@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CommentsRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  */
-class Comments
+class Comment
 {
     /**
      * @ORM\Id()
@@ -22,12 +22,6 @@ class Comments
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $author;
-
-    /**
      * @ORM\Column(type="integer")
      */
     private $itemId;
@@ -38,7 +32,7 @@ class Comments
     private $publicationDate;
 
     /**
-     * @ORM\Column(type="string", length=9)
+     * @ORM\Column(type="string", length=1)
      */
     private $type;
 
@@ -46,6 +40,12 @@ class Comments
      * @ORM\Column(type="string", length=210)
      */
     private $itemName;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
 
     public function getId(): ?int
     {
@@ -60,18 +60,6 @@ class Comments
     public function setContent(string $content): self
     {
         $this->content = $content;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?User
-    {
-        return $this->author;
-    }
-
-    public function setAuthor(?User $author): self
-    {
-        $this->author = $author;
 
         return $this;
     }
@@ -120,6 +108,18 @@ class Comments
     public function setItemName(string $itemName): self
     {
         $this->itemName = $itemName;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
