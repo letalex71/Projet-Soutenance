@@ -58,7 +58,7 @@ class ApiController extends AbstractController
      */
     public function Uncheck(Request $request)
     {
-        $data = $request->query->all();
+        $data = $request->request->all();
 
         $data['user'] = $this->getUser();
 
@@ -67,8 +67,20 @@ class ApiController extends AbstractController
         $watchlistRepository = $this->getDoctrine()->getRepository(Watchlist::class);
        
 
-        $foundWatchlist = $watchlistRepository->findOneBy(['item_id' => ['itemID'], 'type' => 's' | 'm']); 
+        $watchlistToDelete = $watchlistRepository->findOneBy(['itemId' => $data['itemId'], 'type' => $data['type'], 'user' => $data['user']->getId()]); 
 
-        return $this->json(['status' => 'success']);
+        
+        if($watchlistToDelete == NULL ){
+            return $this->json(['status' => 'error']);
+            
+        }else{
+            
+            $entityManager->remove($watchlistToDelete);
+    
+            $entityManager->flush();
+            
+            return $this->json(['status' => 'success']);
+
+        }
     }
 }
