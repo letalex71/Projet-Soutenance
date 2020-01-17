@@ -44,12 +44,40 @@ class ApiController extends AbstractController
         $watchlist->setItemId($data['itemID']);
         $watchlist->setUser($data['user']);
 
-
     	$em = $this->getDoctrine()->getManager();
     	$em->persist($watchlist);
     	$em->flush();
 
     	return $this->json(['status' => 'success']);
 
+    }
+
+    /**
+     * [sendWatchlist description]
+     * @Route ("api/send-watchlist", name="send_watchlist")
+     */
+    public function sendWatchlist(Request $request)
+    {	
+
+
+    	$watchlistRepo = $this->getDoctrine()->getRepository(Watchlist::class);
+
+    	$items = $watchlistRepo->findByUser($request->query->get('user'));
+
+    	$itemList = [
+    		'm' => [''],
+
+    		't' => ['']
+    	];
+
+    	foreach ($items as $item)
+    	{
+    		if ($item->getType() == 'm')
+    			$itemList['m'][] = $item->getItemId();
+    		else
+    			$itemList['t'][] = $item->getItemId();
+    	}
+
+    	return $this->json($itemList);
     }
 }

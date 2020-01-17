@@ -4,8 +4,8 @@
 
 function formOverlay() {
 
-	// Overlay s'affiche quand on clique sur icone
-	$('.c-reaction-square').click( function () {
+	// Overlay s'affiche quand on clique sur icone Ajouter
+	$('.add-media').click( function () {
 
 		let apiCall; // recevra la promesse de l'api
 
@@ -39,7 +39,7 @@ function formOverlay() {
 			// Ajout de la div formulaire
 			$('.overlay').append(`
 							
-					<div class="container bg-dark rounded-lg col-10 offset-1 watchlist-container">
+					<div class="shadow container bg-dark rounded-lg col-10 py-3 offset-1 watchlist-container">
 						<div class="row">
 							<img class="col-md-2" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}" alt="Image du film ${title}">
 						
@@ -113,20 +113,29 @@ function formOverlay() {
 			// Vérifie le formulaire et envoit le formulaire à notre API PHP + l'API TMDB sir tout est bon
 			$('.send-button').click( function(e) {
 				
-				
-				
 				e.preventDefault();
 
-				let status = $('#inputStatus').val();
 				let score = $('#inputScore').val();
+				let status = $('#inputStatus').val();
+
+
+				$(this).remove();
+				$('.watchlist-container').children().remove();
+				$('.watchlist-container').removeClass();
+				$('.overlay').children().addClass('watchlist-container col-sm-10 col-xs-10 col-md-6 bg-dark rounded-lg align-items-center d-flex flex-column py-3');
+				$('.watchlist-container').append('<p class="h4 text-light py-2 validation-info">Ajout en cours...</p>')
+				$('.watchlist-container').append('<div class="loader"></div>');
+
+
 				
-                                    	
+
 				let type = (media[0] == 'tv') ? 's' : 'm';
 
 				let formData = new FormData();
 
+
 				formData.append('type', type);
-				formData.append('score', score * 10);
+				formData.append('score', parseInt(score) * 10);
 				formData.append('title', title);
 				formData.append('status', status);
 				formData.append('itemID', media[1]);
@@ -134,8 +143,28 @@ function formOverlay() {
 		
 				let result = formCheck(formData);
 					
-				result.then(result => {
-					console.log(result);
+				result.then( message => {
+
+					$('.loader').remove();
+
+					if (message['status'] == 'success'){
+
+						$('.validation-info').text('L\'ajout à votre watchlist a bien été effectué ');
+						$('.watchlist-container')
+						.append(`
+						<a style="text-decoration: none!important;" href="${redirectionPath}">										
+							<button class="btn btn-info validation-button">Ok</button>
+						</a>
+						`);
+					}
+
+					else {
+						
+						$('.validation-info').text('Nous avons rencontré un problème, veuillez rééssayer plus tard');
+						$('.watchlist-container').append(`<button class="btn btn-info validation-button">Ok</button>`);
+						$('.validation-button').click(() => $('.overlay').remove() );
+					}
+	
 				});
 
 			});
@@ -150,4 +179,31 @@ function formOverlay() {
 		$(this).remove();
 	});
 
+
+	$('.delete-media').click( function(){
+
+		$('body').prepend('<div class="overlay d-flex align-items-center justify-content-center"></div>');
+
+
+		$('.overlay').append(`
+			
+			<div class="shadow container bg-dark rounded-lg col-md-6 offset-md-3 py-3 col-10 offset-1  watchlist-container">
+				<p class="h4 text-center text-light">Voulez vous vraiment supprimer cet élément de votre watchlist ?</p>
+				<div class="col-md-8 offset-md-2 d-flex justify-content-center">
+					<button class="btn btn-danger cancel-button mr-2">Annuler</button>
+					<button class="btn btn-info offset-1 send-button">Confirmer</button>
+				</div>
+			</div>
+
+			`);
+
+
+		// Enlève le formulaire quand on clique sur le boutton cancel
+			$('.cancel-button').click( function(e) {
+
+				e.preventDefault();
+				$('.overlay').remove();
+			});
+
+	});
 }

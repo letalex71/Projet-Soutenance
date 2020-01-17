@@ -34,18 +34,70 @@
  * Check if user is logged : Display "add to list" button if logged
  * @param {*} isLogged 
  */
-function checkSession(isLogged) {
+async function checkSession(isLogged) {
 
-    let itemsToChange = $("[id*='itemMovies-'], [id*='itemShows-'], [id*='item-']")
+    
+
+    let itemsToChange = $("[class*='itemMovies'], [class*='itemShows'], [id*='item-']");
+
+
+
     if (isLogged === true) {
+
+        // Récupère la liste des medias déjà ajoutés par l'utilisateur
+        let watchlist = await fetch(`${watchlistPath}?user=${userId}`)
+                            .then(function (response) {
+                                return response.json();
+                            })
+                            .then(function (result) {
+                                return result;
+                            });
+
+
+
         itemsToChange.each(function () {
-            $(this).append(`
-                <div class="c-tooltip ml-1">
-                        <div class="c-reaction-square">
-                            <i class=" c-reaction-icon far fa-plus-square"></i>
-                        </div>    
-                    <div class="c-tooltip-text">Cette fonctionnalité n'est pas encore disponible</div>
-                </div>`);
+
+             
+
+            let media = $(this).parent().attr('id').split('-');
+            media[1] = parseInt(media[1]);
+
+            console.log(`movie condition = ${media[0] == 'tv' && watchlist['t'].length == 1 || ( watchlist['t'].length > 1 && !watchlist['t'].includes(media[1]) )}`  );
+            console.log(`tv condition = ${media[0] == 'movie' && ( watchlist['m'].length == 1 || ( watchlist['m'].length > 1 &&  !watchlist['m'].includes(media[1]) ) )}`  );
+
+
+
+                /* Cette condition vérifie si l'item a déjà été ajouté a la watchlist par l'utilisateur.
+                   Si c'est le cas, un bouton de suppression sera affiché à la place */
+            if (
+                ( media[0] == 'tv' && ( watchlist['t'].length == 1 || ( watchlist['t'].length > 1 && !watchlist['t'].includes(media[1]) ) ) ) ||           
+                ( media[0] == 'movie' && ( watchlist['m'].length == 1 || ( watchlist['m'].length > 1 &&  !watchlist['m'].includes(media[1]) ) ) ) 
+               ) 
+            {    
+
+                $(this).append(`
+                    <div class="c-tooltip ml-1">
+                            <div class="c-reaction-square add-media">
+                                <i class=" c-reaction-icon far fa-plus-square"></i>
+                            </div>    
+                        <div class="c-tooltip-text">Ajouter à votre watchlist</div>
+                    </div>
+                `);
+            }
+            else
+            {
+                $(this).append(`
+
+                    <div class="c-tooltip ml-1">
+                            <div class="c-reaction-square delete-media">
+                                <i class=" c-reaction-icon far fa-times-circle"></i>
+                            </div>    
+                        <div class="c-tooltip-text">Supprimer de votre watchlist</div>
+                    </div>
+
+
+                `);
+            }
         });
     } else {
         itemsToChange.each(function () {
@@ -77,7 +129,7 @@ async function displayMovies(movies) {
             let urlTitle = movie.title.split(" ").join("-");
             $('#popular-movies').append(`
                     <article class="grid-item" id="movie-${movie.id}">
-                        <div class="grid-item-icons u-top" id="itemMovies-` + movieId++ + `">
+                        <div class="grid-item-icons u-top itemMovies">
                         <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                         </i>
@@ -99,13 +151,12 @@ async function displayMovies(movies) {
 
 }
 
-async function displayTrendings(trendings) {
-    console.log(trendings);
+async function displayTrendings(trendings) {  
     return new Promise(resolve => {
         let itemId = 0;
         for (item of trendings) {
             var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
-            console.log(trueTitle);
+
             let urlTitle = trueTitle.split(" ").join("-");
             $('#trendings').append(`
                     <article class="grid-item" id="movie-${item.id}">
@@ -144,7 +195,7 @@ async function displayShows(shows) {
             var poster = show.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
             $('#popular-shows').append(`
                 <article class="grid-item" id="tv-${show.id}">
-                    <div class="grid-item-icons u-top" id="itemShows-${showInd}">
+                    <div class="grid-item-icons u-top itemShows">
                     <i class="far fa-star">
                         <span id="js-glamour-likes-28145" class="c-reaction-icon ">${show.vote_average}</span>
                     </i>
