@@ -69,26 +69,26 @@ Voilà !
 
 ### A faire :
 formulaire watchlist :
-	- [ ] système validation / message erreur
- 	- [ ] L'implémenter dans Rechercher / pages d'affichage
- 	- [ ] supression de l'item quand déjà ajouté
- 	- [ ] mettre une croix a la place du + si déjà ajouté
+ - [x] système validation / message erreur
+ - [ ] L'implémenter dans Rechercher / pages d'affichage
+ - [x] supression de l'item quand déjà ajouté
+ - [x] mettre une croix a la place du + si déjà ajouté
 
 Rechercher :
-	- [ ] changer système d'ajout des films (pagination ?)
- 	- [ ] implémenter barre de recherche textuelle
+ - [ ] changer système d'ajout des films (pagination ?)
+ - [ ] implémenter barre de recherche textuelle
 
 
 Pages d'affichage média :
- 	- [x]  Ajouter présentation commentaires
- 	- [ ]  Pagination pour casting (optionnel)
+ - [x]  Ajouter présentation commentaires
+ - [ ]  Pagination pour casting (optionnel)
 
 
 Page watchlist :
- 	- [x] Créer la page
- 	- [ ] Faire un affichage pour les séries
- 	- [ ] Améliorer le visuel
- 	- [ ] Améliorer réception de la watchlist (ne recevoir que film ou série par exemple)
+ - [x] Créer la page
+ - [ ] Faire un affichage pour les séries
+ - [ ] Améliorer le visuel
+ - [ ] Améliorer réception de la watchlist (ne recevoir que film ou série par exemple)
 
 
 

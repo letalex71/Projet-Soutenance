@@ -43,6 +43,9 @@
     {% if app.user is not empty %}
 
         userId = {{ app.user.id }};
+        watchlistPath = '{{ path('send_watchlist') }}';
+        redirectionPath = '{{ path('home')}}';
+        deleteItemPath = '{{ path('delete_item') }}';
 
     {% endif %}
 

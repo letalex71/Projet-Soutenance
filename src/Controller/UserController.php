@@ -57,4 +57,63 @@ class UserController extends AbstractController
             'comments' => $comments,
         ]);
     }
+
+
+    /**
+     * @Route("/profil/watchlist/{id}", name="watchlist")
+     */
+    public function watchlist(User $user)
+    {   
+
+        $watchlistRepo = $this->getDoctrine()->getRepository(Watchlist::class);
+
+
+
+        $watchlist = $watchlistRepo->findByUser($user);
+
+        $movieIndex = 0;
+        $tvIndex = 0;
+
+        $watchlistOutput = [
+
+            'm' => [],
+            't' => []
+        ];
+
+        foreach ($watchlist as $item)
+        {
+            if ($item->getType() == 'm')
+            {
+                $watchlistOutput['m'][$movieIndex]['title'] = $item->getTitle(); 
+                $watchlistOutput['m'][$movieIndex]['posterPath'] = $item->getPosterPath();
+                $watchlistOutput['m'][$movieIndex]['score'] = $item->getScore();
+                $watchlistOutput['m'][$movieIndex]['itemId'] = $item->getItemId();
+                $watchlistOutput['m'][$movieIndex++]['status'] = $item->getStatus();
+
+            }
+            else
+            {
+                $watchlistOutput['t'][$tvIndex]['title'] = $item->getTitle(); 
+                $watchlistOutput['t'][$tvIndex]['posterPath'] = $item->getPosterPath();
+                $watchlistOutput['t'][$tvIndex]['sscore'] = $item->getScore();
+                $watchlistOutput['t'][$tvIndex]['itemId'] = $item->getItemId();
+                $watchlistOutput['t'][$tvIndex++]['status'] = $item->getStatus();
+            }
+        } 
+
+        dump($watchlistOutput);
+
+        return ($user == $this->getUser()) ?  
+        
+        $this->render('main/watchlist.html.twig', [
+            'watchlist' => $watchlistOutput
+        ]) 
+
+        :
+        
+        $this->render('main/watchlist.html.twig', [
+            'watchlist' => $watchlistOutput,
+            'user' => $user->getId()
+        ]);
+    }
 }

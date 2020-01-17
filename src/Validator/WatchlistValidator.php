@@ -60,7 +60,7 @@ class WatchlistValidator
 
         $metadata->addPropertyConstraint('title', new Length([ 'max' => '210' ]));
 
-        $metadata->addPropertyConstraint('score', new LessThanOrEqual([ 'value' => 10 ]));
+        $metadata->addPropertyConstraint('score', new LessThanOrEqual([ 'value' => 100 ]));
         $metadata->addPropertyConstraint('score', new GreaterThanOrEqual([ 'value' => 0 ]));
         $metadata->addPropertyConstraint('score', new DivisibleBy(['value' => 5]));
 
