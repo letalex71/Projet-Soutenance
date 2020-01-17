@@ -48,7 +48,7 @@ class UserController extends AbstractController
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
-            
+
         }
         $comments = $this->getUser()->getComments();
         return $this->render('user/profile.html.twig', [

@@ -24,7 +24,7 @@ class UserCustomizationType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
-                'required' => 'false',
+                'required' => false,
                 'constraints' => [
                     new Length([
                         'min' => 2,
@@ -36,7 +36,7 @@ class UserCustomizationType extends AbstractType
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom de famille',
-                'required' => 'false',
+                'required' => false,
                 'constraints' => [
                     new Length([
                         'min' => 2,
@@ -48,12 +48,12 @@ class UserCustomizationType extends AbstractType
             ])
             ->add('birthday', BirthdayType::class, [
                 'label' => 'Date de naissance',
-                'required' => 'false',
+                'required' => false,
                 'format' => 'dd-MM-yyyy'
             ])
             ->add('pseudo', TextType::class, [
                 'label' => 'Nom d\'utilisateur',
-                'required' => 'false',
+                'required' => false,
                 'constraints' => [
                     new Length([
                         'min' => 6,
@@ -65,7 +65,7 @@ class UserCustomizationType extends AbstractType
             ])
             ->add('biography', TextAreaType::class, [
                 'label' => 'Biographie',
-                'required' => 'false',
+                'required' => false,
                 'constraints' => [
                     new Length([
                         'min' => 10,
