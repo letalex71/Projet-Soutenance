@@ -11,6 +11,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ContactFormType extends AbstractType
 {
@@ -46,6 +47,9 @@ class ContactFormType extends AbstractType
                         'maxMessage' => 'Votre message doit moins de {{ limit }} caractères',
                     ]),
                 ],
+            ])
+            ->add('Envoyer', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-lg btn-block btn-info']
             ])
         ;
     }

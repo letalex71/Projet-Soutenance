@@ -5,6 +5,11 @@
 {% block body %}
 <main class="page projects-page" id="movie-item">
     <section class="portfolio-block photography primary-block primary-block-text" id="movie-backdrop">
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
         <div class="backdrop primary-block">
         </div>
         <div class="row ">
@@ -12,6 +17,11 @@
             <div class="offset-1 col-md-7 synopsis">
                 <!-- Synopsis -->
                 <div class="container text-center overview">
+                    {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                     <div class="primary-details">
                         <h3>Synopsis</h3>
                         <p class="overview-content mb-2"></p>

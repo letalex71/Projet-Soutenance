@@ -27,6 +27,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
         $userPasswordForm = $this->createForm(UserPasswordType::class, $user);
         $userPasswordForm->handleRequest($request);
+
         if ($userPasswordForm->isSubmitted() && $userPasswordForm->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -40,13 +41,14 @@ class UserController extends AbstractController
             $entityManager->flush();
 
         }
+
         $userCustomizationForm = $this->createForm(UserCustomizationType::class, $user);
         $userCustomizationForm->handleRequest($request);
         if ($userCustomizationForm->isSubmitted() && $userCustomizationForm->isValid()) {
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
-
+            
         }
         $comments = $this->getUser()->getComments();
         return $this->render('user/profile.html.twig', [

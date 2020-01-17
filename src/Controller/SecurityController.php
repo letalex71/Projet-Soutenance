@@ -17,8 +17,19 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+
+        $form = $this->createForm(LoginFormType::class, $user);
+        $form->handleRequest($request);
         if ($this->getUser()) {
             return $this->redirectToRoute('home');
+        }
+        if ($form->isSubmitted() && $form->isValid()) {
+            
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_login');
         }
 
         // get the login error if there is one

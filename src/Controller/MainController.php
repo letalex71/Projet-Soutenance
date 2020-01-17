@@ -86,6 +86,7 @@ class MainController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($commentToAdd);
             $entityManager->flush();
+            $this->addFlash('success', 'Article Created! Knowledge is power!');
         }
 
         return $this->render('main/movie-view.html.twig',[

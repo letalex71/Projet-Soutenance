@@ -17,23 +17,14 @@
                             <form class="form-signin" method="POST">
                                 {{ form_start(registrationForm) }}
                                 <div class="form-label-group">
-                                    {{ form_row(registrationForm.email, {
-                                        'label': 'Adresse Email ',
-                                        'attr': {'placeholder': 'Adresse email'}
-                                        }) 
-                                    }}
+                                {{ form_row(registrationForm.email)}}
                                 </div>
                                 <div class="form-label-group">
-                                    {{ form_row(registrationForm.plainPassword, {
-                                        'label': 'Mot de passe ',
-                                        'attr': {'placeholder': 'Mot de passe'}
-                                        })
-                                    }}
+                                    {{ form_label(registrationForm.plainPassword, 'Mot de Passe')}}
                                 </div>
-                                <button class="btn btn-sm btn-primary btn-block text-uppercase mt-3"
-                                    type="submit">Inscription</button>
                                 <p class="d-block text-center mt-2 small">Déjà un compte ? <a
                                         href="{{ path('app_login') }}">Cliquez ici pour vous connecter</a></p>
+                                {{ form_end(registrationForm) }}
                                 <hr class="my-4">
                                 <button class="btn btn-sm btn-danger btn-google btn-block text-uppercase"
                                     type="submit"><i class="fab fa-google mr-2"></i>Connexion avec
@@ -41,7 +32,6 @@
                                 <button class="btn btn-sm btn-info btn-facebook btn-block text-uppercase"
                                     type="submit"><i class="fab fa-facebook-f mr-2"></i>Connexion avec
                                     Facebook</button>
-                                {{ form_end(registrationForm) }}
                             </form>
                         </div>
                     </div>

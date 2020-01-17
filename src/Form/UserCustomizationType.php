@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserCustomizationType extends AbstractType
 {
@@ -73,6 +74,9 @@ class UserCustomizationType extends AbstractType
                         'maxMessage' => 'Votre biographie doit comporter moins de {{ limit }} caractères',
                     ]),
                 ],
+            ])
+            ->add('Enregistrer', SubmitType::class, [
+                'attr' => ['class' => 'btn btn-lg btn-block btn-info']
             ])
         ;
     }
