@@ -70,14 +70,14 @@ Voilà !
 ### A faire :
 formulaire watchlist :
  - [x] système validation / message erreur
- - [ ] L'implémenter dans Rechercher / pages d'affichage
+ - [x] L'implémenter dans Rechercher / pages d'affichage
  - [x] supression de l'item quand déjà ajouté
  - [x] mettre une croix a la place du + si déjà ajouté
 
 Rechercher :
  - [ ] changer système d'ajout des films (pagination ?)
  - [x] implémenter barre de recherche textuelle
- - [ ] Ajax loader en bas du scroll infini
+ - [x] Ajax loader en bas du scroll infini
 
 Pages d'affichage média :
  - [x]  Ajouter présentation commentaires
