@@ -28,11 +28,14 @@ class MainController extends AbstractController
     /**
      * @Route("/rechercher", name="search")
      */
-    public function search()
+    public function search(Request $request)
     {
 
+        $query = $request->query->get('s');
+
         return $this->render('main/search.html.twig', [
-            "date" => new DateTime()
+            "date" => new DateTime(),
+            "query" => $query
         ]);
     }
     /**

@@ -128,6 +128,7 @@ function filterSearch() {
 	addEvent(window, 'scroll', (function() {
     // https://developer.mozilla.org/en/DOM/window.scrollY#Notes
 	    var stObj, stProp;
+
 	    if('scrollY' in window) { // CSSOM:
 	        // http://www.w3.org/TR/cssom-view/#extensions-to-the-window-interface
 	        stObj = window;
@@ -147,14 +148,15 @@ function filterSearch() {
 	        var lastSt = -1;
 	        return function(e) {
 		        if(lastSt !== stObj[ stProp ] && // IE <= 8 fires twice
-		        	node.scrollHeight === stObj[ stProp ] + node.clientHeight) {
+		        	node.scrollHeight  === stObj[ stProp ] + node.clientHeight )  {
 		        		
 		        		filters['page'] = ++page;
+						$('.portfolio-block').append('<div class="loader m-auto"></div>')
 
 						
 						tmdbApi.discover(type, filters)
 						.then( response => {
-
+							$('.loader').remove();
 							if (type == 'movie')
 								displayMovies(response.results);
 							else
@@ -255,4 +257,74 @@ async function deleteItem(data) {
 		return response.json();
 
 	});
+}
+
+
+function querySearch(query) {
+
+
+	// ajoute la div qui contiendra les médias
+	$('.contents-container').attr('id', `trendings`);
+	
+	// Appel api avec les filtres correspondants
+	tmdbApi.search('multi', query)
+	.then( response => {
+
+		// Variable qui servira à rappeler l'api avec l'infinite scroll
+		page = 1;
+
+
+		$('.grid-item').remove();
+		$('.total-results').remove();
+
+		displayResults(response.total_results);
+		displayTrendings(response.results);
+		checkSession();
+	});
+
+	function addEvent(node, type, callback) {
+		if('addEventListener' in node) {
+			node.addEventListener(type, callback, false);
+		} else {
+			node.attachEvent('on' + type, callback);
+		}
+	}
+
+	addEvent(window, 'scroll', (function() {
+    // https://developer.mozilla.org/en/DOM/window.scrollY#Notes
+	    var stObj, stProp;
+
+	    if('scrollY' in window) { // CSSOM:
+	        // http://www.w3.org/TR/cssom-view/#extensions-to-the-window-interface
+	        stObj = window;
+	        stProp = 'scrollY';
+	    } else if('pageYOffset' in window) { // CSSOM too
+	    	stObj = window;
+	    	stProp = 'pageYOffset';
+	    } else {
+	    	stObj = document.documentElement.clientHeight ?
+	    	document.documentElement : document.body;
+	    	stProp = 'scrollTop';
+	    }
+
+	    var node = document.documentElement.clientHeight ?
+	    document.documentElement :
+	        document.body; // let's assume it is IE in quirks mode
+	        var lastSt = -1;
+	        return function(e) {
+		        if(lastSt !== stObj[ stProp ] && // IE <= 8 fires twice
+		        	node.scrollHeight  === stObj[ stProp ] + node.clientHeight )  {		        		
+						
+						$('.portfolio-block').append('<div class="loader m-auto"></div>')
+						tmdbApi.search('multi', query, ++page)
+						.then( response => {
+
+							$('.loader').remove();
+							displayTrendings(response.results);
+							checkSession();
+						});
+	    			}
+	    		lastSt = stObj[ stProp ];
+			};
+	})());
 }

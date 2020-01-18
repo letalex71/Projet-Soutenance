@@ -3,6 +3,7 @@
 {% block title %}Rechercher {% endblock %}
 {% block body %}
 
+
     <h1 class="text-center mt-3">Rechercher :</h1>
     <main class="page projects-page">
 
@@ -69,7 +70,6 @@
 
     
 
-
 {% endblock %}
 {% block javascripts %}
     <script src=" {{asset('js/api/tmdb_api_calls.js')}} "></script>
@@ -96,8 +96,15 @@
 
     fillGenres();
     fillYears({{ date|date('Y') }});
-    filterSearch();
-    checkSession();
+
+
+    {% if query is empty %}
+        filterSearch();
+    {% else %}
+        querySearch( '{{ query }}' );
+    {% endif %}
+
+        checkSession();
 
     
     $('h2[data-filter="type"]').click( function() {

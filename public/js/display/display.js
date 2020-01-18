@@ -148,6 +148,7 @@ async function displayMovies(movies) {
  * @param {*} trendings 
  */
 async function displayTrendings(trendings) {
+    
     return new Promise(resolve => {
         
         let itemId = 0;
@@ -560,9 +561,6 @@ function fillGenres() {
                         filterSearch();
                     }
 
-
-
-
                 });
 
 
@@ -574,6 +572,6 @@ function fillGenres() {
 function displayResults(results)
 {
     $('.contents-container').before(`
-        <h2 class="text-center col-12 m-5 total-results">Nombre total de résultats : ${results}</h2>
+        <h2 class="text-center col-12 mt-5 total-results">Nombre total de résultats : ${results}</h2>
     `);
 }

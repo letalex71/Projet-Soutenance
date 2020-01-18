@@ -122,4 +122,11 @@ var tmdbApi = {
 
 		return this.apiRequest(url);
 	},
+
+	search: function (type, query, page = 1, language = 'fr-FR', )
+	{
+		url = `${this.baseURL}search/${type}?api_key=${this.apiKey}&language=${language}&page=${page}&query=${query}`
+
+		return this.apiRequest(url);
+	}
 }
