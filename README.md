@@ -113,3 +113,4 @@ Autre :
 - [ ] Essayer d'assombrir la div "notes, watchlist" sur le poster (accueil)
 - [ ] Implémenter poser par défaut si image non trouvée
 - [ ] Implémenter score = 0 si score "undefined"
+- [ ] recherche qui n'affiche que des items pointant vers des films alors que certains résultats ne le sont pas.
