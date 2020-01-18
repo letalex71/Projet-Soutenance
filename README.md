@@ -111,3 +111,5 @@ Autre :
 - [ ] Lorem pages inutiles
 - [ ] Div et icones page profile
 - [ ] Essayer d'assombrir la div "notes, watchlist" sur le poster (accueil)
+- [ ] Implémenter poser par défaut si image non trouvée
+- [ ] Implémenter score = 0 si score "undefined"
