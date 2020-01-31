@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
 
 class CommentFormType extends AbstractType
 {
@@ -36,6 +37,7 @@ class CommentFormType extends AbstractType
             'attr' => ['class' => 'btn btn-lg btn-block btn-success'],
         ])
         ->add('itemName', HiddenType::class)
+        ->add('HoneyPot', HoneypotType::class)
         ;
     }
 
