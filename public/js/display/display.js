@@ -36,7 +36,7 @@
  */
 async function checkSession() {
 
-    
+
 
     let itemsToChange = $("[class*='itemMovies']:not('.added-fav'), [class*='itemShows']:not('.added-fav')");
 
@@ -46,30 +46,29 @@ async function checkSession() {
 
         // Récupère la liste des medias déjà ajoutés par l'utilisateur
         let watchlist = await fetch(`${watchlistPath}?user=${userId}`)
-                            .then(function (response) {
-                                return response.json();
-                            })
-                            .then(function (result) {
-                                return result;
-                            });
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (result) {
+                return result;
+            });
 
 
 
         itemsToChange.each(function () {
 
-             
+
 
             mediaCS = $(this).parent().attr('id').split('-');
             mediaCS[1] = parseInt(mediaCS[1]);
 
 
-                /* Cette condition vérifie si l'item a déjà été ajouté a la watchlist par l'utilisateur.
-                   Si c'est le cas, un bouton de suppression sera affiché à la place */
+            /* Cette condition vérifie si l'item a déjà été ajouté a la watchlist par l'utilisateur.
+               Si c'est le cas, un bouton de suppression sera affiché à la place */
             if (
-                ( mediaCS[0] == 'tv' && ( watchlist['t'].length == 1 || ( watchlist['t'].length > 1 && !watchlist['t'].includes(mediaCS[1]) ) ) ) ||           
-                ( mediaCS[0] == 'movie' && ( watchlist['m'].length == 1 || ( watchlist['m'].length > 1 &&  !watchlist['m'].includes(mediaCS[1]) ) ) ) 
-               ) 
-            {    
+                (mediaCS[0] == 'tv' && (watchlist['t'].length == 1 || (watchlist['t'].length > 1 && !watchlist['t'].includes(mediaCS[1])))) ||
+                (mediaCS[0] == 'movie' && (watchlist['m'].length == 1 || (watchlist['m'].length > 1 && !watchlist['m'].includes(mediaCS[1]))))
+            ) {
 
                 $(this).append(`
                     <div class="c-tooltip ml-1">
@@ -79,9 +78,7 @@ async function checkSession() {
                         <div class="c-tooltip-text">Ajouter à votre watchlist</div>
                     </div>
                 `);
-            }
-            else
-            {
+            } else {
                 $(this).append(`
 
                     <div class="c-tooltip ml-1">
@@ -148,20 +145,20 @@ async function displayMovies(movies) {
  * @param {*} trendings 
  */
 async function displayTrendings(trendings) {
-    
+
     return new Promise(resolve => {
-        
+
         let itemId = 0;
         for (item of trendings) {
             var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
 
-            if(item.media_type == 'tv'){
+            if (item.media_type == 'tv') {
                 var trueType = 'tv';
                 var itemType = 'itemShows';
-            } else if(item.media_type == 'movie' ){
+            } else if (item.media_type == 'movie') {
                 var trueType = 'movie';
                 var itemType = 'itemMovies'
-            }else if(item.media_type == "person"){
+            } else if (item.media_type == "person") {
                 var trueType = 'personnes';
             }
 
@@ -234,120 +231,119 @@ async function displayShows(shows) {
 // 2.1 - Display Movie
 function displayMovie(response) {
 
-        /**
-         * Variables declarations
-         */
-        var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
-        var poster = response.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
-        var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
-        let countries = [];
-        response.production_countries.forEach(country => {
-            countries.push(country.name);
-        });
-        let studios = [];
-        response.production_companies.forEach(studio => {
-            studios.push(studio.name);
-        });
+    /**
+     * Variables declarations
+     */
+    var backdrop = response.backdrop_path == null ? `img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
+    var poster = response.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
+    var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
+    let countries = [];
+    response.production_countries.forEach(country => {
+        countries.push(country.name);
+    });
+    let studios = [];
+    response.production_companies.forEach(studio => {
+        studios.push(studio.name);
+    });
 
-        /**
-         * Synopsis Area
-         */
-        $('title').prepend(response.title);
-        $('#comment_form_itemName').val(response.title);
-        $('.overview-content').text(overview);
-        $('.poster').attr('src', poster);
-        $('body').css('background-image', 'url("' + backdrop + '")');
-        $('.votes').append(`<span class="fa-layers fa-fw">
+    /**
+     * Synopsis Area
+     */
+    $('title').prepend(response.title);
+    $('#comment_form_itemName').val(response.title);
+    $('.overview-content').text(overview);
+    $('.poster').attr('src', poster);
+    $('body').css('background-image', 'url("' + backdrop + '")');
+    $('.votes').append(`<span class="fa-layers fa-fw">
         <i class="fas fa-star"></i>
             <span class="fa-layers-text fa-inverse" data-fa-transform="shrink-11.5 rotate--30" style="font-weight:900">${response.vote_average}</span>
         </span>`);
-        $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
-        /**
-         * Details Area
-         */
-        $('.country').append(countries.join(', '));
-        $('.studio').append(studios.join(', '));
-        $('.year').append(`${response.release_date.substr(0, 4)}`);
-        $('.budget').append(`${response.budget} $`);
-        $('.revenues').append(`${response.revenue} $`)
+    $('.votes-count').append(`<span class="font-weight-light small">Note déduite après ${response.vote_count} votes</span>`);
+    /**
+     * Details Area
+     */
+    $('.country').append(countries.join(', '));
+    $('.studio').append(studios.join(', '));
+    $('.year').append(`${response.release_date.substr(0, 4)}`);
+    $('.budget').append(`${response.budget} $`);
+    $('.revenues').append(`${response.revenue} $`)
 }
 
 /**
  * 2.2 Display People 
  */
 function displayPerson(response) {
-
-    id = window.location.search.substr(4);
+    console.log(response);
     var biography = response.biography.length == '' ? "Cet/cette acteur/actrice n'a pas de biographie" : response.biography;
-    
-        // Used to convert US dates to French dates
-        const birthday = new Date(response.birthday);
-        const deathday = new Date(response.deathday);
-        const options = {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        };
 
-        $('.overview-content').text(biography);
-        $('.name').prepend(response.name);
-        $('.profile').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.profile_path}`);
-        $('.birthday').append(`<li><small>${birthday.toLocaleDateString('fr-FR', options)}</small></li>`);
-        if(response.deathday !== null){
+    // Used to convert US dates to French dates
+    const birthday = new Date(response.birthday);
+    const deathday = new Date(response.deathday);
+    const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+
+    $('.overview-content').text(biography);
+    $('.name').prepend(response.name);
+    $('.profile').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.profile_path}`);
+    $('.birthday').append(`<li><small>${birthday.toLocaleDateString('fr-FR', options)}</small></li>`);
+    if (response.deathday !== null) {
         $('.deathday').append(`<li><small>${deathday.toLocaleDateString('fr-FR', options)}</small></li>`);
-        }else{
-            $('.death').remove;
-        }
-        $('.birthplace').append(`<li><small>${response.place_of_birth}</small></li>`);
-        $('.know-for-department').append(`<li><small>${response.known_for_department}</small></li>`);
+    } else {
+        $('.death').remove;
+    }
+    $('.birthplace').append(`<li><small>${response.place_of_birth}</small></li>`);
+    $('.know-for-department').append(`<li><small>${response.known_for_department}</small></li>`);
 }
 
-function displayPersonCredits(response){
+function displayPersonCredits(response) {
 
     /**
      * Credits area
      * Need to truncate results because some people have a very big movies credits. Display only the first 5
      */
-    
-    var trunCreditsCast = response.cast.slice(0,5); 
 
-    if(response.cast.length != 0){
+    var trunCreditsCast = response.cast.slice(0, 5);
 
-    trunCreditsCast.forEach(creditsCast => {
-        let title = creditsCast.title
-        let character = creditsCast.character
-            
-        if((window.innerWidth < 768)){
+    if (response.cast.length != 0) {
 
-            title = title.substr(0, 10);
-            character = character.substr(0, 15);
+        trunCreditsCast.forEach(creditsCast => {
+            let title = creditsCast.title
+            let character = creditsCast.character
 
-            title += (title.length == creditsCast.title.length) ? '' : '...';
-            
-            character += (character.length == creditsCast.character.length) ? '' : '...';
-        }
-        $('.list-cast').append(`
+            if ((window.innerWidth < 768)) {
+
+                title = title.substr(0, 10);
+                character = character.substr(0, 15);
+
+                title += (title.length == creditsCast.title.length) ? '' : '...';
+
+                character += (character.length == creditsCast.character.length) ? '' : '...';
+            }
+            $('.list-cast').append(`
         <div class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCast">
             <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCast.poster_path}" loading="lazy" class="casting-list-img">
             <p class="badge badge-pill text-dark">${character}</p>
-            <p class="badge badge-pill text-dark">dans : <a href="/films?id=${creditsCast.id}">${title}</a></p>
+            <p class="badge badge-pill text-dark">dans : <a href="/films/${creditsCast.id}">${title}</a></p>
         </div>`);
         });
-    }else{
+    } else {
         $('.list-cast').append('<p class="text-dark" id="creditsCrew">Cette personne n\'a jamais eu de rôle.</p>');
     }
 
-    
 
-    var trunCreditsCrew = response.crew.slice(0,5);
-    if(response.crew.length != 0){
+
+    var trunCreditsCrew = response.crew.slice(0, 5);
+    if (response.crew.length != 0) {
 
         trunCreditsCrew.forEach(creditsCrew => {
 
             let title = creditsCrew.title
-            
-            if((window.innerWidth < 960) && title.length >= 26){
+
+            if ((window.innerWidth < 960) && title.length >= 26) {
 
                 title = title.substr(0, 25);
 
@@ -357,38 +353,37 @@ function displayPersonCredits(response){
             $('.list-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCrew">
             <img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${creditsCrew.poster_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill align-self-center"><a href="/films?id=${creditsCrew.id}">${title}</a></span></p>`
-            );
+            <span class="badge badge-pill align-self-center"><a href="/films/${creditsCrew.id}">${title}</a></span></p>`);
         });
-    }else{
+    } else {
         $('.list-crew').append('<p class="text-dark" id="creditsCrew">Cette personne n\'a jamais fait partie d\'une équipe de production.</p>');
     }
 }
 
-function displayCast(response){
-        /**
-         * Cast / Crew Area
-         * Need to truncate results because some movies have very big cast/crew. Display only the first ten
-         */
-        var truncCast = response.cast.slice(0, 5);
-        truncCast.forEach(casting => {
-            $('.list-group-cast').append(`
+function displayCast(response) {
+    /**
+     * Cast / Crew Area
+     * Need to truncate results because some movies have very big cast/crew. Display only the first ten
+     */
+    var truncCast = response.cast.slice(0, 5);
+    truncCast.forEach(casting => {
+        $('.list-group-cast').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${casting.profile_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}">${casting.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes/${casting.id}">${casting.name}</a></span>
             <span class="badge badge-pill text-dark">${casting.character}</span>
         </p>`);
-        });
+    });
 
-        var truncCrew = response.crew.slice(0, 5);
-        truncCrew.forEach(crew => {
-            $('.list-group-crew').append(`
+    var truncCrew = response.crew.slice(0, 5);
+    truncCrew.forEach(crew => {
+        $('.list-group-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes/${crew.id}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </p>`);
-        });
+    });
 }
 
 
@@ -397,7 +392,7 @@ function displayCast(response){
 /**
  * 2.2 - Display TV Show
  * Get last characters of URL to have only the ID
-*/ 
+ */
 function displayShow(id) {
     var settings = {
         "async": true,
@@ -413,7 +408,7 @@ function displayShow(id) {
 
         /**
          * Variables declarations
-         */ 
+         */
         var backdrop = response.backdrop_path == null ? `../../img/ressources/backdrop_not_found.png` : `https://image.tmdb.org/t/p/original${response.backdrop_path}`;
         var poster = response.poster_path == null ? `../../img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.poster_path}`;
         var overview = response.overview.length == '' ? "Cette série n'a pas encore de synopsis" : response.overview;
@@ -466,7 +461,7 @@ function displayShow(id) {
             $('.list-group-cast').append(`
             <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cast.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${cast.id}">${cast.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes/${cast.id}">${cast.name}</a></span>
             <span class="badge badge-pill text-dark">${cast.character}</span>
         </li>`);
         });
@@ -475,7 +470,7 @@ function displayShow(id) {
             $('.list-group-crew').append(`
             <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes/${crew.id}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </li>`);
         });
@@ -569,9 +564,9 @@ function fillGenres() {
 }
 
 
-function displayResults(results)
-{
+function displayResults(results) {
     $('.contents-container').before(`
         <h2 class="text-center col-12 mt-5 total-results">Nombre total de résultats : ${results}</h2>
     `);
 }
+

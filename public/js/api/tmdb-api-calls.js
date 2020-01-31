@@ -96,7 +96,7 @@ function discoverMovies() {
                     <span id="js-glamour-likes-28145" class="c-reaction-icon">${movie.vote_average}</span>
                     </i>
                     </div>
-                    <a href="films?id=${movie.id}" class="grid-item-link">
+                    <a href="films/${movie.id}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                             <h3 class="grid-item-content-title">${movie.original_title}</h3>
@@ -136,7 +136,7 @@ function discoverShows() {
                     </i>
                     </div>
                     </div>
-                    <a href="/series?id=${show.id}" class="grid-item-link">
+                    <a href="/series/${show.id}" class="grid-item-link">
                         <div class="grid-item-content">
                             <div class="grid-item-content-divider"></div>
                             <h3 class="grid-item-content-title">${show.name}</h3>
@@ -158,7 +158,6 @@ function discoverShows() {
 // 2.1 - Display Movie
 // Get last characters of URL to have only the ID
 function displayMovie() {
-    id = window.location.search.substr(4);
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -184,7 +183,7 @@ function displayMovie() {
             $('.list-group-cast').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${casting.profile_path}" loading="lazy" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${casting.id}">${casting.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes/${casting.id}">${casting.name}</a></span>
             <span class="badge badge-pill text-dark">${casting.character}</span>
         </p>`);
         });
@@ -194,7 +193,7 @@ function displayMovie() {
             $('.list-group-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes/${crew.id}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </p>`);
         });
@@ -286,7 +285,7 @@ function displayShow() {
             $('.list-group-cast').append(`
             <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="cast">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${cast.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${cast.id}">${cast.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes/${cast.id}">${cast.name}</a></span>
             <span class="badge badge-pill text-dark">${cast.character}</span>
         </li>`);
         });
@@ -295,7 +294,7 @@ function displayShow() {
             $('.list-group-crew').append(`
             <li class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="crew">
             <td><img src="https://image.tmdb.org/t/p/w300_and_h450_bestv2/${crew.profile_path}" loading="lazy" style="height:125px;" class="casting-list-img">
-            <span class="badge badge-pill"><a href="/personnes?id=${crew.id}">${crew.name}</a></span>
+            <span class="badge badge-pill"><a href="/personnes/${crew.id}">${crew.name}</a></span>
             <span class="badge badge-pill text-dark">${crew.job}</span>
         </li>`);
         });
@@ -305,7 +304,6 @@ function displayShow() {
 // 2.2 - Display People
 /* Get last characters of URL to have only the ID */
 function displayPeople() {
-    id = window.location.search.substr(4);
     var settings = {
         "async": true,
         "crossDomain": true,
@@ -321,7 +319,6 @@ function displayPeople() {
 }
 
 function displayPeopleCredits() {
-    id = window.location.search.substr(4);
     var settings = {
         "async": true,
         "crossDomain": true,
