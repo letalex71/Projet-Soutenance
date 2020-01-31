@@ -15,6 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -48,6 +49,7 @@ class RegistrationFormType extends AbstractType
                 'label' => 'Inscription',
                 'attr' => ['class' => 'btn btn-sm btn-block btn-info']
             ])
+            ->add('HoneyPot', HoneypotType::class)
         ;
     }
 
