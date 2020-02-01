@@ -14,6 +14,14 @@
     text-shadow: none!important;
 }
 
+.bg-profiletab{
+    background-color:rgba(96, 145, 239, 0.63);
+    margin-top:3rem;
+    margin-bottom:3rem;
+    padding:3rem;
+    border-radius: .75rem;
+}
+
 .sidebar-profile {
     width: 25%;
     height: 25vh; 

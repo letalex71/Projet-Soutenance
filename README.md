@@ -99,8 +99,8 @@ Formulaires :
 - [x] Implémenter formulaires TWIG
 - [x] Gestion des messages de succes
 - [ ] Gestion des messages d'erreur
-- [ ] Implémenter regex pour mot de passe
-- [ ] CAPTCHAS !!!!!!!!!!!!!!!
+- [x] Implémenter regex pour mot de passe > Pas de regex, mais validateur si mot de passe dispo dans une brèche
+- [x] CAPTCHAS !!!!!!!!!!!!!!! > Choisi la méthode HoneyPot à la place
 - [ ] ajouter "mot de passe actuel" page profile
 - [ ] Redirection formulaire profile
 
@@ -111,3 +111,6 @@ Autre :
 - [ ] Lorem pages inutiles
 - [ ] Div et icones page profile
 - [ ] Essayer d'assombrir la div "notes, watchlist" sur le poster (accueil)
+- [ ] Implémenter poser par défaut si image non trouvée
+- [ ] Implémenter score = 0 si score "undefined"
+- [ ] recherche qui n'affiche que des items pointant vers des films alors que certains résultats ne le sont pas.

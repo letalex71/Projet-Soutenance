@@ -105,9 +105,11 @@ class MainController extends AbstractController
     /**
      * @Route("/personnes/{id}", name="display_people")
      */
-    public function displayPeople()
+    public function displayPeople($id)
     {
-        return $this->render('main/people-view.html.twig');
+        return $this->render('main/people-view.html.twig',[
+            'id' => $id,
+        ]);
     }
 
 }

@@ -65,7 +65,6 @@
                     </div>
                 </div>
             </div>
-    
         </section>
 
 {% endblock %}
@@ -74,11 +73,8 @@
 <script src="{{ asset('js/api/tmdb_api_calls.js') }} "></script>
 <script src="{{ asset('js/display/display.js') }} "></script>
 <script>
-
-    let id = window.location.search.substr(4);
-
-
-    peopleView();
+    id = {{id}};
+    peopleView({{id}});
     personCredits();
 </script>
 {% endblock %}

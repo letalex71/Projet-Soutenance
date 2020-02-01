@@ -18,3 +18,6 @@ TODO_list.txt
 
 composer.phar
 composer-setup.php
+
+.env
+.DS_STORE
