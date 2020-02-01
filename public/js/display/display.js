@@ -105,7 +105,7 @@ async function displayMovies(movies) {
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>
-                            </div> 
+                            </div>
                             <img
                                 src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}"
                                 loading="lazy" class="grid-item-image u-inset">
@@ -123,7 +123,14 @@ async function displayTrendings(trendings) {
     return new Promise(resolve => {
         let itemId = 0;
         for (item of trendings) {
+            console.log(item);
+            var poster = item.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${item.poster_path}`;
             var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
+            if (item.vote_average){
+                var vote = `class="c-reaction-icon">${item.vote_average}`
+            } else {
+                var vote = `class="c-reaction-icon">0`
+            }
             if (item.media_type == 'tv') {
                 var trueType = 'series';
                 var itemType = 'itemShows';
@@ -139,7 +146,7 @@ async function displayTrendings(trendings) {
                     <article class="grid-item" id="${trueType}-${item.id}">
                         <div class="grid-item-icons u-top ${itemType}">
                         <i class="far fa-star">
-                        <span id="js-glamour-likes-28145" class="c-reaction-icon">${item.vote_average}</span>
+                        <span id="js-glamour-likes-28145" ${vote}</span>
                         </i>
                         </div>
                         <a href="${trueType}/${item.id}" class="grid-item-link media-id">
@@ -148,7 +155,7 @@ async function displayTrendings(trendings) {
                                 <h3 class="grid-item-content-title">${trueTitle}</h3>
                             </div>
                             <img
-                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}"
+                                src="${poster}"
                                 loading="lazy" class="grid-item-image u-inset">
                         </a>
                     </article>`);
