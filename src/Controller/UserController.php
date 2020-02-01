@@ -63,8 +63,7 @@ class UserController extends AbstractController
      * @Route("/profil/watchlist/{id}", name="watchlist")
      */
     public function watchlist(User $user)
-    {   
-
+    {
         $watchlistRepo = $this->getDoctrine()->getRepository(Watchlist::class);
 
         dump($user);
