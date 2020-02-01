@@ -124,7 +124,11 @@ async function displayTrendings(trendings) {
         let itemId = 0;
         for (item of trendings) {
             console.log(item);
-            var poster = item.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${item.poster_path}`;
+            if (item.profile_path){
+                var poster = item.profile_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${item.profile_path}`
+            } else {
+                var poster = (item.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${item.poster_path}`)
+            }
             var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
             if (item.vote_average){
                 var vote = `class="c-reaction-icon">${item.vote_average}`
