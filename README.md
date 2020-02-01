@@ -58,7 +58,7 @@ php bin/console doctrine:migrations:migrate
 Voilà !
 
 ***
-## MaJ 16/01/2020 : 
+## MaJ 16/01/2020 :
 ***
 ### Ajout : trendings
 * Ajout : formulaires personnalisation utilisateur
