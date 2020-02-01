@@ -100,7 +100,7 @@ class ApiController extends AbstractController
         $watchlistToDelete = $watchlistRepository->findOneBy(['itemId' => $data['itemId'], 'type' => $data['type'], 'user' => $data['user']->getId()]); 
 
         
-        if($watchlistToDelete == NULL ){
+        if($watchlistToDelete === NULL ){
             return $this->json(['status' => 'error']);
             
         }else{
