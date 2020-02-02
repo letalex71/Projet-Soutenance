@@ -104,6 +104,7 @@ Formulaires :
 - [ ] ajouter "mot de passe actuel" page profile > pas compris comment faire
 - [x] Redirection formulaire profile
 - [ ] OAUTH
+- [x] Convertir login de la version html à la version twig
 
 Autre :
 - [x] Ajouter footer
