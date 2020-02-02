@@ -9,21 +9,21 @@
             <div class="col-12 col-md-2 text-white d-flex personal-infos" id="left">
                 <div class="nav flex-column nav-pills sidebar-profile menuuu" id="v-pills-tab" role="tablist"
                     aria-orientation="vertical">
-                    <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
-                        role="tab" aria-controls="v-pills-profile" aria-selected="true">Profil</a>
-                    <a class="nav-link" id="v-pills-activity-tab" data-toggle="pill" href="#v-pills-activity"
+                    <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="#mon-profil"
+                        role="tab" aria-controls="v-pills-profile" aria-selected="false">Profil</a>
+                    <a class="nav-link" id="v-pills-activity-tab" data-toggle="pill" href="#mes-commentaires"
                         role="tab" aria-controls="v-pills-activity" aria-selected="false">Activité</a>
                     <a class="nav-link" id="v-pills-my-watchlists-tab" data-toggle="pill"
-                        href="#v-pills-my-watchlists" role="tab" aria-controls="v-pills-my-watchlists"
+                        href="#mes-watchlists" role="tab" aria-controls="v-pills-my-watchlists"
                         aria-selected="false">Mes Watchlists</a>
-                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings"
+                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#parametres"
                         role="tab" aria-controls="v-pills-settings" aria-selected="false">Paramètres</a>
-                    <a class="nav-link" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password"
+                    <a class="nav-link" id="v-pills-password-tab" data-toggle="pill" href="#changer-mot-de-passe"
                         role="tab" aria-controls="v-pills-password" aria-selected="false">Modifier mot de passe</a>
                 </div>
             </div>
             <div class="tab-content col-md-8 col-12 py-2 personal-infos" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
+                <div class="tab-pane fade" id="mon-profil" role="tabpanel"
                     aria-labelledby="v-pills-profile-tab">
                     <div class="bg-profiletab">
                         <div class="row mx-md-n5 border-bottom">
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="v-pills-activity" role="tabpanel"
+                <div class="tab-pane fade" id="mes-commentaires" role="tabpanel"
                     aria-labelledby="v-pills-activity-tab">
                     <div class="bg-profiletab">
                         <div class="row mx-md-n5 border-bottom">
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="v-pills-my-watchlists" role="tabpanel"
+                <div class="tab-pane fade" id="mes-watchlists" role="tabpanel"
                     aria-labelledby="v-pills-my-watchlists-tab">
                     <div class="bg-profiletab">
                         <h6>Ici se trouvera l'activité de l'utilisateur (likes, messages forum...)</h6>
@@ -124,7 +124,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
+                <div class="tab-pane fade" id="parametres" role="tabpanel"
                     aria-labelledby="v-pills-settings-tab">
                     <div class="bg-profiletab">
                         <div class="row mx-md-n5 border-bottom">
@@ -140,7 +140,7 @@
                                 </div>
                             </div>
                         </div>
-                        <form class="form-signin" method="POST">
+                        <form class="user-customization-form" method="POST" id="parametres">
                             {{ form_start(userCustomizationForm) }}
                             <div class="form-label-group">
                                 {{ form_label(userCustomizationForm.pseudo, null, {
@@ -181,7 +181,7 @@
                         </form>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="v-pills-password" role="tabpanel"
+                <div class="tab-pane fade" id="changer-mot-de-passe" role="tabpanel"
                     aria-labelledby="v-pills-password-tab">
                     <div class="bg-profiletab">
                         <div class="row mx-md-n5 border-bottom">
@@ -215,7 +215,6 @@
 <script>
     var profileBanner = "{{app.user.bannerPath }}";
     var imgPath = "{{ asset('img/user_img/')}}";
-    console.log(imgPath + profileBanner);
     function displayBanner(){
         $('body').css({
             'background-position' : 'center',
@@ -225,5 +224,30 @@
         });
     }
     displayBanner();
+</script>
+<script>
+    $(document).ready(() => {
+        let url = location.href.replace(/\/$/, "");
+        if (location.hash) {
+            const hash = url.split("#");
+            $('#v-pills-tab a[href="#'+hash[1]+'"]').tab("show");
+            url = location.href.replace(/\/#/, "#");
+            history.replaceState(null, null, url);
+            setTimeout(() => {
+            $(window).scrollTop(0);
+            }, 400);
+        }
+        $('a[data-toggle="pill"]').on("click", function() {
+            let newUrl;
+            const hash = $(this).attr("href");
+            if(hash == "#mon-profil") {
+                newUrl = url.split("#")[0];
+            } else {
+                newUrl = url.split("#")[0] + hash;
+                }
+            newUrl += "/";
+            history.replaceState(null, null, newUrl);
+        });
+    });
 </script>
 {% endblock %}
