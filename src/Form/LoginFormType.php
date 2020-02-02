@@ -11,25 +11,31 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
+
 class LoginFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            ->add('email', EmailType::class, [
+                'label' => 'Adresse Email',
+                'attr' => ['placeholder' => 'Adresse email',
+                ]
+            ])
             ->add('password', PasswordType::class, [
-                'mapped' => false,
+                'label' => 'Mot de passe',
+                'attr' => ['placeholder' => 'Mot de passe'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe',
-                    ]),
-                    new Length([
-                        'min' => 6,
+                        'message' => 'Veuillez entrer votre mot de passe',
                     ]),
                 ],
             ])
-            ->add('Connexion', SubmitType::class, [
-                'attr' => ['class' => 'btn btn-lg btn-block btn-success']
+            ->add('HoneyPot', HoneypotType::class)
+            ->add('login', SubmitType::class, [
+                'label' => 'Connexion',
+                'attr' => ['class' => 'btn btn-sm btn-block btn-info']
             ])
         ;
     }

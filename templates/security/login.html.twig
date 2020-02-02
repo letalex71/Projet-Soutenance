@@ -18,24 +18,25 @@
                                         href="{{ path('app_logout') }}">Deconnexion</a></p>
                                 </div>
                                 {% else %}
-                                <h2 class=" mb-3 font-weight-normal">Veuillez vous connecter</h2>
-                                <div class="row">
-                                    <form method="POST" class="col-6 offset-3">
-                                        <label for="inputEmail" class="mt-1">Email</label>
-                                        <input type="email" value="" name="email" id="inputEmail" class="form-control"
-                                            required autofocus>
-                                        <label for="inputPassword">Mot de passe</label>
-                                        <input type="password" name="password" id="inputPassword" class="form-control"
-                                            required>
-                                        <input type="hidden" name="_csrf_token"
-                                            value="{{ csrf_token('authenticate') }}">
-                                        <button class="btn btn-lg btn-block btn-primary mt-2"
-                                            type="submit">Connexion</button>
-                                    </form>
-                                    {% endif %}
-                                </div>
+                                    {{ form_start(loginForm) }}
+                                    <div class="form-label-group">
+                                        {{ form_row(loginForm.email)}}
+                                    </div>
+                                    <div class="form-label-group">
+                                        {{ form_row(loginForm.password)}}
+                                    </div>
+                                    <hr class="my-2">
+                                    {{ form_row(loginForm.login)}}
+                                    <p class="d-block text-center mt-2 small">Pas de compte ? <a href="{{ path('app_register') }}">Cliquez ici pour en créer un</a>
+                                    </p>
+                                    {{ form_end(loginForm) }}
+                                {% endif %}
+                            </form>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </section>
-    {% endblock %}
+</main>
+{% endblock %}
