@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}Connexion {% endblock %}
 
 {% block body %}
 <main class="page projects-page">
@@ -12,25 +12,37 @@
                         <div class="card-body">
                             <h1 class="card-title text-center">Connexion</h1>
                             <form class="form-signin" method="POST">
+                                {% if error %}
+                                <div class="alert alert-danger">
+                                    {{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
                                 {% if app.user %}
-                                <div class="mb-3 alert alert-danger">
+                                <div class="mb-3">
                                     Vous êtes deja connecté en tant que {{ app.user.pseudo }}, <a class="text-primary"
                                         href="{{ path('app_logout') }}">Deconnexion</a></p>
                                 </div>
-                                {% else %}
-                                    {{ form_start(loginForm) }}
-                                    <div class="form-label-group">
-                                        {{ form_row(loginForm.email)}}
-                                    </div>
-                                    <div class="form-label-group">
-                                        {{ form_row(loginForm.password)}}
-                                    </div>
-                                    <hr class="my-2">
-                                    {{ form_row(loginForm.login)}}
-                                    <p class="d-block text-center mt-2 small">Pas de compte ? <a href="{{ path('app_register') }}">Cliquez ici pour en créer un</a>
-                                    </p>
-                                    {{ form_end(loginForm) }}
                                 {% endif %}
+                                <label for="inputEmail">Adresse email</label>
+                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail"
+                                    class="form-control" required autofocus>
+                                <label for="inputPassword">Mot de passe</label>
+                                <input type="password" name="password" id="inputPassword" class="form-control" required>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                {#
+                                    Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
+                                    See https://symfony.com/doc/current/security/remember_me.html
+                                    <div class="checkbox mb-3">
+                                        <label>
+                                            <input type="checkbox" name="_remember_me"> Remember me
+                                        </label>
+                                    </div>
+                                #}
+                                <hr class="my-2">
+                                <button class="btn btn-block btn-info" type="submit">
+                                    Connexion
+                                </button>
+                                <p class="d-block text-center mt-2 small">Pas de compte ? <a href="{{ path('app_register') }}">Cliquez ici pour en créer un</a>
+                                </p>
                             </form>
                         </div>
                     </div>
