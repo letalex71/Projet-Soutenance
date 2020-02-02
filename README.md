@@ -98,11 +98,12 @@ Formulaires :
 
 - [x] Implémenter formulaires TWIG
 - [x] Gestion des messages de succes
-- [ ] Gestion des messages d'erreur
+- [x] Gestion des messages d'erreur
 - [x] Implémenter regex pour mot de passe > Pas de regex, mais validateur si mot de passe dispo dans une brèche
 - [x] CAPTCHAS !!!!!!!!!!!!!!! > Choisi la méthode HoneyPot à la place
-- [ ] ajouter "mot de passe actuel" page profile
-- [ ] Redirection formulaire profile
+- [ ] ajouter "mot de passe actuel" page profile > pas compris comment faire
+- [x] Redirection formulaire profile
+- [ ] OAUTH
 
 Autre :
 - [x] Ajouter footer
