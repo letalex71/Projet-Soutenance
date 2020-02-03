@@ -168,7 +168,6 @@ function displayMovie() {
         "data": "{}"
     }
     $.ajax(settings).done(function (response) {
-        console.log(response);
         var overview = response.overview.length == '' ? "Ce film n'a pas encore de synopsis" : response.overview;
         var backdrop = response.backdrop_path == null ? `img/ressources/image_not_found.jpg` : `https://image.tmdb.org/t/p/w1440_and_h320_bestv2${response.backdrop_path}`;
         $('title').prepend(response.title);
@@ -237,7 +236,6 @@ function displayShow() {
     }
 
     $.ajax(settings).done(function (response) {
-        console.log(response);
         // Used to convert US dates to French dates
         const firstAired = new Date(response.first_air_date);
         const lastAired = new Date(response.last_air_date);
@@ -261,7 +259,6 @@ function displayShow() {
         response.genres.forEach(genre => {
             genres.push(genre.name);
         });
-        console.log(genres);
         // Display other elements
         $('title').prepend(response.name);
         $('.overview-content').text(overview);
@@ -316,7 +313,6 @@ function displayPeople() {
     }
 
     $.ajax(settings).done(function (people) {
-        console.log(people);
     });
 }
 
@@ -332,6 +328,5 @@ function displayPeopleCredits() {
     }
 
     $.ajax(settings).done(function (credits) {
-        console.log(credits);
     });
 }

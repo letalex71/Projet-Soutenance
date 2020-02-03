@@ -3,143 +3,139 @@
 {% block title %}Rechercher {% endblock %}
 {% block body %}
 
-    <h1 class="text-center mt-3">Rechercher :</h1>
-    <main class="page projects-page">
+<h1 class="text-center mt-3">Rechercher :</h1>
+<main class="page projects-page">
 
-        <div class="container-fluid">
-            <div class="row col-md-6 offset-md-3 search-type">
-                <div class="col-6 offset">
-                    <h2 data-filter="type" id="movie" class="col-md-6 offset-3 text-center filter-active">Films</h2>
-                </div>
-                <div class="col-6">
-                    <h2 data-filter="type" id="tv" class="col-md-6 offset-3 text-center">Séries</h2>
-                </div>
+    <div class="container-fluid">
+        <div class="row col-md-6 offset-md-3 search-type">
+            <div class="col-6 offset">
+                <h2 data-filter="type" id="movie" class="col-md-6 offset-3 text-center filter-active">Films</h2>
             </div>
-            <div class="row col-xl-8 offset-xl-2 col-md-12">
-
-                <div class="col-sm-12 text-center mt-3 col-md-3">
-                    <h5 class="text-center">Trier par</h5>
-                    <div class="input-group">
-                        <select class="custom-select" id="inputGroupSelect02">
-                            <option data-filter="sort" value="popularity.desc">Les plus populaires</option>
-                            <option data-filter="sort" value="popularity.asc">Les moins populaires</option>
-                            <option data-filter="sort" value="release_date.desc">Les plus récents</option>
-                            <option data-filter="sort" value="release_date.asc">Les moins récents</option>
-                            <option data-filter="sort" value="original_tilte.desc">Titre A-Z</option>
-                            <option data-filter="sort" value="original_tilte.asc">Titre Z-A</option>
-                            <option data-filter="sort" value="vote_average.desc">Meilleurs notes</option>
-                            <option data-filter="sort" value="vote_average.asc">Moins bonnes notes</option>
-                            <option data-filter="sort" value="vote_count.desc">Le plus de vote</option>
-                            <option data-filter="sort" value="vote_count.asc">Le moins de vote</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="mt-3 col-md-2">
-                    <h5 class="text-center">Année</h5>
-                    <div class="input-group">
-                        <select class="year-select custom-select" id="inputGroupSelect02">
-                            <option data-filter="year" value="none">Aucune</option>
-                        </select>
-                    </div>
-                </div>
-
-
-
-                <div class="mt-3 col-md-7 col-sm-12">
-                    <h5 class="text-center">Genres</h5>
-                    <label class="col-12 genres-group p-0 m-0" for="genres-search">
-                        <div class="genres-form p-0 border rounded-lg">
-                            <input type="text" class="genres-search" disabled="disabled" id="genres-search">
-                        </div>
-                    </label>
-                </div>
+            <div class="col-6">
+                <h2 data-filter="type" id="tv" class="col-md-6 offset-3 text-center">Séries</h2>
             </div>
-        
-
-                <section class="portfolio-block projects-with-sidebar contents-container row col-md-10 offset-md-1">
-                <!-- Start: portfolio heading -->
-                <!-- End: portfolio heading -->
-
-
-
-                </section>
         </div>
-    </main>
+        <div class="row col-xl-8 offset-xl-2 col-md-12">
 
-    
+            <div class="col-sm-12 text-center mt-3 col-md-3">
+                <h5 class="text-center">Trier par</h5>
+                <div class="input-group">
+                    <select class="custom-select" id="inputGroupSelect02">
+                        <option data-filter="sort" value="popularity.desc">Les plus populaires</option>
+                        <option data-filter="sort" value="popularity.asc">Les moins populaires</option>
+                        <option data-filter="sort" value="release_date.desc">Les plus récents</option>
+                        <option data-filter="sort" value="release_date.asc">Les moins récents</option>
+                        <option data-filter="sort" value="original_tilte.desc">Titre A-Z</option>
+                        <option data-filter="sort" value="original_tilte.asc">Titre Z-A</option>
+                        <option data-filter="sort" value="vote_average.desc">Meilleurs notes</option>
+                        <option data-filter="sort" value="vote_average.asc">Moins bonnes notes</option>
+                        <option data-filter="sort" value="vote_count.desc">Le plus de vote</option>
+                        <option data-filter="sort" value="vote_count.asc">Le moins de vote</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mt-3 col-md-2">
+                <h5 class="text-center">Année</h5>
+                <div class="input-group">
+                    <select class="year-select custom-select" id="inputGroupSelect02">
+                        <option data-filter="year" value="none">Aucune</option>
+                    </select>
+                </div>
+            </div>
+
+
+
+            <div class="mt-3 col-md-7 col-sm-12">
+                <h5 class="text-center">Genres</h5>
+                <label class="col-12 genres-group p-0 m-0" for="genres-search">
+                    <div class="genres-form p-0 border rounded-lg">
+                        <input type="text" class="genres-search" disabled="disabled" id="genres-search">
+                    </div>
+                </label>
+            </div>
+        </div>
+
+
+        <section class="portfolio-block projects-with-sidebar contents-container row col-md-10 offset-md-1">
+            <!-- Start: portfolio heading -->
+            <!-- End: portfolio heading -->
+
+
+
+        </section>
+    </div>
+</main>
+
+
 
 
 {% endblock %}
 {% block javascripts %}
-    <script src=" {{asset('js/api/tmdb_api_calls.js')}} "></script>
-    <script src=" {{asset('js/api/tmdb_api.js')}} "></script>
-    <script src=" {{asset('js/display/display.js')}} "></script>
+<script src=" {{asset('js/api/tmdb_api_calls.js')}} "></script>
+<script src=" {{asset('js/api/tmdb_api.js')}} "></script>
+<script src=" {{asset('js/display/display.js')}} "></script>
 
-    <script>
-
-    // $(document).click(function (event) {
-    //     console.log($(event.target));
-    // })
-
+<script>
     page = 1;
-   toggleRemoveEvent = true;
+    toggleRemoveEvent = true;
 
     fillGenres();
-    fillYears({{ date|date('Y') }});
+    fillYears({
+        {
+            date | date('Y')
+        }
+    });
     filterSearch();
 
-    
-    $('h2[data-filter="type"]').click( function() {
 
-        if ( $(this)[0].className.includes('filter-active') === false )
-        {
-            
+    $('h2[data-filter="type"]').click(function () {
+
+        if ($(this)[0].className.includes('filter-active') === false) {
+
             $('.selected-genre').remove();
 
             $('h2[data-filter="type"]').removeClass('filter-active');
 
             $(this).addClass('filter-active');
-                   
+
             fillGenres();
-            filterSearch(); 
+            filterSearch();
         }
-    
+
     });
 
-    $('[data-filter="sort"]').click(function() {
+    $('[data-filter="sort"]').click(function () {
 
         $('h2[data-filter="sort"]').removeClass('filter-active');
         $(this).addClass('filter-active');
 
-        filterSearch(); 
+        filterSearch();
 
     })
 
-    $('[data-filter="year"]').click( function() {
+    $('[data-filter="year"]').click(function () {
 
         $('[data-filter="year"]').removeClass('filter-active');
-        
+
         $(this).addClass('filter-active');
 
         filterSearch();
     });
 
-    $('[data-filter="genres"]').click( () => {
+    $('[data-filter="genres"]').click(() => {
 
         $(this).addClass('filter-active');
 
         $('select2-selection__choice__remove').click(() => {
-            console.log('here');
         });
 
         filterSearch();
     });
 
-    $('#my-div').on('click','button',function(){
-    alert('button inside my-div clicked!');
-});
-
-    </script>
+    $('#my-div').on('click', 'button', function () {
+        alert('button inside my-div clicked!');
+    });
+</script>
 
 {% endblock %}

@@ -409,8 +409,6 @@ function displayShow(id) {
     }
 
     $.ajax(settings).done(function (response) {
-        console.log(response);
-
         /**
          * Variables declarations
          */ 
