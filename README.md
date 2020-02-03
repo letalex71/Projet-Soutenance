@@ -58,7 +58,7 @@ php bin/console doctrine:migrations:migrate
 Voilà !
 
 ***
-## MaJ 16/01/2020 : 
+## MaJ 16/01/2020 :
 ***
 ### Ajout : trendings
 * Ajout : formulaires personnalisation utilisateur
@@ -98,19 +98,21 @@ Formulaires :
 
 - [x] Implémenter formulaires TWIG
 - [x] Gestion des messages de succes
-- [ ] Gestion des messages d'erreur
+- [x] Gestion des messages d'erreur
 - [x] Implémenter regex pour mot de passe > Pas de regex, mais validateur si mot de passe dispo dans une brèche
 - [x] CAPTCHAS !!!!!!!!!!!!!!! > Choisi la méthode HoneyPot à la place
-- [ ] ajouter "mot de passe actuel" page profile
-- [ ] Redirection formulaire profile
+- [ ] ajouter "mot de passe actuel" page profile > pas compris comment faire
+- [x] Redirection formulaire profile
+- [ ] OAUTH
+- [x] Convertir login de la version html à la version twig
 
 Autre :
 - [x] Ajouter footer
 - [x] Trouver des images quand image originale non dispo
 - [ ] Barre transversale
-- [ ] Lorem pages inutiles
-- [ ] Div et icones page profile
-- [ ] Essayer d'assombrir la div "notes, watchlist" sur le poster (accueil)
-- [ ] Implémenter poser par défaut si image non trouvée
-- [ ] Implémenter score = 0 si score "undefined"
-- [ ] recherche qui n'affiche que des items pointant vers des films alors que certains résultats ne le sont pas.
+- [x] Lorem pages inutiles
+- [x] Div et icones page profile
+- [x] Essayer d'assombrir la div "notes, watchlist" sur le poster (accueil)
+- [x] Implémenter poser par défaut si image non trouvée
+- [x] Implémenter score = 0 si score "undefined"
+- [x] recherche qui n'affiche que des items pointant vers des films alors que certains résultats ne le sont pas.

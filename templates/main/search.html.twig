@@ -2,11 +2,8 @@
 {% extends "base.html.twig" %}
 {% block title %}Rechercher {% endblock %}
 {% block body %}
-
-
     <h1 class="text-center mt-3">Rechercher :</h1>
     <main class="page projects-page">
-
         <div class="container-fluid">
             <div class="row col-md-6 offset-md-3 search-type">
                 <div class="col-6 offset">
@@ -17,7 +14,6 @@
                 </div>
             </div>
             <div class="row col-xl-8 offset-xl-2 col-md-12">
-
                 <div class="col-sm-12 text-center mt-3 col-md-3">
                     <h5 class="text-center">Trier par</h5>
                     <div class="input-group">
@@ -35,7 +31,6 @@
                         </select>
                     </div>
                 </div>
-
                 <div class="mt-3 col-md-2">
                     <h5 class="text-center">Année</h5>
                     <div class="input-group">
@@ -44,9 +39,6 @@
                         </select>
                     </div>
                 </div>
-
-
-
                 <div class="mt-3 col-md-7 col-sm-12">
                     <h5 class="text-center">Genres</h5>
                     <label class="col-12 genres-group p-0 m-0" for="genres-search">
@@ -56,111 +48,70 @@
                     </label>
                 </div>
             </div>
-        
-
                 <section class="portfolio-block projects-with-sidebar contents-container row col-md-10 offset-md-1">
                 <!-- Start: portfolio heading -->
                 <!-- End: portfolio heading -->
-
-
-
                 </section>
         </div>
     </main>
-
-    
-
 {% endblock %}
 {% block javascripts %}
     <script src=" {{asset('js/api/tmdb_api_calls.js')}} "></script>
     <script src=" {{asset('js/api/tmdb_api.js')}} "></script>
     <script src=" {{asset('js/display/display.js')}} "></script>
     <script src=" {{asset('js/display/add_list_form.js')}} "></script>
-
-
     <script>
-
     isLogged = {{ (app.user is not empty) ? 'true' : 'false' }};
-
     {% if app.user is not empty %}
-
         userId = {{ app.user.id }};
         watchlistPath = '{{ path('send_watchlist') }}';
         redirectionPath = '{{ path('search')}}';
         deleteItemPath = '{{ path('delete_item') }}';
         formCheckPath = '{{path('form_check')}}';
-
     {% endif %}
-
     page = 1;
-
     fillGenres();
     fillYears({{ date|date('Y') }});
-
-
     {% if query is empty %}
         filterSearch();
     {% else %}
         querySearch( '{{ query }}' );
     {% endif %}
-
         checkSession();
-
-    
     $('h2[data-filter="type"]').click( function() {
-
         if ( $(this)[0].className.includes('filter-active') === false )
         {
-            
             $('.selected-genre').remove();
-
             $('h2[data-filter="type"]').removeClass('filter-active');
-
             $(this).addClass('filter-active');
-                   
             fillGenres();
             filterSearch();
             checkSession();
         }
-    
     });
-
     $('[data-filter="sort"]').click(function() {
-
         $('[data-filter="sort"]').removeClass('filter-active');
         $(this).addClass('filter-active');
-
         filterSearch();
         checkSession();
-
     })
-
     $('[data-filter="year"]').click( function() {
-
         $('[data-filter="year"]').removeClass('filter-active');
-        
         $(this).addClass('filter-active');
-
         filterSearch();
         checkSession();
     });
-
     $('[data-filter="genres"]').click( () => {
-
         $(this).addClass('filter-active');
-
         $('select2-selection__choice__remove').click(() => {
             console.log('here');
         });
-
         filterSearch();
         checkSession();
     });
-
     $('#my-div').on('click','button',function(){
     alert('button inside my-div clicked!');
-});
-
+    });
     </script>
 
 {% endblock %}

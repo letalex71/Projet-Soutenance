@@ -1,29 +1,29 @@
 /*
  * SUMMARY
- * 
+ *
  * 1 :: DISCOVER PAGE
  * 1.1 - Popular Movies
  * 1.2 - Popular TV Shows
- * 
+ *
  * 2 :: ITEM PAGE
  * 2.1 - Display Movie
  * 2.2 - Display TV Show
- * 
+ *
  * 3 :: SEARCH PAGE
  * 3.1 - Movie filter
  * 3.2 - TV Show filter
  * 3.3 - Actors filter
- * 
+ *
  * 4 - LISTS
  * 4.1 - Create list
  * 4.2 - Read List
  * 4.3 - Delete list
- * 
+ *
  * 5 - ADDITIONNAL
- * 
- * 
+ *
+ *
  * Authors : Alex, Thomas, Lisia
- * 
+ *
  */
 
 /**
@@ -32,18 +32,12 @@
 
 /**
  * Check if user is logged : Display "add to list" button if logged
- * @param {*} isLogged 
+ * @param {*} isLogged
  */
 async function checkSession() {
-
-
-
     let itemsToChange = $("[class*='itemMovies']:not('.added-fav'), [class*='itemShows']:not('.added-fav')");
-
     itemsToChange.addClass('added-fav');
-
     if (isLogged === true) {
-
         // Récupère la liste des medias déjà ajoutés par l'utilisateur
         let watchlist = await fetch(`${watchlistPath}?user=${userId}`)
             .then(function (response) {
@@ -52,43 +46,31 @@ async function checkSession() {
             .then(function (result) {
                 return result;
             });
-
-
-
         itemsToChange.each(function () {
-
-
-
             mediaCS = $(this).parent().attr('id').split('-');
             mediaCS[1] = parseInt(mediaCS[1]);
-
-
             /* Cette condition vérifie si l'item a déjà été ajouté a la watchlist par l'utilisateur.
                Si c'est le cas, un bouton de suppression sera affiché à la place */
             if (
                 (mediaCS[0] == 'tv' && (watchlist['t'].length == 1 || (watchlist['t'].length > 1 && !watchlist['t'].includes(mediaCS[1])))) ||
                 (mediaCS[0] == 'movie' && (watchlist['m'].length == 1 || (watchlist['m'].length > 1 && !watchlist['m'].includes(mediaCS[1]))))
             ) {
-
                 $(this).append(`
                     <div class="c-tooltip ml-1">
                             <div class="c-reaction-square add-media">
                                 <i class=" c-reaction-icon far fa-plus-square"></i>
-                            </div>    
+                            </div>
                         <div class="c-tooltip-text">Ajouter à votre watchlist</div>
                     </div>
                 `);
             } else {
                 $(this).append(`
-
                     <div class="c-tooltip ml-1">
                             <div class="c-reaction-square delete-media">
                                 <i class=" c-reaction-icon far fa-times-circle"></i>
-                            </div>    
+                            </div>
                         <div class="c-tooltip-text">Supprimer de votre watchlist</div>
                     </div>
-
-
                 `);
             }
         });
@@ -107,15 +89,10 @@ async function checkSession() {
     }
     formOverlay();
 }
-
-// 1.1 - 
-
-
+// 1.1 - Display Movies
 async function displayMovies(movies) {
-
     return new Promise(resolve => {
         let movieId = 0;
-
         for (movie of movies) {
             $('#popular-movies').append(`
                     <article class="grid-item" id="movie-${movie.id}">
@@ -128,74 +105,73 @@ async function displayMovies(movies) {
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${movie.title}</h3>
-                            </div> 
+                            </div>
                             <img
                                 src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${movie.poster_path}"
                                 loading="lazy" class="grid-item-image u-inset">
                         </a>
                     </article>`);
         }
-
         resolve('Success');
     });
-
 }
 /**
  * 1.3 Trending
- * @param {*} trendings 
+ * @param {*} trendings
  */
 async function displayTrendings(trendings) {
-
     return new Promise(resolve => {
-
         let itemId = 0;
         for (item of trendings) {
+            console.log(item);
+            if (item.profile_path){
+                var poster = item.profile_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${item.profile_path}`
+            } else {
+                var poster = (item.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${item.poster_path}`)
+            }
             var trueTitle = (item.title ? item.title : '' || item.name ? item.name : '');
-
+            if (item.vote_average){
+                var vote = `class="c-reaction-icon">${item.vote_average}`
+            } else {
+                var vote = `class="c-reaction-icon">0`
+            }
             if (item.media_type == 'tv') {
-                var trueType = 'tv';
+                var trueType = 'series';
                 var itemType = 'itemShows';
             } else if (item.media_type == 'movie') {
-                var trueType = 'movie';
-                var itemType = 'itemMovies'
+                var trueType = 'films';
+                var itemType = 'itemMovies';
             } else if (item.media_type == "person") {
                 var trueType = 'personnes';
+                var itemType = 'itemPersons';
             }
-
             let urlTitle = trueTitle.split(" ").join("-");
-
             $('#trendings').append(`
                     <article class="grid-item" id="${trueType}-${item.id}">
                         <div class="grid-item-icons u-top ${itemType}">
                         <i class="far fa-star">
-                        <span id="js-glamour-likes-28145" class="c-reaction-icon">${item.vote_average}</span>
+                        <span id="js-glamour-likes-28145" ${vote}</span>
                         </i>
                         </div>
-                        <a href="films/${item.id}" class="grid-item-link media-id">
+                        <a href="${trueType}/${item.id}" class="grid-item-link media-id">
                             <div class="grid-item-content">
                                 <div class="grid-item-content-divider"></div>
                                 <h3 class="grid-item-content-title">${trueTitle}</h3>
                             </div>
                             <img
-                                src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/${item.poster_path}"
+                                src="${poster}"
                                 loading="lazy" class="grid-item-image u-inset">
                         </a>
                     </article>`);
         }
-
         resolve('Success');
     });
-
 }
 
 // 1.2 - Popular TV Shows
-
 async function displayShows(shows) {
-
     return new Promise((resolve) => {
-
         let showInd = 0;
-
         for (show of shows) {
             let urlTitle = show.name.split(" ").join("-");
             var poster = show.poster_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/original${show.poster_path}`;
@@ -217,11 +193,8 @@ async function displayShows(shows) {
                         </a>
                 </article>`);
         }
-
         resolve('Success');
-
     });
-
 }
 
 /**
@@ -245,7 +218,6 @@ function displayMovie(response) {
     response.production_companies.forEach(studio => {
         studios.push(studio.name);
     });
-
     /**
      * Synopsis Area
      */
@@ -270,12 +242,11 @@ function displayMovie(response) {
 }
 
 /**
- * 2.2 Display People 
+ * 2.2 Display People
  */
 function displayPerson(response) {
     console.log(response);
     var biography = response.biography.length == '' ? "Cet/cette acteur/actrice n'a pas de biographie" : response.biography;
-
     // Used to convert US dates to French dates
     const birthday = new Date(response.birthday);
     const deathday = new Date(response.deathday);
@@ -285,7 +256,6 @@ function displayPerson(response) {
         month: 'long',
         day: 'numeric'
     };
-
     $('.overview-content').text(biography);
     $('.name').prepend(response.name);
     $('.profile').attr('src', `https://image.tmdb.org/t/p/w600_and_h900_bestv2${response.profile_path}`);
@@ -298,29 +268,21 @@ function displayPerson(response) {
     $('.birthplace').append(`<li><small>${response.place_of_birth}</small></li>`);
     $('.know-for-department').append(`<li><small>${response.known_for_department}</small></li>`);
 }
-
 function displayPersonCredits(response) {
-
     /**
      * Credits area
      * Need to truncate results because some people have a very big movies credits. Display only the first 5
      */
 
     var trunCreditsCast = response.cast.slice(0, 5);
-
     if (response.cast.length != 0) {
-
         trunCreditsCast.forEach(creditsCast => {
             let title = creditsCast.title
             let character = creditsCast.character
-
             if ((window.innerWidth < 768)) {
-
                 title = title.substr(0, 10);
                 character = character.substr(0, 15);
-
                 title += (title.length == creditsCast.title.length) ? '' : '...';
-
                 character += (character.length == creditsCast.character.length) ? '' : '...';
             }
             $('.list-cast').append(`
@@ -333,22 +295,13 @@ function displayPersonCredits(response) {
     } else {
         $('.list-cast').append('<p class="text-dark" id="creditsCrew">Cette personne n\'a jamais eu de rôle.</p>');
     }
-
-
-
     var trunCreditsCrew = response.crew.slice(0, 5);
     if (response.crew.length != 0) {
-
         trunCreditsCrew.forEach(creditsCrew => {
-
             let title = creditsCrew.title
-
             if ((window.innerWidth < 960) && title.length >= 26) {
-
                 title = title.substr(0, 25);
-
                 title += (title.length == creditsCast.title.length) ? '' : '...';
-
             }
             $('.list-crew').append(`
             <p class="list-group-item d-flex justify-content-between align-items-center .list-group-item-action" id="creditsCrew">
@@ -374,7 +327,6 @@ function displayCast(response) {
             <span class="badge badge-pill text-dark">${casting.character}</span>
         </p>`);
     });
-
     var truncCrew = response.crew.slice(0, 5);
     truncCrew.forEach(crew => {
         $('.list-group-crew').append(`
@@ -385,9 +337,6 @@ function displayCast(response) {
         </p>`);
     });
 }
-
-
-
 
 /**
  * 2.2 - Display TV Show
@@ -402,10 +351,8 @@ function displayShow(id) {
         "headers": {},
         "data": "{}"
     }
-
     $.ajax(settings).done(function (response) {
         console.log(response);
-
         /**
          * Variables declarations
          */
@@ -477,35 +424,25 @@ function displayShow(id) {
     });
 }
 
-
 /* Fills year select from 1900 to current year */
 function fillYears(currentYear) {
-
     while (currentYear > 1899) {
         $('.year-select').append(`
             <option data-filter="year" value="${currentYear}">${currentYear--}</option>
         `);
     }
 }
-
-
 /* Fills genres select corresponding to the media type previously selected*/
 function fillGenres() {
-
     // Vide les genres du select car différents selon série ou film
     $('.genres-search').empty();
-
-
     // Affichage des genres quand clique sur la barre de recherche
     $('label[for="genres-search"]').click(() => {
-
         // Appelle les genres correspondant au type de média
         tmdbApi.genres($('h2.filter-active[data-filter="type"]').attr('id'))
             .then(response => {
-
                 // Ajoute la div ".genres-options" seulement si elle n'existe pas
                 if (!$('.genres-options').length) {
-
                     $('.genres-group').after(`
                     <div class="genres-options border py-2"></div>
                 `);
@@ -516,10 +453,7 @@ function fillGenres() {
                     `);
                     }
                 }
-
-
                 $(document).click(function (event) {
-
                     // Si on clique sur une de ces divs, la liste des genres s'enlèvera
                     if (!$(event.target)[0].className.includes('genre-option') &&
                         $(event.target)[0] !== document.querySelector('.genres-options') &&
@@ -531,14 +465,9 @@ function fillGenres() {
                         $('.genres-options').remove();
                     }
                 });
-
                 $('.genre-option').click(function () {
-
-
                     // Ajoute une étiquette au genre cliqué si il n'y en a pas déjà une
                     if (!$(`#genre-${$(this).attr('id')}`).length) {
-
-
                         $('.genres-form').prepend(`
                         <span class="selected-genre text-center filter-active" data-filter="genre" id="genre-${$(this).attr('id')}">
                         <span class="remove-selected-genre">X</span>
@@ -547,23 +476,15 @@ function fillGenres() {
                     `);
                         // Ajoute un eventlistener pour pouvoir supprimer le genre ajouté
                         $(`#genre-${$(this).attr('id')}`).children('.remove-selected-genre').click(function () {
-
                             $(this).parent().remove();
                             filterSearch();
-
                         });
-
                         filterSearch();
                     }
-
                 });
-
-
             });
     });
 }
-
-
 function displayResults(results) {
     $('.contents-container').before(`
         <h2 class="text-center col-12 mt-5 total-results">Nombre total de résultats : ${results}</h2>

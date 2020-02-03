@@ -4,192 +4,253 @@
 {% block stylesheets %}{% endblock %}
 {% block body %}
 <main class="page projects-page pb-4" id="movie-item">
+    {% for message in app.flashes('success') %}
+    <div class="alert alert-success col-12 text-center"> {{ message|raw }} !</div>
+    {% endfor %}
     <section class="portfolio-block photography primary-block primary-block-text py-5">
-            <div class="row offset-1 h-100 ">
-                <div class="col-12 col-md-2 text-white d-flex personal-infos" id="left">
-                    <div class="nav flex-column nav-pills sidebar-profile menuuu" id="v-pills-tab" role="tablist"
-                        aria-orientation="vertical">
-                        <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile"
-                            role="tab" aria-controls="v-pills-profile" aria-selected="true">Profil</a>
-                        <a class="nav-link" id="v-pills-activity-tab" data-toggle="pill" href="#v-pills-activity"
-                            role="tab" aria-controls="v-pills-activity" aria-selected="false">Activité</a>
-                        <a class="nav-link" id="v-pills-my-watchlists-tab" data-toggle="pill"
-                            href="#v-pills-my-watchlists" role="tab" aria-controls="v-pills-my-watchlists"
-                            aria-selected="false">Mes Watchlists</a>
-                        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings"
-                            role="tab" aria-controls="v-pills-settings" aria-selected="false">Paramètres</a>
-                        <a class="nav-link" id="v-pills-password-tab" data-toggle="pill" href="#v-pills-password"
-                            role="tab" aria-controls="v-pills-password" aria-selected="false">Modifier mot de passe</a>    
-                    </div>
+        <div class="row offset-1 h-100 ">
+            <div class="col-12 col-md-2 text-white d-flex personal-infos" id="left">
+                <div class="nav flex-column nav-pills sidebar-profile menuuu" id="v-pills-tab" role="tablist"
+                    aria-orientation="vertical">
+                    <a class="nav-link show active" id="v-pills-profile-tab" data-toggle="pill" href="#mon-profil"
+                        role="tab" aria-controls="v-pills-profile" aria-selected="true">Profil</a>
+                    <a class="nav-link" id="v-pills-activity-tab" data-toggle="pill" href="#mes-commentaires"
+                        role="tab" aria-controls="v-pills-activity" aria-selected="false">Activité</a>
+                    <a class="nav-link" id="v-pills-my-watchlists-tab" data-toggle="pill"
+                        href="#mes-watchlists" role="tab" aria-controls="v-pills-my-watchlists"
+                        aria-selected="false">Mes Watchlists</a>
+                    <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#parametres"
+                        role="tab" aria-controls="v-pills-settings" aria-selected="false">Paramètres</a>
+                    <a class="nav-link" id="v-pills-password-tab" data-toggle="pill" href="#changer-mot-de-passe"
+                        role="tab" aria-controls="v-pills-password" aria-selected="false">Modifier mot de passe</a>
                 </div>
-                <div class="tab-content col-md-8 col-12 py-2 personal-infos" id="v-pills-tabContent">
-                    <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
-                        aria-labelledby="v-pills-profile-tab">
-                        <div class="bg-profiletab">
-                            <div class="row mx-md-n5 border-bottom">
-                                <div class="col px-md-5">
-                                    <div class="p-3">
-                                        <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="64" height="64"
-                                        class="d-inline-block align-top img-fluid" alt="photodeprofil">
-                                    </div>
-                                </div>
-                                <div class="col px-md-5">
-                                    <div class="p-3">
-                                        <p class="text-right">Mon Profil</p>
-                                    </div>
+            </div>
+            <div class="tab-content col-md-8 col-12 py-2 personal-infos" id="v-pills-tabContent">
+                <div class="tab-pane fade active show" id="mon-profil" role="tabpanel"
+                    aria-labelledby="v-pills-profile-tab">
+                    <div class="bg-profiletab">
+                        <div class="row mx-md-n5 border-bottom">
+                            <div class="col px-md-5">
+                                <div class="p-3">
+                                    <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="64" height="64"
+                                    class="d-inline-block align-top img-fluid" alt="photodeprofil">
                                 </div>
                             </div>
-                            <div class="pt-5">
-                                <p>
-                                    <small>Pseudo : {{ app.user.pseudo }}</small>
-                                </p>
-                                <p>
-                                    <small>Adresse Email : {{ app.user.email }}</small>
-                                </p>
-                                <p>
-                                    <small>Prenom : {{ app.user.firstname }}</small>
-                                </p>
-                                <p>
-                                    <small>Nom : {{ app.user.lastname }}</small>
-                                </p>
-                                <p>
-                                    <small>Date de naissance : {{ app.user.birthday|date("d/m/Y") }}</small>
-                                </p>
-                                <p>
-                                    <small>Biographie : {{ app.user.biography }}</small>
-                                </p>
-                                <p>
-                                    <small>Inscrit le : {{ app.user.registerDate|date("d/m/Y") }}</small>
-                                </p>
+                            <div class="col px-md-5">
+                                <div class="p-3">
+                                    <p class="text-right">Mon Profil</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-activity" role="tabpanel"
-                        aria-labelledby="v-pills-activity-tab">
-                        <div class="bg-profiletab">
-                            <div class="row mx-md-n5 border-bottom">
-                                <div class="col px-md-5">
-                                    <div class="p-3">
-                                        <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="64" height="64"
-                                        class="d-inline-block align-top img-fluid" alt="photodeprofil">
-                                    </div>
-                                </div>
-                                <div class="col px-md-5">
-                                    <div class="p-3">
-                                        <p class="text-right">Mon activité</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pt-5">
-                                {% for comment in comments %}
-                                <div class="col-12">
-                                    <div class="card-deck card-no-shadow mb-3">
-                                        <div class="card">
-                                            <div class="card-body text-dark">
-                                                <h5 class="card-title">En référance à
-                                                {% if comment.type == 'm' %}
-                                                    <a href="films/{{ comment.itemId}}">{{ comment.itemName}}</a>
-                                                {% else %}
-                                                    <a href="series/{{ comment.itemId}}">{{ comment.itemName}}</a>
-                                                {% endif %}
-                                                </h5>
-                                                <p class="card-text">{{comment.content}}</p>
-                                            </div>
-                                            <div class="card-footer">
-                                                <small class="text-muted">Posté le
-                                                    {{ comment.publicationDate|date("d/m/Y") }} à {{ comment.publicationDate|date("h:i:s") }}.</small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% else %}
-                                <p class="mb-0 text-white">Vous n'avez pas encore posté de commentaires. Ajoutez-en pour
-                                    les retrouver sur cette page.</p>
-                                {% endfor %}
-                            </div>
+                        <div class="py-3 mt-3 border-bottom">
+                            <p><i class="fas fa-user"> </i>
+                                <small> Pseudo : {{ app.user.pseudo }}</small>
+                            </p>
+                            <p><i class="fas fa-envelope"> </i>
+                                <small> Adresse Email : {{ app.user.email }}</small>
+                            </p>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="v-pills-my-watchlists" role="tabpanel"
-                        aria-labelledby="v-pills-my-watchlists-tab">
-                        <div class="bg-profiletab">
-                            <h6>Ici se trouvera l'activité de l'utilisateur (likes, messages forum...)</h6>
-                            <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui
-                                magna. Ad
-                                proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat
-                                velit
-                                nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor.
-                                Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.
+                        <div class="py-3 mt-3 border-bottom">
+                            <p><i class="far fa-id-badge"> </i>
+                                <small> Prenom : {{ app.user.firstname }}</small>
+                            </p>
+                            <p><i class="far fa-address-card"> </i>
+                                <small> Nom : {{ app.user.lastname }}</small>
+                            </p>
+                            <p><i class="fas fa-birthday-cake"> </i>
+                                <small> Date de naissance : {{ app.user.birthday|date("d/m/Y") }}</small>
+                            </p>
+                            <p><i class="fas fa-atlas"> </i>
+                                <small> Biographie : {{ app.user.biography }}</small>
+                            </p>
+                            <p><i class="far fa-calendar-alt"> </i>
+                                <small> Inscrit le : {{ app.user.registerDate|date("d/m/Y") }}</small>
                             </p>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
-                        aria-labelledby="v-pills-settings-tab">
-                        <div class="bg-profiletab">
-                            <div class="row mx-md-n5 border-bottom">
-                                <div class="col px-md-5">
-                                    <div class="p-3">
-                                        <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="64" height="64"
-                                        class="d-inline-block align-top img-fluid" alt="photodeprofil">
-                                    </div>
+                </div>
+                <div class="tab-pane fade" id="mes-commentaires" role="tabpanel"
+                    aria-labelledby="v-pills-activity-tab">
+                    <div class="bg-profiletab">
+                        <div class="row mx-md-n5 border-bottom">
+                            <div class="col px-md-5">
+                                <div class="p-3">
+                                    <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="64" height="64"
+                                    class="d-inline-block align-top img-fluid" alt="photodeprofil">
                                 </div>
-                                <div class="col px-md-5">
-                                    <div class="p-3">
-                                        <p class="text-right">Personnalisation du compte</p>
+                            </div>
+                            <div class="col px-md-5">
+                                <div class="p-3">
+                                    <p class="text-right">Mon activité</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-5">
+                            {% for comment in comments %}
+                            <div class="col-12">
+                                <div class="card-deck card-no-shadow mb-3">
+                                    <div class="card">
+                                        <div class="card-body text-dark">
+                                            <h5 class="card-title">En référance à
+                                            {% if comment.type == 'm' %}
+                                                <a href="films/{{ comment.itemId}}">{{ comment.itemName}}</a>
+                                            {% else %}
+                                                <a href="series/{{ comment.itemId}}">{{ comment.itemName}}</a>
+                                            {% endif %}
+                                            </h5>
+                                            <p class="card-text">{{comment.content}}</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <small class="text-muted">Posté le
+                                                {{ comment.publicationDate|date("d/m/Y") }} à {{ comment.publicationDate|date("h:i:s") }}.</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <form class="form-signin" method="POST">
-                                {{ form_start(userCustomizationForm) }}
-                                <div class="form-label-group">
-                                    {{ form_widget(userCustomizationForm) }}
-                                </div>
-                                {{ form_end(userCustomizationForm) }}
-                            </form>
+                            {% else %}
+                            <p class="mb-0 text-white">Vous n'avez pas encore posté de commentaires. Ajoutez-en pour
+                                les retrouver sur cette page.</p>
+                            {% endfor %}
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="v-pills-password" role="tabpanel"
-                        aria-labelledby="v-pills-password-tab">
-                        <div class="bg-profiletab">
-                            <div class="row mx-md-n5 border-bottom">
-                                <div class="col px-md-5">
-                                    <div class="p-3">
-                                        <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="64" height="64"
-                                        class="d-inline-block align-top img-fluid" alt="photodeprofil">
-                                    </div>
-                                </div>
-                                <div class="col px-md-5">
-                                    <div class="p-3">
-                                        <p class="text-right">Modifier mot de passe</p>
-                                    </div>
+                </div>
+                <div class="tab-pane fade" id="mes-watchlists" role="tabpanel"
+                    aria-labelledby="v-pills-my-watchlists-tab">
+                    <div class="bg-profiletab">
+                        <h6>Ici se trouvera l'activité de l'utilisateur (likes, messages forum...)</h6>
+                        <p>Fugiat id quis dolor culpa eiusmod anim velit excepteur proident dolor aute qui
+                            magna. Ad
+                            proident laboris ullamco esse anim Lorem Lorem veniam quis Lorem irure occaecat
+                            velit
+                            nostrud magna nulla. Velit et et proident Lorem do ea tempor officia dolor.
+                            Reprehenderit Lorem aliquip labore est magna commodo est ea veniam consectetur.
+                        </p>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="parametres" role="tabpanel"
+                    aria-labelledby="v-pills-settings-tab">
+                    <div class="bg-profiletab">
+                        <div class="row mx-md-n5 border-bottom">
+                            <div class="col px-md-5">
+                                <div class="p-3">
+                                    <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="64" height="64"
+                                    class="d-inline-block align-top img-fluid" alt="photodeprofil">
                                 </div>
                             </div>
-                            <form class="form-signin" method="POST">
-                                {{ form_start(userPasswordForm) }}
-                                <div class="form-label-group">
-                                    {{ form_row(userPasswordForm.password) }}
+                            <div class="col px-md-5">
+                                <div class="p-3">
+                                    <p class="text-right">Personnalisation du compte</p>
                                 </div>
-                                {{ form_end(userPasswordForm) }}
-                            </form>
+                            </div>
                         </div>
+                        <form class="user-customization-form" method="POST" id="parametres">
+                            {{ form_start(userCustomizationForm) }}
+                            <div class="form-label-group">
+                                {{ form_label(userCustomizationForm.pseudo, null, {
+                                    'label': ' Nom d\'utilisateur',
+                                    'label_attr': {'class': 'fas fa-user py-2'}
+                                }) }}
+                                {{ form_widget(userCustomizationForm.pseudo)}}
+                            </div>
+                            <div class="form-label-group my-3">
+                                {{ form_label(userCustomizationForm.firstname, null, {
+                                    'label': ' Prénom',
+                                    'label_attr': {'class': 'far fa-id-badge py-2'}
+                                }) }}
+                                {{ form_widget(userCustomizationForm.firstname)}}
+                            </div>
+                            <div class="form-label-group my-3">
+                                {{ form_label(userCustomizationForm.lastname, null, {
+                                    'label': ' Nom de famille',
+                                    'label_attr': {'class': 'far fa-address-card py-2'}
+                                }) }}
+                                {{ form_widget(userCustomizationForm.lastname)}}
+                            </div>
+                            <div class="form-label-group">
+                                {{ form_label(userCustomizationForm.biography, null, {
+                                    'label': ' Biographie',
+                                    'label_attr': {'class': 'fas fa-atlas py-2'}
+                                }) }}
+                                {{ form_widget(userCustomizationForm.biography)}}
+                            </div>
+                            <div class="form-label-group my-3 pb-4">
+                                {{ form_label(userCustomizationForm.birthday, null, {
+                                    'label': ' Date de naissance',
+                                    'label_attr': {'class': 'fas fa-birthday-cake py-2'}
+                                }) }}
+                                {{ form_widget(userCustomizationForm.birthday)}}
+                            </div>
+                            {{ form_end(userCustomizationForm) }}
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="changer-mot-de-passe" role="tabpanel"
+                    aria-labelledby="v-pills-password-tab">
+                    <div class="bg-profiletab">
+                        <div class="row mx-md-n5 border-bottom">
+                            <div class="col px-md-5">
+                                <div class="p-3">
+                                    <img src="{{ asset('img/user_img/' ~ app.user.avatarPath)}}" width="64" height="64"
+                                    class="d-inline-block align-top img-fluid" alt="photodeprofil">
+                                </div>
+                            </div>
+                            <div class="col px-md-5">
+                                <div class="p-3">
+                                    <p class="text-right">Modifier mot de passe</p>
+                                </div>
+                            </div>
+                        </div>
+                        <form class="form-signin" method="POST">
+                            {{ form_start(userPasswordForm) }}
+                            <div class="form-label-group">
+                                {{ form_row(userPasswordForm.password) }}
+                            </div>
+                            {{ form_end(userPasswordForm) }}
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    {% endblock %}
-    {% block javascripts %}
-    <script>
-        var profileBanner = "{{app.user.bannerPath }}";
-        var imgPath = "{{ asset('img/user_img/')}}";
-        console.log(imgPath + profileBanner);
-        function displayBanner(){
-            $('body').css({
-                'background-position' : 'center',
-                'background-image' : 'url("/img/user_img/defaultBanner.png")',
-                'background-size' : 'cover',
-                'background-repeat' : 'no-repeat',
-            });
+</main>
+{% endblock %}
+{% block javascripts %}
+<script>
+    var profileBanner = "{{app.user.bannerPath }}";
+    var imgPath = "{{ asset('img/user_img/')}}";
+    function displayBanner(){
+        $('body').css({
+            'background-position' : 'center',
+            'background-image' : 'url("/img/user_img/defaultBanner.png")',
+            'background-size' : 'cover',
+            'background-repeat' : 'no-repeat',
+        });
+    }
+    displayBanner();
+</script>
+<script>
+    $(document).ready(() => {
+        let url = location.href.replace(/\/$/, "");
+        if (location.hash) {
+            const hash = url.split("#");
+            $('#v-pills-tab a[href="#'+hash[1]+'"]').tab("show");
+            url = location.href.replace(/\/#/, "#");
+            history.replaceState(null, null, url);
+            setTimeout(() => {
+            $(window).scrollTop(0);
+            }, 400);
         }
-        displayBanner();
-    </script>
-    {% endblock %}
+        $('a[data-toggle="pill"]').on("click", function() {
+            let newUrl;
+            const hash = $(this).attr("href");
+            if(hash == "#mon-profil") {
+                newUrl = url.split("#")[0];
+            } else {
+                newUrl = url.split("#")[0] + hash;
+                }
+            newUrl += "/";
+            history.replaceState(null, null, newUrl);
+        });
+    });
+</script>
+{% endblock %}

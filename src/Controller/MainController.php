@@ -112,4 +112,20 @@ class MainController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/mentions-legales", name="t&c")
+     */
+    public function displayTerms()
+    {
+        return $this->render('main/terms.html.twig');
+    }
+
+    /**
+     * @Route("/politique-de-confidentialite", name="policy")
+     */
+    public function displayPolicy()
+    {
+        return $this->render('main/policy.html.twig');
+    }
+
 }
