@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Comment;
 use App\Form\UserPasswordType;
+use App\Entity\Watchlist;
 use App\Form\UserCustomizationType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,7 +71,7 @@ class UserController extends AbstractController
         dump($user);
 
 
-        $watchlist = $watchlistRepo->findByUser($user);
+        $watchlist = $watchlistRepo->findByUser($user->getId());
 
         $movieIndex = 0;
         $tvIndex = 0;
