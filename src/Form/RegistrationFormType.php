@@ -30,9 +30,6 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['placeholder' => 'Adresse email',
                 ]
             ])
-            /**
-             * @Assert\NotCompromisedPassword
-             */
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Mot de passe', 'attr' => ['placeholder' => 'Mot de passe']],
