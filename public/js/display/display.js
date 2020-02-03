@@ -123,7 +123,6 @@ async function displayTrendings(trendings) {
     return new Promise(resolve => {
         let itemId = 0;
         for (item of trendings) {
-            console.log(item);
             if (item.profile_path){
                 var poster = item.profile_path == null ? `img/ressources/poster_not_found.png` : `https://image.tmdb.org/t/p/w600_and_h900_bestv2${item.profile_path}`
             } else {
@@ -245,7 +244,6 @@ function displayMovie(response) {
  * 2.2 Display People
  */
 function displayPerson(response) {
-    console.log(response);
     var biography = response.biography.length == '' ? "Cet/cette acteur/actrice n'a pas de biographie" : response.biography;
     // Used to convert US dates to French dates
     const birthday = new Date(response.birthday);
@@ -352,7 +350,6 @@ function displayShow(id) {
         "data": "{}"
     }
     $.ajax(settings).done(function (response) {
-        console.log(response);
         /**
          * Variables declarations
          */
