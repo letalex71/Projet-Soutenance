@@ -28,8 +28,8 @@
                     <li class="nav-item{% if route == 'search' %} active{% endif %}">
                         <a class="nav-link" href="{{ path('search') }}">Rechercher</a>
                     </li>
-                    <form class="form-inline" action="{{ path('search') }}">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher un film, série... " aria-label="Rechercher">
+                    <form class="form-inline" action="{{ path('search') }}" method="GET">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher un film, série... " aria-label="Rechercher" name="s">
                         <button class="btn btn-outline-light my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
                     </form>
                 </ul>
@@ -54,8 +54,8 @@
                             <a class="dropdown-item{% if route == 'profile' %} active{% endif %}"
                                 href="{{ path('profile') }}">Mon Compte</a>
                             </a>
-                            <a class="dropdown-item{% if route == 'app_logout' %} active{% endif %}"
-                                href="{{ path('profile') }}">Mes Watchlists</a>
+                            <a class="dropdown-item{% if route == 'watchlist' %} active{% endif %}"
+                                href="{{ path('watchlist', {id: app.user.id}) }}">Mes Watchlists</a>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item text-danger{% if route == 'app_logout' %} active{% endif %}"
@@ -103,7 +103,7 @@
                             <a class="nav-link" href="{{ path('profile') }}">Mon compte</a>
                         </li>
                         <li class="nav-item{% if route == 'profile' %} active{% endif %}">
-                            <a class="nav-link" href="{{ path('profile') }}">Mes watchlists</a>
+                            <a class="nav-link" href="{{ path('watchlist', {id: app.user.id}) }}">Mes watchlists</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
@@ -120,10 +120,10 @@
                             <a class="nav-link" href="{{ path('contact') }}">Contactez-nous</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Termes et conditions</a>
+                            <a class="nav-link" href="{{ path('t&c') }}">Termes et conditions</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Politique de confidentialité</a>
+                            <a class="nav-link" href="{{ path('policy') }}">Politique de confidentialité</a>
                         </li>
                     </ul>
                 </div>
@@ -131,10 +131,9 @@
             <div class="col-md-2 footer-social animated fadeInDown">
                 <h4>Suivez-nous :</h4>
                 <ul>
-                    <li><a class="btn-link disabled" href="#"><i class="fab fa-facebook"></i>  Facebook</a></li>
-                    <li><a class="btn-link disabled" href="#"><i class="fab fa-twitter"></i> Twitter</a></li>
-                    <li><a class="btn-link disabled" href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                    <li><a class="btn-link disabled" href="#"><i class="fas fa-rss"></i> RSS</a></li>
+                    <li><a class="btn-link " href="https://fr-fr.facebook.com/zuck"><i class="fab fa-facebook"></i>  Facebook</a></li>
+                    <li><a class="btn-link " href="https://twitter.com/Twitter"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a class="btn-link " href="https://www.instagram.com/instagram/?hl=fr"><i class="fab fa-instagram"></i> Instagram</a></li>
                 </ul>
             </div>
         </div>

@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
 
 class ContactFormType extends AbstractType
 {
@@ -48,6 +49,7 @@ class ContactFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('HoneyPot', HoneypotType::class)
             ->add('Envoyer', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-lg btn-block btn-info']
             ])

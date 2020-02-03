@@ -2,6 +2,9 @@
 {% block title %} {% endblock %}
 {% block stylesheets %}{% endblock %}
 {% block body %}
+
+
+{% set i = 1 %}
 <main class="page projects-page">
     <section class="portfolio-block photography my-3 py-2">
         <h1 class="text-center">Mes watchlists</h1>
@@ -17,7 +20,7 @@
                   
                     <thead class="bg-info">
                         <tr>
-                          <th scope="col"></th>
+                          <th scope="col">#</th>
                           <th scope="col">Titre</th>
                           <th scope="col">Score</th>
                         </tr>
@@ -25,24 +28,26 @@
                     
                     <tbody>
                         {% for media in watchlist.m %}
-                             {% if media.status == "c" %}
+                             {% if media.status == "completed" %}
                                <tr>
-                                  <th scope="row"></th>
+                                  <th scope="row">{{ i }}</th>
                                   <td>{{media.title}}</td>
                                   <td>{{media.score / 10}}</td>
                                 </tr>
+                                {% set i = i + 1 %}
                              {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
 
+                {% set i = 1 %}
                 <h2 class="text-center mt-5">Abandonnés</h2>
                 
                 <table class="table table-bordered rounded-lg">
                   
                     <thead class="bg-info">
                         <tr>
-                          <th scope="col"></th>
+                          <th scope="col">#</th>
                           <th scope="col">Titre</th>
                           <th scope="col">Score</th>
                         </tr>
@@ -50,16 +55,20 @@
                     
                     <tbody>
                         {% for media in watchlist.m %}
-                             {% if media.status == "d" %}
+                             {% if media.status == "dropped" %}
                                <tr>
-                                  <th scope="row"></th>
+                                  <th scope="row"> {{ i }} </th>
                                   <td>{{media.title}}</td>
                                   <td>{{media.score / 10}}</td>
                                 </tr>
                              {% endif %}
+                            {% set i = i + 1 %}
                         {% endfor %}
                     </tbody>
                 </table>
+
+                {% set i = 1 %}
+
 
                 <h2 class="text-center mt-5">A regarder plus tard</h2>
                 <table class="table table-bordered rounded-lg">
@@ -71,16 +80,16 @@
                           <th scope="col">Score</th>
                         </tr>
                     </thead>
-                    
                     <tbody>
                         {% for media in watchlist.m %}
-                             {% if media.status == "c" %}
+                             {% if media.status == "plan_to_watch" %}
                                <tr>
-                                  <th scope="row"></th>
+                                  <th scope="row">{{i}}</th>
                                   <td>{{media.title}}</td>
                                   <td>{{media.score / 10}}</td>
                                 </tr>
-                             {% endif %}
+                                {% set i = i + 1 %}
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>

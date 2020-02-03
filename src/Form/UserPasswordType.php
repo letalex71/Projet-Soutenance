@@ -32,8 +32,8 @@ class UserPasswordType extends AbstractType
             ],
             'invalid_message' => 'Les mots de passe doivent correspondre.',
             'options' => ['attr' => ['class' => 'password-field']],
-            'first_options'  => ['label' => 'Mot de passe'],
-            'second_options' => ['label' => 'Repetez mot de passe'],
+            'first_options' => ['label' => 'Mot de passe *', 'attr' => ['placeholder' => 'Mot de passe']],
+            'second_options' => ['label' => 'Répétez le mot de passe *', 'attr' => ['placeholder' => 'Répétez le mot de passe']],
         ])
         ->add('Enregistrer', SubmitType::class, [
             'attr' => ['class' => 'btn btn-lg btn-block btn-info']

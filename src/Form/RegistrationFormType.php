@@ -15,6 +15,10 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Eo\HoneypotBundle\Form\Type\HoneypotType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
 {
@@ -26,24 +30,23 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['placeholder' => 'Adresse email',
                 ]
             ])
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
-                'mapped' => false,
-                'label' => 'Mot de passe',
-                'attr' => ['placeholder' => 'Mot de passe'],
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options' => ['label' => 'Mot de passe', 'attr' => ['placeholder' => 'Mot de passe']],
+                'second_options' => ['label' => 'Répétez le mot de passe', 'attr' => ['placeholder' => 'Répétez le mot de passe']],
+                'invalid_message' => 'Le mot de passe n\'est pas identique',
+                'required' => true,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Veuillez entrer un mot de passe',
-                    ]),
                     new Length([
                         'min' => 6,
-                        'minMessage' => 'Votre mot de passe doit faire au moins {{ limit }} caractères',
-                        // max length allowed by Symfony for security reasons
-                        'max' => 4096,
+                        'minMessage' => 'Le mot de passe doit comporter au moins 6 caractères.',
+                        'max' => 255,
+                        'maxMessage' => 'Le mot de passe doit comporter 255 caractères maximum.'
                     ]),
-                ],
+                    new NotNull(['message' => 'Mot de passe requis']),
+                ]
             ])
+            ->add('HoneyPot', HoneypotType::class)
             ->add('register', SubmitType::class, [
                 'label' => 'Inscription',
                 'attr' => ['class' => 'btn btn-sm btn-block btn-info']

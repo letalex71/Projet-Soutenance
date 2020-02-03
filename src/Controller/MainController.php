@@ -28,11 +28,14 @@ class MainController extends AbstractController
     /**
      * @Route("/rechercher", name="search")
      */
-    public function search()
+    public function search(Request $request)
     {
 
+        $query = $request->query->get('s');
+
         return $this->render('main/search.html.twig', [
-            "date" => new DateTime()
+            "date" => new DateTime(),
+            "query" => $query
         ]);
     }
     /**
@@ -102,9 +105,27 @@ class MainController extends AbstractController
     /**
      * @Route("/personnes/{id}", name="display_people")
      */
-    public function displayPeople()
+    public function displayPeople($id)
     {
-        return $this->render('main/people-view.html.twig');
+        return $this->render('main/people-view.html.twig',[
+            'id' => $id,
+        ]);
+    }
+
+    /**
+     * @Route("/mentions-legales", name="t&c")
+     */
+    public function displayTerms()
+    {
+        return $this->render('main/terms.html.twig');
+    }
+
+    /**
+     * @Route("/politique-de-confidentialite", name="policy")
+     */
+    public function displayPolicy()
+    {
+        return $this->render('main/policy.html.twig');
     }
 
 }
