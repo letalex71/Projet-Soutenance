@@ -103,7 +103,7 @@
                             <a class="nav-link" href="{{ path('profile') }}">Mon compte</a>
                         </li>
                         <li class="nav-item{% if route == 'profile' %} active{% endif %}">
-                            <a class="nav-link" href="{{ path('profile') }}">Mes watchlists</a>
+                            <a class="nav-link" href="{{ path('watchlist', {id: app.user.id}) }}">Mes watchlists</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_logout') }}">Déconnexion</a>
