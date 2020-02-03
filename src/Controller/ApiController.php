@@ -89,8 +89,6 @@ class ApiController extends AbstractController
 
         $data['user'] = $this->getUser();
 
-        dump($data);
-
         $entityManager = $this->getDoctrine()->getManager();
 
         $watchlistRepository = $this->getDoctrine()->getRepository(Watchlist::class);
