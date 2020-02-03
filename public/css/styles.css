@@ -1,5 +1,11 @@
-#main-navbar .nav-item.active>.nav-link {
-    color: #42d342;
+#main-navbar .nav-item.active > .nav-link {
+    color: yellow;
+    font-size: larger;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    font-size: x-large;
+    font-weight: bolder;
 }
 
 .nav-link.dropdown-toggle>img{
